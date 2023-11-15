@@ -6,4 +6,19 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Tonga" Version="0.5.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Request\" />
+    <None Remove="Parts\" />
+    <None Remove="Pipe\" />
+    <None Remove="Response\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Request\" />
+    <Folder Include="Parts\" />
+    <Folder Include="Pipe\" />
+    <Folder Include="Response\" />
+  </ItemGroup>
 </Project>
