@@ -6,22 +6,22 @@ namespace Whyre
 	/// <summary>
 	/// HTTP request.
 	/// </summary>
-	public interface IRequest
+	public interface IMessage
 	{
         /// <summary>
         /// Refine the request.
         /// </summary>
-        IRequest Refined(IPair<string,string> parts);
+        IMessage Refined(IPair<string,string> parts);
 
-        /// <summary>
-        /// Refine the request.
-        /// </summary>
-        IRequest Refined(IRequestInput input);
+        ///// <summary>
+        ///// Refine the request.
+        ///// </summary>
+        //IMessage Refined(IMessageInput input);
 
         /// <summary>
         /// Append a body to the request.
         /// </summary>
-        IRequest Refine(Stream body);
+        IMessage Refine(Stream body);
 
         /// <summary>
         /// 

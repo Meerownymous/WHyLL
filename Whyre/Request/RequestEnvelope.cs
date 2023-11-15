@@ -3,11 +3,11 @@ using Tonga;
 
 namespace Whyre.Request
 {
-	public class RequestEnvelope : IRequest
+	public class RequestEnvelope : IMessage
 	{
-        private readonly IRequest origin;
+        private readonly IMessage origin;
 
-        public RequestEnvelope(IRequest origin)
+        public RequestEnvelope(IMessage origin)
 		{
             this.origin = origin;
         }
@@ -17,20 +17,20 @@ namespace Whyre.Request
             return this.origin.Render(rendering);
         }
 
-        public IRequest Refine(Stream body)
+        public IMessage Refine(Stream body)
         {
             return this.origin.Refine(body);
         }
 
-        public IRequest Refined(IPair<string, string> parts)
+        public IMessage Refined(IPair<string, string> parts)
         {
             return this.origin.Refined(parts);
         }
 
-        public IRequest Refined(IRequestInput input)
-        {
-            return this.origin.Refined(input);
-        }
+        //public IMessage Refined(IMessageInput input)
+        //{
+        //    return this.origin.Refined(input);
+        //}
     }
 }
 

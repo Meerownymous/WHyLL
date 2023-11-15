@@ -6,7 +6,7 @@ using Whyre.Parts;
 
 namespace Whyre.Wire
 {
-	public sealed class AspRequest : IRequest
+	public sealed class AspRequest : IMessage
 	{
         private readonly HttpRequestMessage aspRequest;
         private readonly UriBuilder uriBuild;
@@ -37,18 +37,13 @@ namespace Whyre.Wire
                 );
         }
 
-        public IRequest Refined(IPair<string, string> part)
+        public IMessage Refined(IPair<string, string> part)
         {
             this.crystallization.Invoke(part);
             return this;
         }
 
-        public IRequest Refined(IRequestInput part)
-        {
-            return part.WriteTo(this);
-        }
-
-        public IRequest Refine(Stream body)
+        public IMessage Refine(Stream body)
         {
             this.aspRequest.Content = new StreamContent(body);
             return this;
@@ -56,13 +51,14 @@ namespace Whyre.Wire
 
         public async Task<T> Render<T>(IRendering<T> output)
         {
-            return
-                (await Task.Run(() => output.With("status", "done")))
-                    .Render(
-                        new MemoryStream(
-                            new AsBytes("I am a body").Bytes()
-                        )
-                    );
+            throw new Exception();
+            //return
+            //    (await Task.Run(() => output.Refine("status", "done")))
+            //        .Render(
+            //            new MemoryStream(
+            //                new AsBytes("I am a body").Bytes()
+            //            )
+            //        );
         }
 
         private static string ByIdentifier(IPair<string, string> prefixedPart)

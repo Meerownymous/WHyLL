@@ -7,70 +7,34 @@ namespace Whyre
     /// <summary>
     /// Simple HTTP Request.
     /// </summary>
-    public sealed class SimpleRequest : IRequest
+    public sealed class SimpleMessage : IMessage
     {
-        private readonly Func<IRequest> initial;
+        private readonly IEnumerable<IPair<string, string>> parts;
+        private readonly Stream body;
 
-        public SimpleRequest(IRequest via, params IPair<string, string>[] parts) : this(
-            via,
-            Mapped._(
-                part => AsRequestInput._(part),
-                parts
-            )
-        )
-        { }
-
-        public SimpleRequest(IRequest via, params IRequestInput[] parts) : this(via, AsEnumerable._(parts))
-        { }
-
-        public SimpleRequest(IRequest via, IPair<string,string> part, IEnumerable<IRequestInput> parts) : this(
-            via,
-            Joined._(
-                Tonga.Enumerable.Single._(
-                    AsRequestInput._(part)
-                ),
-                parts
-            )
-        )
-        { }
-
-        public SimpleRequest(IRequest via, IEnumerable<IRequestInput> parts)
+        public SimpleMessage(IEnumerable<IPair<string,string>> parts, Stream body)
         {
-            this.initial = () =>
-                {
-                    foreach (var input in parts)
-                    {
-                        via = input.WriteTo(via);
-                    }
-                    return via;
-                };
+            this.parts = parts;
+            this.body = body;
         }
 
-        public IRequest Refined(IPair<string, string> header)
+        public IMessage Refined(IPair<string, string> part)
         {
-            return
-                this.initial()
-                    .Refined(header);
+            return new SimpleMessage(Joined._(parts, part), this.body);
         }
 
-        public IRequest Refined(IRequestInput input)
+        public IMessage Refine(Stream body)
         {
-            return input.WriteTo(this.initial());
-        }
-
-        public IRequest Refine(Stream body)
-        {
-            return
-                this.initial()
-                    .Refine(body);
+            return new SimpleMessage(this.parts, body);
         }
 
         public async Task<T> Render<T>(IRendering<T> rendering)
         {
-            return
-                await
-                    this.initial()
-                        .Render(rendering);
+            IMessage message = this;
+            foreach (var part in this.parts)
+                rendering = rendering.Refine(part);
+            rendering = rendering.Refine(body);
+            return await rendering.Render();
         }
     }
 }

@@ -8,37 +8,42 @@ using Whyre.Parts;
 
 namespace WHYRE.Test
 {
-    public sealed class ResponseHeaders : IRendering<IMap<string, ICollection<string>>>
+    public sealed class Headers : IRendering<IMap<string, ICollection<string>>>
 	{
         private readonly IMap<string, ICollection<string>> before;
 
-        public ResponseHeaders() : this(Tonga.Map.Empty._<string, ICollection<string>>())
+        public Headers() : this(Tonga.Map.Empty._<string, ICollection<string>>())
         { }
 
-        private ResponseHeaders(IMap<string,ICollection<string>> before)
+        private Headers(IMap<string,ICollection<string>> before)
 		{
             this.before = before;
         }
 
-        public IMap<string, ICollection<string>> Render(Stream body)
+        public Task<IMap<string, ICollection<string>>> Render()
         {
-            return this.before;
+            return Task.FromResult(this.before);
         }
 
-        public IRendering<IMap<string, ICollection<string>>> With(string name, string value)
+        public IRendering<IMap<string, ICollection<string>>> Refine(Stream body)
+        {
+            return this;
+        }
+
+        public IRendering<IMap<string, ICollection<string>>> Refine(IPair<string,string> part)
         {
             var result = before;
-            if(Is._(new Header(), name).Value())
+            if(Is._(new Header(), part.Key()).Value())
             {
-                name = new TrimmedLeft(name, "header:").AsString();
+                var name = new TrimmedLeft(part.Key(), "header:").AsString();
                 if (!before.Keys().Contains(name))
-                    result = before.With(AsPair._(name, AsCollection._(value)));
+                    result = before.With(AsPair._(name, AsCollection._(part.Value())));
                 else
                     result = before.With(
-                        AsPair._(name, Tonga.Collection.Joined._(before[name], Tonga.Enumerable.Single._(value)))
+                        AsPair._(name, Tonga.Collection.Joined._(before[name], Tonga.Enumerable.Single._(part.Value())))
                     );
             }
-            return new ResponseHeaders(result);
+            return new Headers(result);
         }
     }
 }

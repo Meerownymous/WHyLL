@@ -11,10 +11,12 @@ namespace Whyre.Parts
         /// Http Method.
         /// </summary>
         public Method(string method) : base(
-            new Strict(
-                method,
-                ignoreCase: true,
-                "GET", "PUT", "POST", "DELETE", "CONNECT", "OPTIONS", "TRACE", "HEAD"
+            new Upper(
+                new Strict(
+                    method,
+                    ignoreCase: true,
+                    "GET", "PUT", "POST", "DELETE", "CONNECT", "OPTIONS", "TRACE", "HEAD"
+                )
             )
         )
         { }

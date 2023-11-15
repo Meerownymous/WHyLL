@@ -13,12 +13,12 @@
     <None Remove="Request\" />
     <None Remove="Parts\" />
     <None Remove="Pipe\" />
-    <None Remove="Response\" />
+    <None Remove="Rendering\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Request\" />
     <Folder Include="Parts\" />
     <Folder Include="Pipe\" />
-    <Folder Include="Response\" />
+    <Folder Include="Rendering\" />
   </ItemGroup>
 </Project>
