@@ -7,44 +7,38 @@ namespace Whyre.Wire
     /// <summary>
     /// Crystallization, where input crystallizes in specific actions.
     /// </summary>
-    public sealed class Crystal<Input, Attribute> : IAction<Input>
+    public sealed class Crystal : IAction<IPair<string,string>>
 	{
-        private readonly DeepMap<Input, Attribute, Action<Input>> line;
+        private readonly DeepMap<IPair<string,string>, string, Action<IPair<string, string>>> line;
 
         /// <summary>
         /// Crystallization, where input crystallizes in specific actions.
         /// </summary>
         public Crystal(
-            Func<Input, Attribute> extract,
-			IEnumerable<IPair<Input, Action<Input>>> spikes
+			IEnumerable<IPair<IPair<string,string>, Action<IPair<string,string>>>> spikes
 		)
 		{
             this.line =
                 DeepMap._(
-                    extract,
+                    part => part.Key(),
                     AsMap._(spikes)
                 );
         }
 
-        public void Invoke(Input input)
+        public void Invoke(IPair<string,string> part)
         {
-            this.line[input].Invoke(input);
+            this.line[part].Invoke(part);
         }
-    }
-
-    public static class Crystal
-    {
-        public static Crystal<Input, Attribute> _<Input, Attribute>(
-            Func<Input, Attribute> extract,
-            IEnumerable<IPair<Input, Action<Input>>> lines
+    
+        public static Crystal _(
+            IEnumerable<IPair<IPair<string, string>, Action<IPair<string, string>>>> spikes
         ) =>
-            new Crystal<Input, Attribute>(extract, lines);
+            new Crystal(spikes);
 
-        public static Crystal<Input, Attribute> _<Input, Attribute>(
-            Func<Input, Attribute> extract,
-            params IPair<Input, Action<Input>>[] lines
+        public static Crystal _(
+            params IPair<IPair<string, string>, Action<IPair<string, string>>>[] spikes
         ) =>
-            new Crystal<Input, Attribute>(extract, lines);
+            new Crystal(spikes);
     }
 }
 

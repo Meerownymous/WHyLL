@@ -8,12 +8,12 @@ namespace Whyre
     /// <summary>
     /// HTTP GET Request.
     /// </summary>
-    public sealed class Get : RequestEnvelope
+    public sealed class Get : MessageEnvelope
     {
         /// <summary>
         /// HTTP GET Request.
         /// </summary>
-        public Get(Uri uri, params IPair<string,string>[] parts) : this(
+        public Get(Uri uri, params IPair<string, string>[] parts) : this(
             uri, AsEnumerable._(parts)
         )
         { }
@@ -23,10 +23,8 @@ namespace Whyre
         /// </summary>
         public Get(Uri uri, IEnumerable<IPair<string, string>> parts) : base(
             new SimpleMessage(
-                new Joined<IPair<string, string>>(
-                    new RequestLine("get", uri),
-                    parts
-                ),
+                new RequestLine("get", uri).AsString(),
+                parts,
                 new MemoryStream()
             )
         )

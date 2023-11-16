@@ -4,17 +4,18 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <RootNamespace>Test.Whyre</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Pipe\" />
     <None Remove="Request\" />
     <None Remove="Parts\" />
+    <None Remove="Rendering\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Pipe\" />
     <Folder Include="Request\" />
     <Folder Include="Parts\" />
+    <Folder Include="Rendering\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Whyre\Whyre.csproj" />

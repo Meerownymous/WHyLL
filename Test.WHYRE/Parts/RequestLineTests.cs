@@ -2,7 +2,7 @@
 using Whyre.Parts;
 using Xunit;
 
-namespace WHYRE.Parts.Test
+namespace Whyre.Parts.Test
 {
 	public sealed class RequestLineTests
 	{
@@ -20,10 +20,10 @@ namespace WHYRE.Parts.Test
 			Assert.Equal(
 				$"{method} /slash/slash/boom HTTP/1.1\r\n",
 				new RequestLine(
-					"GET",
+					method,
 					new Uri("/slash/slash/boom"),
 					new Version(1, 1)
-				).Value()
+				).AsString()
 			);
 		}
 
@@ -35,7 +35,7 @@ namespace WHYRE.Parts.Test
                     "DESTROY",
                     new Uri("/slash/slash/boom"),
                     new Version(1, 1)
-                ).Value()
+                ).AsString()
             );
         }
 
@@ -46,7 +46,7 @@ namespace WHYRE.Parts.Test
                 new RequestLine(
                     "GET",
                     new Version(1, 1)
-                ).Value()
+                ).AsString()
             );
         }
 
@@ -58,7 +58,7 @@ namespace WHYRE.Parts.Test
                 new RequestLine(
                     "OPTIONS",
                     new Version(1, 1)
-                ).Value()
+                ).AsString()
             );
         }
     }

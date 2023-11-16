@@ -9,23 +9,25 @@ namespace Whyre
 	public interface IMessage
 	{
         /// <summary>
-        /// Refine the request.
+        /// Refine the first line of the message -
+        /// request-line (request message)
+        /// or status-line (response message).
         /// </summary>
-        IMessage Refined(IPair<string,string> parts);
-
-        ///// <summary>
-        ///// Refine the request.
-        ///// </summary>
-        //IMessage Refined(IMessageInput input);
+        IMessage With(string firstLine);
 
         /// <summary>
-        /// Append a body to the request.
+        /// Refine the headers.
         /// </summary>
-        IMessage Refine(Stream body);
+        IMessage With(IPair<string,string> header);
 
         /// <summary>
-        /// 
+        /// Refine the body to the request.
+        /// </summary>
+        IMessage WithBody(Stream body);
+
+        /// <summary>
+        /// Render the message to a response, a followup or something else.
         /// </summary>
         Task<T> Render<T>(IRendering<T> rendering);
-	}
+    }
 }

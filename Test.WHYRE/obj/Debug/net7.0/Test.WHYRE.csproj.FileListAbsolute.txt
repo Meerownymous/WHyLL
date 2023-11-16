@@ -5,13 +5,17 @@
 /Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/Test.WHYRE.runtimeconfig.json
 /Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/Test.WHYRE.dll
 /Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/Test.WHYRE.pdb
+/Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/Microsoft.VisualStudio.CodeCoverage.Shim.dll
 /Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/Microsoft.TestPlatform.CoreUtilities.dll
+/Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/Microsoft.TestPlatform.PlatformAbstractions.dll
 /Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/Microsoft.VisualStudio.TestPlatform.ObjectModel.dll
 /Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/Microsoft.TestPlatform.CommunicationUtilities.dll
 /Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/Microsoft.TestPlatform.CrossPlatEngine.dll
+/Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/Microsoft.TestPlatform.Utilities.dll
 /Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/Microsoft.VisualStudio.TestPlatform.Common.dll
 /Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/testhost.dll
 /Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/Newtonsoft.Json.dll
+/Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/NuGet.Frameworks.dll
 /Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/Tonga.dll
 /Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/xunit.abstractions.dll
 /Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/xunit.assert.dll
@@ -96,7 +100,3 @@
 /Users/meerow/Documents/Coding/Whyre/Test.WHYRE/obj/Debug/net7.0/Test.WHYRE.pdb
 /Users/meerow/Documents/Coding/Whyre/Test.WHYRE/obj/Debug/net7.0/Test.WHYRE.genruntimeconfig.cache
 /Users/meerow/Documents/Coding/Whyre/Test.WHYRE/obj/Debug/net7.0/ref/Test.WHYRE.dll
-/Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/Microsoft.VisualStudio.CodeCoverage.Shim.dll
-/Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/Microsoft.TestPlatform.PlatformAbstractions.dll
-/Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/Microsoft.TestPlatform.Utilities.dll
-/Users/meerow/Documents/Coding/Whyre/Test.WHYRE/bin/Debug/net7.0/NuGet.Frameworks.dll

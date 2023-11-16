@@ -6,7 +6,7 @@ using Tonga.Text;
 using Whyre;
 using Whyre.Parts;
 
-namespace WHYRE.Test
+namespace Whyre.Test
 {
     public sealed class Body : IRendering<Stream>
     {
@@ -15,14 +15,19 @@ namespace WHYRE.Test
         public Body() : this(new MemoryStream())
         { }
 
-        public Body(Stream body)
+        private Body(Stream body)
         {
             this.body = body;
         }
 
-        public Stream Render()
+        public IRendering<Stream> Refine(string firstLine)
         {
-            return body;
+            return this;
+        }
+
+        public IRendering<Stream> Refine(IPair<string, string> part)
+        {
+            return this;
         }
 
         public IRendering<Stream> Refine(Stream body)
@@ -30,14 +35,9 @@ namespace WHYRE.Test
             return new Body(body);
         }
 
-        public IRendering<Stream> Refine(IPair<string,string> part)
+        public async Task<Stream> Render()
         {
-            return this;
-        }
-
-        Task<Stream> IRendering<Stream>.Render()
-        {
-            return Task.FromResult(this.body);
+            return await Task.FromResult(body);
         }
     }
 }

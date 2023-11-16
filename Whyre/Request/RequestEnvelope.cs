@@ -3,34 +3,40 @@ using Tonga;
 
 namespace Whyre.Request
 {
-	public class RequestEnvelope : IMessage
+    /// <summary>
+    /// Envelope for messages.
+    /// </summary>
+	public abstract class MessageEnvelope : IMessage
 	{
         private readonly IMessage origin;
 
-        public RequestEnvelope(IMessage origin)
+        /// <summary>
+        /// Envelope for messages.
+        /// </summary>
+        public MessageEnvelope(IMessage origin)
 		{
             this.origin = origin;
+        }
+
+        public IMessage With(string firstLine)
+        {
+            return this.origin.With(firstLine);
+        }
+
+        public IMessage With(IPair<string, string> parts)
+        {
+            return this.origin.With(parts);
+        }
+
+        public IMessage WithBody(Stream body)
+        {
+            return this.origin.WithBody(body);
         }
 
         public Task<T> Render<T>(IRendering<T> rendering)
         {
             return this.origin.Render(rendering);
         }
-
-        public IMessage Refine(Stream body)
-        {
-            return this.origin.Refine(body);
-        }
-
-        public IMessage Refined(IPair<string, string> parts)
-        {
-            return this.origin.Refined(parts);
-        }
-
-        //public IMessage Refined(IMessageInput input)
-        //{
-        //    return this.origin.Refined(input);
-        //}
     }
 }
 

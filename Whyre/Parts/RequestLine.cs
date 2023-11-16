@@ -7,7 +7,7 @@ namespace Whyre.Parts
 	/// <summary>
 	/// The request line, first line of a http request.
 	/// </summary>
-	public sealed class RequestLine : PartWrap
+	public sealed class RequestLine : TextEnvelope
 	{
         /// <summary>
         /// The request line, first line of a http request.
@@ -29,7 +29,7 @@ namespace Whyre.Parts
         /// The request line, first line of a http request.
         /// </summary>
         public RequestLine(string method, Uri resource) : this(
-			method, resource, new Version(1,1)
+			method, resource, new Version(1, 1)
 		)
 		{ }
 
@@ -38,7 +38,7 @@ namespace Whyre.Parts
         /// </summary>
         public RequestLine(string method, Uri resource, Version httpVersion) : this(
             new Method(method),
-			AsText._(resource.IsAbsoluteUri ? resource.AbsolutePath : resource.LocalPath),
+			AsText._(resource.IsAbsoluteUri ? resource.AbsoluteUri : resource.PathAndQuery),
 			httpVersion
 		)
 		{ }
@@ -47,18 +47,18 @@ namespace Whyre.Parts
         /// The request line, first line of a http request.
         /// </summary>
         private RequestLine(IText method, IText resource, Version httpVersion) : base(
-			"request-line",
-			() =>
-			Joined._(
-				"",
+			AsText._(() =>
 				Joined._(
-					AsText._(" "),
-					method,
-					resource,
-					AsText._($"HTTP/{httpVersion.ToString(2)}")
-				),
-                AsText._("\r\n")
-            ).AsString()
+					"",
+					Joined._(
+						AsText._(" "),
+						method,
+						resource,
+						AsText._($"HTTP/{httpVersion.ToString(2)}")
+					),
+					AsText._("\r\n")
+				).AsString()
+            )
         )
 		{ }
     }

@@ -5,9 +5,9 @@ namespace Whyre
 {
 	public static class TaskExtension
 	{
-        public static async Task<T> Render<T>(this Task<IMessage> entityTask, IRendering<T> rendering)
+        public static async Task<T> Render<T>(this Task<IMessage> responseTask, IRendering<T> rendering)
         {
-            return await entityTask.Render(rendering);
+            return await (await responseTask).Render(rendering);
         }
     }
 }

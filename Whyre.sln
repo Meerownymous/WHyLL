@@ -5,7 +5,7 @@ VisualStudioVersion = 25.0.1706.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Whyre", "Whyre\Whyre.csproj", "{37BB32E6-7DBC-4B5D-B398-FD25F4EECD2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.WHYRE", "Test.WHYRE\Test.WHYRE.csproj", "{02097128-D6DC-4712-B4F3-2E1B5AD41D57}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Whyre", "Test.WHYRE\Test.WHYRE.csproj", "{02097128-D6DC-4712-B4F3-2E1B5AD41D57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

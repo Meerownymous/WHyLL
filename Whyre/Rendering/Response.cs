@@ -5,26 +5,33 @@ namespace Whyre.Wire
 {
 	public sealed class Response : IRendering<IMessage>
 	{
+        private readonly string firstLine;
         private readonly IEnumerable<IPair<string,string>> parts;
         private readonly Stream body;
 
-        public Response() : this(None._<IPair<string, string>>(), new MemoryStream())
+        public Response() : this(string.Empty, None._<IPair<string, string>>(), new MemoryStream())
         { }
 
-        public Response(IEnumerable<IPair<string, string>> parts, Stream body)
+        public Response(string firstLine, IEnumerable<IPair<string, string>> parts, Stream body)
 		{
+            this.firstLine = firstLine;
             this.parts = parts;
             this.body = body;
         }
 
+        public IRendering<IMessage> Refine(string firstLine)
+        {
+            return new Response(firstLine, this.parts, this.body);
+        }
+
         public IRendering<IMessage> Refine(IPair<string,string> part)
         {
-            return new Response(Joined._(this.parts, part), this.body);
+            return new Response(this.firstLine, Joined._(this.parts, part), this.body);
         }
 
         public IRendering<IMessage> Refine(Stream body)
         {
-            return new Response(this.parts, body);
+            return new Response(this.firstLine, this.parts, body);
         }
 
         public async Task<IMessage> Render()
@@ -34,7 +41,8 @@ namespace Whyre.Wire
                     Task.Run(() =>
                         new Get(
                             new Uri("http://www.google.de"),
-                            AsEnumerable._<IPair<string,string>>())
+                            AsEnumerable._<IPair<string,string>>()
+                        ).WithBody(this.body)
                     );
         }
     }
