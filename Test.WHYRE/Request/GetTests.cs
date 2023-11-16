@@ -17,7 +17,7 @@ namespace Whyre.Request.Test
                 "successful",
                 First._(
                     (await
-                        new Get(new Uri("http://www.enhanced-calm.com"))
+                        new Get(new Uri("http://www.enhanced-calm.com"), new Version(1, 1))
                             .With(new Header("x-test", "successful"))
                             .Render(new Headers())
                     )["x-test"]
@@ -32,7 +32,7 @@ namespace Whyre.Request.Test
                 "successful",
                 First._(
                     (await
-                        new Get(new Uri("http://www.enhanced-calm.com"))
+                        new Get(new Uri("http://www.enhanced-calm.com"), new Version(1, 1))
                             .With(new Header("x-test", "successful"))
                             .Render(new Headers())
                     )["x-test"]
@@ -47,7 +47,7 @@ namespace Whyre.Request.Test
                 "success",
                 AsText._(
                     await
-                        new Get(new Uri("http://www.enhanced-calm.com"))
+                        new Get(new Uri("http://www.enhanced-calm.com"), new Version(1, 1))
                             .WithBody(new MemoryStream(AsBytes._("success").Bytes()))
                             .Render(new Response())
                             .Render(new Body())

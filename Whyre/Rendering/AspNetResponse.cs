@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using Tonga;
 using Tonga.Enumerable;
+using Tonga.Text;
 
 namespace Whyre.Wire
 {
@@ -52,6 +53,13 @@ namespace Whyre.Wire
             var pieces = RequestLineParts(requestLine);
             this.message.Method = new HttpMethod(pieces[0]);
             this.message.RequestUri = new Uri(pieces[1]);
+            this.message.Version =
+                new Version(
+                    new TrimmedLeft(
+                        new TrimmedRight(pieces[2], "\r\n"),
+                        "HTTP/"
+                    ).AsString()
+                );
             return new AspNetResponse(message, convert);
         }
 
@@ -73,7 +81,7 @@ namespace Whyre.Wire
             return
                 new SimpleMessage(
                     $"HTTP/{aspResponse.Version} {(int)aspResponse.StatusCode} {aspResponse.ReasonPhrase}\r\n",
-                    Joined._(
+                    Tonga.Enumerable.Joined._(
                         Mapped._(
                             header => 
                             Mapped._(
@@ -92,5 +100,12 @@ namespace Whyre.Wire
             return requestLine.Split(" ");
         }
     }
-}
 
+    public static class FluentRender
+    {
+        public static async Task<T> Render<T>(this Task<IMessage> responseTask, IRendering<T> rendering)
+        {
+            return await (await responseTask).Render(rendering);
+        }
+    }
+}

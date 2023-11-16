@@ -12,13 +12,17 @@
   <ItemGroup>
     <None Remove="Request\" />
     <None Remove="Parts\" />
-    <None Remove="Pipe\" />
     <None Remove="Rendering\" />
+    <None Remove="Request\Http1\" />
+    <None Remove="Request\Http2\" />
+    <None Remove="Request\Http3\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Request\" />
     <Folder Include="Parts\" />
-    <Folder Include="Pipe\" />
     <Folder Include="Rendering\" />
+    <Folder Include="Request\Http1\" />
+    <Folder Include="Request\Http2\" />
+    <Folder Include="Request\Http3\" />
   </ItemGroup>
 </Project>

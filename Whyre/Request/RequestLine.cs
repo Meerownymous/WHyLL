@@ -38,7 +38,13 @@ namespace Whyre.Parts
         /// </summary>
         public RequestLine(string method, Uri resource, Version httpVersion) : this(
             new Method(method),
-			AsText._(resource.IsAbsoluteUri ? resource.AbsoluteUri : resource.PathAndQuery),
+			AsText._(
+				$"{(resource.Scheme.Equals("file") ?
+					""
+					:
+					$"{resource.Scheme}://{resource.Host}{(resource.Port != 80 ? $":{resource.Port}" : "")}"
+				)}{resource.PathAndQuery}"
+			),
 			httpVersion
 		)
 		{ }

@@ -69,6 +69,32 @@ namespace Whyre.Rendering.Test
         }
 
         [Fact]
+        public async void ConfiguresRequestHttpVersion()
+        {
+            HttpRequestMessage result = new HttpRequestMessage();
+            await
+                new AspNetResponse(
+                    message =>
+                    {
+                        result = message;
+                        return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK));
+                    })
+                    .Refine(
+                        new RequestLine(
+                            "GET",
+                            new Uri("http://www.enhanced-calm.com/resource"),
+                            new Version(3,0)
+                        ).AsString()
+                    )
+                    .Render();
+
+            Assert.Equal(
+                result.Version,
+                new Version(3,0)
+            );
+        }
+
+        [Fact]
         public async void ConfiguresRequestHeader()
         {
             HttpRequestMessage result = new HttpRequestMessage();

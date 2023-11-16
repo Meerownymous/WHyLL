@@ -37,13 +37,9 @@ namespace Whyre.Wire
         public async Task<IMessage> Render()
         {
             return
-                await
-                    Task.Run(() =>
-                        new Get(
-                            new Uri("http://www.google.de"),
-                            AsEnumerable._<IPair<string,string>>()
-                        ).WithBody(this.body)
-                    );
+                await Task.FromResult(
+                    new SimpleMessage(this.firstLine, this.parts, this.body)
+                );
         }
     }
 }
