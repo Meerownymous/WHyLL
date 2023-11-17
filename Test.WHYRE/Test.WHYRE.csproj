@@ -11,11 +11,13 @@
     <None Remove="Request\" />
     <None Remove="Rendering\" />
     <None Remove="Headers\" />
+    <None Remove="Message\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Request\" />
     <Folder Include="Rendering\" />
     <Folder Include="Headers\" />
+    <Folder Include="Message\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Whyre\Whyre.csproj" />
