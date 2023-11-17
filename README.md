@@ -1,7 +1,9 @@
 # WHyLL
 True object-oriented, declarative, DTO-free HTTP library. Make requests and responses using immutable objects.
 
-## HTTP is simple. So is this library.
+Currently under development, without an alpha release.
+
+## HTTP is simple, so is this library.
 You send a message to the server, and get a message back. The message, sent and received, is text and always in this shape:
 
 ```
