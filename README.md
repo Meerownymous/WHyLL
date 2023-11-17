@@ -46,7 +46,7 @@ var request =
 		.Refine(new FileStream("~/my-jsons/important-posting.json", FileMode.Read));
 ```
 
-## Render the response
+## Render the response (asynchronously)
 
 This is how you render a request to a response:
 
@@ -69,3 +69,7 @@ var bodyText =
 			.Render(new AspNetResponse())
 			.Render(new BodyAsText());
 ```
+
+## Http 2.0 and 3.0
+For using Http 2.0/3.0 in your requests, take the objects in the WHyLL.Request.Http2 or WHyLL.Request.Http3 namespaces.
+
