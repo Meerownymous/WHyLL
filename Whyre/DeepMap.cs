@@ -22,7 +22,7 @@ namespace Whyre
             this.deep =
                 AsMap._(() =>
                     Mapped._(
-                        pair => AsPair._(digDown(pair.Key()), pair.Value()),
+                        pair => AsPair._(this.digDown(pair.Key()), pair.Value()),
                         origin.Pairs()
                     )
                 );

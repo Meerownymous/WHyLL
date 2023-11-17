@@ -53,7 +53,12 @@ namespace Whyre.Message
 
         public IMessage With(IPair<string, string> part)
         {
-            return new SimpleMessage(this.firstLine, Joined._(this.parts, part), this.body);
+            return
+                new SimpleMessage(
+                    this.firstLine,
+                    Joined._(this.parts, part),
+                    this.body
+                );
         }
 
         public IMessage WithBody(Stream body)

@@ -48,7 +48,7 @@ namespace Whyre.Rendering
                     result = before.With(AsPair._(name, AsCollection._(part.Value())));
                 else
                     result = before.With(
-                        AsPair._(name, Tonga.Collection.Joined._(before[name], Tonga.Enumerable.Single._(part.Value())))
+                        AsPair._(name, Joined._(before[name], Tonga.Enumerable.Single._(part.Value())))
                     );
             
             return new AllHeaders(result);

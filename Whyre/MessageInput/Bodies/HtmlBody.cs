@@ -13,11 +13,12 @@ namespace Whyre.MessageInput.Bodies
         /// </summary>
         public HtmlBody(Stream body) : base(
 			new JoinedInput(
-				new HeaderInput(new ContentType("text/html")),
+				new HeaderInput(
+					new ContentType("text/html")
+				),
 				new BodyInput(body)
 			)
 		)
 		{ }
 	}
 }
-
