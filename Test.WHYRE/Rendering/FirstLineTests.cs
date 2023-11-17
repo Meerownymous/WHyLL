@@ -1,21 +1,28 @@
 ﻿using System;
 using Tonga.IO;
 using Tonga.Text;
+using Whyre.Headers;
 using Xunit;
 
 namespace Whyre.Rendering.Test
 {
-	public sealed class FirstLineTests
+	public sealed class AllHeadersTests
 	{
-		[Fact]
-		public async void RendersFirstLine()
+		[Theory]
+		[InlineData("Test-Type", "Unit")]
+        [InlineData("Test-Difficulty", "Easy")]
+        [InlineData("Test-Difficulty", "Peasy")]
+        public async void RendersHeaders(string key, string value)
 		{
-			Assert.Equal(
-				"CONNECT /world HTTP/1.1",
-				await
-					new FirstLine()
-						.Refine("CONNECT /world HTTP/1.1")
-						.Render()
+			Assert.Contains(
+				value,
+				(await
+					new AllHeaders()
+						.Refine(new Header("Test-Type", "Unit"))
+                        .Refine(new Header("Test-Difficulty", "Easy"))
+                        .Refine(new Header("Test-Difficulty", "Peasy"))
+                        .Render()
+				)[key]
 			);
 		}
 	}
