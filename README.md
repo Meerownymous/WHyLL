@@ -69,5 +69,3 @@ var bodyText =
 			.Render(new AspNetResponse())
 			.Render(new BodyAsText());
 ```
-
->>>>>>> 17ec7ef (feat: add BodyAsText)
