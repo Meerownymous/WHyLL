@@ -20,7 +20,7 @@ namespace WHyLL.Rendering
         { }
 
         private MessageCopy(string firstLine, IEnumerable<IPair<string, string>> parts, Stream body)
-		{
+        {
             this.firstLine = firstLine;
             this.parts = parts;
             this.body = body;

@@ -16,7 +16,7 @@ namespace WHyLL.Rendering
         { }
 
         private FirstLine(string firstLine)
-		{
+        {
             this.firstLine = firstLine;
         }
 
