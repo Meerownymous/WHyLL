@@ -1,8 +1,7 @@
-﻿using System;
-using Tonga;
+﻿using Tonga;
 using Tonga.Text;
 
-namespace Whyre.Parts
+namespace Whyre.Request
 {
 	/// <summary>
 	/// The request line, first line of a http request.

@@ -2,31 +2,32 @@
 using Tonga.Enumerable;
 using Whyre.Message;
 using Whyre.MessageInput;
+using Whyre.Request;
 
-namespace Whyre.Request.Http3
+namespace Whyre.Request.Http2
 {
     /// <summary>
-    /// HTTP GET Request.
+    /// HTTP CONNECT Request.
     /// </summary>
-    public sealed class Get : MessageEnvelope
+    public sealed class Connect : MessageEnvelope
     {
         /// <summary>
-        /// HTTP GET Request.
+        /// HTTP CONNECT Request.
         /// </summary>
-        public Get(Uri uri, params IPair<string, string>[] headers) : this(
+        public Connect(Uri uri, params IPair<string, string>[] headers) : this(
             uri, new HeaderInput(headers)
         )
         { }
 
         /// <summary>
-        /// HTTP GET Request.
+        /// HTTP CONNECT Request.
         /// </summary>
-        public Get(Uri uri, IMessageInput input, params IMessageInput[] more) : base(
+        public Connect(Uri uri, IMessageInput input, params IMessageInput[] more) : base(
             new MessageOfInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
-                        new RequestLine("GET", uri, new Version(2, 0)).AsString(),
-                        None._<IPair<string,string>>(),
+                        new RequestLine("CONNECT", uri, new Version(2,0)).AsString(),
+                        None._<IPair<string, string>>(),
                         new MemoryStream()
                     ),
                     new Joined<IMessageInput>(input, more)

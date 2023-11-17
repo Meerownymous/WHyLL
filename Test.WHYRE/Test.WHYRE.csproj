@@ -9,13 +9,13 @@
 
   <ItemGroup>
     <None Remove="Request\" />
-    <None Remove="Parts\" />
     <None Remove="Rendering\" />
+    <None Remove="Headers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Request\" />
-    <Folder Include="Parts\" />
     <Folder Include="Rendering\" />
+    <Folder Include="Headers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Whyre\Whyre.csproj" />

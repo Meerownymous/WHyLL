@@ -7,43 +7,43 @@ using Whyre.Request;
 namespace Whyre.Request
 {
     /// <summary>
-    /// HTTP GET Request.
+    /// HTTP CONNECT Request.
     /// </summary>
-    public sealed class Get : MessageEnvelope
+    public sealed class Connect : MessageEnvelope
     {
         /// <summary>
-        /// HTTP GET Request.
+        /// HTTP CONNECT Request.
         /// </summary>
-        public Get(Uri uri, params IPair<string, string>[] headers) : this(
-            uri, new Version(1,1), headers
+        public Connect(Uri uri, params IPair<string, string>[] headers) : this(
+            uri, new Version(1,1), new HeaderInput(headers)
         )
         { }
 
         /// <summary>
-        /// HTTP GET Request.
+        /// HTTP CONNECT Request.
         /// </summary>
-        public Get(Uri uri, Version httpVersion, params IPair<string, string>[] headers) : this(
+        public Connect(Uri uri, Version httpVersion, params IPair<string, string>[] headers) : this(
             uri, httpVersion, new HeaderInput(headers)
         )
         { }
 
         /// <summary>
-        /// HTTP GET Request.
+        /// HTTP CONNECT Request.
         /// </summary>
-        public Get(Uri uri, IMessageInput input, params IMessageInput[] more) : this(
+        public Connect(Uri uri, IMessageInput input, params IMessageInput[] more) : this(
             uri, new Version(1,1), input, more
         )
         { }
 
         /// <summary>
-        /// HTTP GET Request.
+        /// HTTP CONNECT Request.
         /// </summary>
-        public Get(Uri uri, Version httpVersion, IMessageInput input, params IMessageInput[] more) : base(
+        public Connect(Uri uri, Version httpVersion, IMessageInput input, params IMessageInput[] more) : base(
             new MessageOfInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
-                        new RequestLine("GET", uri, httpVersion).AsString(),
-                        None._<IPair<string,string>>(),
+                        new RequestLine("CONNECT", uri, httpVersion).AsString(),
+                        None._<IPair<string, string>>(),
                         new MemoryStream()
                     ),
                     new Joined<IMessageInput>(input, more)

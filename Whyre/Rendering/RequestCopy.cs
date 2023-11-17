@@ -1,18 +1,19 @@
 ﻿using Tonga;
 using Tonga.Enumerable;
+using Whyre.Message;
 
-namespace Whyre.Wire
+namespace Whyre.Rendering
 {
-	public sealed class Response : IRendering<IMessage>
+	public sealed class RequestCopy : IRendering<IMessage>
 	{
         private readonly string firstLine;
         private readonly IEnumerable<IPair<string,string>> parts;
         private readonly Stream body;
 
-        public Response() : this(string.Empty, None._<IPair<string, string>>(), new MemoryStream())
+        public RequestCopy() : this(string.Empty, None._<IPair<string, string>>(), new MemoryStream())
         { }
 
-        public Response(string firstLine, IEnumerable<IPair<string, string>> parts, Stream body)
+        public RequestCopy(string firstLine, IEnumerable<IPair<string, string>> parts, Stream body)
 		{
             this.firstLine = firstLine;
             this.parts = parts;
@@ -21,17 +22,17 @@ namespace Whyre.Wire
 
         public IRendering<IMessage> Refine(string firstLine)
         {
-            return new Response(firstLine, this.parts, this.body);
+            return new RequestCopy(firstLine, this.parts, this.body);
         }
 
         public IRendering<IMessage> Refine(IPair<string,string> part)
         {
-            return new Response(this.firstLine, Joined._(this.parts, part), this.body);
+            return new RequestCopy(this.firstLine, Joined._(this.parts, part), this.body);
         }
 
         public IRendering<IMessage> Refine(Stream body)
         {
-            return new Response(this.firstLine, this.parts, body);
+            return new RequestCopy(this.firstLine, this.parts, body);
         }
 
         public async Task<IMessage> Render()

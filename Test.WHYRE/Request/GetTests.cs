@@ -1,10 +1,9 @@
 ﻿using Tonga.Bytes;
 using Tonga.Scalar;
 using Tonga.Text;
-using Whyre.Parts;
-using Whyre.Wire;
-using Whyre.Test;
 using Xunit;
+using Whyre.Rendering;
+using Whyre.Headers;
 
 namespace Whyre.Request.Test
 {
@@ -19,24 +18,22 @@ namespace Whyre.Request.Test
                     (await
                         new Get(new Uri("http://www.enhanced-calm.com"), new Version(1, 1))
                             .With(new Header("x-test", "successful"))
-                            .Render(new Headers())
+                            .Render(new AllHeaders())
                     )["x-test"]
                 ).Value()
             );
         }
 
         [Fact]
-        public async void RefinesByRequestInput()
+        public async void RefinesByRequestLine()
         {
             Assert.Equal(
-                "successful",
-                First._(
-                    (await
-                        new Get(new Uri("http://www.enhanced-calm.com"), new Version(1, 1))
-                            .With(new Header("x-test", "successful"))
-                            .Render(new Headers())
-                    )["x-test"]
-                ).Value()
+                "POST http://www.enhanced-calm.com/enhance HTTP/3.0",
+                await
+                    new Get(new Uri("http://www.enhanced-calm.com/old"), new Version(1, 1))
+                        .With("POST http://www.enhanced-calm.com/enhance HTTP/3.0")
+                        .Render(new FirstLine())
+                
             );
         }
 
@@ -49,7 +46,6 @@ namespace Whyre.Request.Test
                     await
                         new Get(new Uri("http://www.enhanced-calm.com"), new Version(1, 1))
                             .WithBody(new MemoryStream(AsBytes._("success").Bytes()))
-                            .Render(new Response())
                             .Render(new Body())
                 ).AsString()
             );

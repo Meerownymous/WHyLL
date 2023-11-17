@@ -1,9 +1,8 @@
 ﻿using Tonga.Bytes;
 using Tonga.IO;
 using Tonga.Text;
-using Whyre.Parts;
-using Whyre.Test;
-using Whyre.Wire;
+using Whyre.Headers;
+using Whyre.Request;
 using Xunit;
 
 namespace Whyre.Rendering.Test
@@ -159,7 +158,7 @@ namespace Whyre.Rendering.Test
                 (await
                     new AspNetResponse(response)
                     .Render()
-                    .Render(new Headers())
+                    .Render(new AllHeaders())
                 )["header"]
             );
         }

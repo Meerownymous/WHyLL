@@ -1,20 +1,23 @@
-﻿using System;
-using Tonga;
-using Tonga.Collection;
-using Tonga.Map;
-using Tonga.Text;
-using Whyre;
-using Whyre.Parts;
+﻿using Tonga;
 
-namespace Whyre.Test
+namespace Whyre.Rendering
 {
+    /// <summary>
+    /// Renders the body of a message as <see cref="Stream"/>
+    /// </summary>
     public sealed class Body : IRendering<Stream>
     {
         private readonly Stream body;
 
+        /// <summary>
+        /// Renders the body of a message as <see cref="Stream"/>
+        /// </summary>
         public Body() : this(new MemoryStream())
         { }
 
+        /// <summary>
+        /// Renders the body of a message as <see cref="Stream"/>
+        /// </summary>
         private Body(Stream body)
         {
             this.body = body;

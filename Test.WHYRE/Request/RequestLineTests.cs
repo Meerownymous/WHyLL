@@ -1,5 +1,6 @@
 ﻿using System;
 using Whyre.Parts;
+using Whyre.Request;
 using Xunit;
 
 namespace Whyre.Parts.Test

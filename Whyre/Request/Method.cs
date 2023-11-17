@@ -1,6 +1,6 @@
 ﻿using Tonga.Text;
 
-namespace Whyre.Parts
+namespace Whyre.Request
 {
 	/// <summary>
 	/// Http Method.

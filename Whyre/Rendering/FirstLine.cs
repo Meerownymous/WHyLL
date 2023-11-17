@@ -1,5 +1,4 @@
-﻿using System;
-using Tonga;
+﻿using Tonga;
 
 namespace Whyre.Rendering
 {

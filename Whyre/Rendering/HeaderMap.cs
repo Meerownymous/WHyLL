@@ -1,30 +1,26 @@
-﻿using System;
-using Tonga;
+﻿using Tonga;
 using Tonga.Collection;
 using Tonga.Map;
-using Tonga.Text;
-using Whyre;
-using Whyre.Parts;
 
-namespace Whyre.Test
+namespace Whyre.Rendering
 {
     /// <summary>
     /// Renders the Headers of a message.
     /// </summary>
-    public sealed class Headers : IRendering<IMap<string, ICollection<string>>>
+    public sealed class AllHeaders : IRendering<IMap<string, ICollection<string>>>
 	{
         private readonly IMap<string, ICollection<string>> before;
 
         /// <summary>
         /// Renders the Headers of a message.
         /// </summary>
-        public Headers() : this(Tonga.Map.Empty._<string, ICollection<string>>())
+        public AllHeaders() : this(Tonga.Map.Empty._<string, ICollection<string>>())
         { }
 
         /// <summary>
         /// Renders the Headers of a message.
         /// </summary>
-        private Headers(IMap<string,ICollection<string>> before)
+        private AllHeaders(IMap<string,ICollection<string>> before)
 		{
             this.before = before;
         }
@@ -55,7 +51,7 @@ namespace Whyre.Test
                         AsPair._(name, Tonga.Collection.Joined._(before[name], Tonga.Enumerable.Single._(part.Value())))
                     );
             
-            return new Headers(result);
+            return new AllHeaders(result);
         }
     }
 }

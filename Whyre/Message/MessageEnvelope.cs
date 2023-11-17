@@ -1,7 +1,7 @@
 ﻿using System;
 using Tonga;
 
-namespace Whyre.Request
+namespace Whyre.Message
 {
     /// <summary>
     /// Envelope for messages.

@@ -11,18 +11,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Request\" />
-    <None Remove="Parts\" />
     <None Remove="Rendering\" />
-    <None Remove="Request\Http1\" />
     <None Remove="Request\Http2\" />
     <None Remove="Request\Http3\" />
+    <None Remove="Headers\" />
+    <None Remove="Message\" />
+    <None Remove="MessageInput\" />
+    <None Remove="MessageInput\Bodies\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Request\" />
-    <Folder Include="Parts\" />
     <Folder Include="Rendering\" />
-    <Folder Include="Request\Http1\" />
     <Folder Include="Request\Http2\" />
     <Folder Include="Request\Http3\" />
+    <Folder Include="Headers\" />
+    <Folder Include="Message\" />
+    <Folder Include="MessageInput\" />
+    <Folder Include="MessageInput\Bodies\" />
   </ItemGroup>
 </Project>

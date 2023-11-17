@@ -2,31 +2,32 @@
 using Tonga.Enumerable;
 using Whyre.Message;
 using Whyre.MessageInput;
+using Whyre.Request;
 
-namespace Whyre.Request.Http3
+namespace Whyre.Http3
 {
     /// <summary>
-    /// HTTP GET Request.
+    /// HTTP DELETE Request.
     /// </summary>
-    public sealed class Get : MessageEnvelope
+    public sealed class Delete : MessageEnvelope
     {
         /// <summary>
-        /// HTTP GET Request.
+        /// HTTP DELETE Request.
         /// </summary>
-        public Get(Uri uri, params IPair<string, string>[] headers) : this(
+        public Delete(Uri uri, params IPair<string, string>[] headers) : this(
             uri, new HeaderInput(headers)
         )
         { }
 
         /// <summary>
-        /// HTTP GET Request.
+        /// HTTP DELETE Request.
         /// </summary>
-        public Get(Uri uri, IMessageInput input, params IMessageInput[] more) : base(
+        public Delete(Uri uri, IMessageInput input, params IMessageInput[] more) : base(
             new MessageOfInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
-                        new RequestLine("GET", uri, new Version(2, 0)).AsString(),
-                        None._<IPair<string,string>>(),
+                        new RequestLine("DELETE", uri, new Version(3, 0)).AsString(),
+                        None._<IPair<string, string>>(),
                         new MemoryStream()
                     ),
                     new Joined<IMessageInput>(input, more)

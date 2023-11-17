@@ -1,5 +1,4 @@
-﻿using System;
-using Tonga;
+﻿using Tonga;
 using Tonga.Enumerable;
 using Tonga.Map;
 
@@ -11,7 +10,8 @@ namespace Whyre
     public sealed class DeepMap<Surface, Deep, Value> : IMap<Surface, Value>
     {
         private readonly Func<Surface, Deep> digDown;
-        private readonly AsMap<Deep, Value> deep;
+        private readonly IMap<Deep, Value> deep;
+        private readonly IMap<Surface, Value> shallow;
 
         /// <summary>
         /// Maps a deeper level of a key to a value.
@@ -20,13 +20,13 @@ namespace Whyre
         {
             this.digDown = digDown;
             this.deep =
-                AsMap._(
+                AsMap._(() =>
                     Mapped._(
                         pair => AsPair._(digDown(pair.Key()), pair.Value()),
                         origin.Pairs()
                     )
                 );
-
+            this.shallow = origin;
         }
 
         public Value this[Surface key]
@@ -39,7 +39,7 @@ namespace Whyre
 
         public ICollection<Surface> Keys()
         {
-            throw new NotImplementedException();
+            return this.shallow.Keys();
         }
 
         public Func<Value> Lazy(Surface key)
@@ -49,17 +49,23 @@ namespace Whyre
 
         public IEnumerable<IPair<Surface, Value>> Pairs()
         {
-            throw new NotImplementedException();
+            return this.shallow.Pairs();
         }
 
         public IMap<Surface, Value> With(IPair<Surface, Value> pair)
         {
-            throw new NotImplementedException();
+            return DeepMap._(this.digDown, this.shallow.With(pair));
         }
     }
 
+    /// <summary>
+    /// Maps a deeper level of a key to a value.
+    /// </summary>
     public static class DeepMap
     {
+        /// <summary>
+        /// Maps a deeper level of a key to a value.
+        /// </summary>
         public static DeepMap<Surface, Deep, Value> _<Surface, Deep, Value>(
             Func<Surface, Deep> digDown, IMap<Surface, Value> origin
         ) => new DeepMap<Surface, Deep, Value>(digDown, origin);

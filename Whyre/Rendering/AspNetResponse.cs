@@ -1,9 +1,9 @@
-﻿using System.Net;
-using Tonga;
+﻿using Tonga;
 using Tonga.Enumerable;
 using Tonga.Text;
+using Whyre.Message;
 
-namespace Whyre.Wire
+namespace Whyre.Rendering
 {
     /// <summary>
     /// Renders a response message using Asp.Net Core HttpClient.
