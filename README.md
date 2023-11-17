@@ -5,15 +5,15 @@ True object-oriented, declarative, DTO-free HTTP library. Make requests and resp
 You send a message to the server, and get a message back. The message, sent and received, is text and always in this shape:
 
 ```
-First Line 				// Saying what you want (request) or what you got back (response)
-Header * n              // N Headers which have a name and a value, controls things
+First Line 	// Saying what you want (request) or what you got back (response)
+Header * n  // N Headers which have a name and a value, controls things
 
-Body                    //Can contain enything from Text to Downloads
+Body        //Can contain anything from Text to Downloads
 ```
 
 This is how the library is designed. There is a message, which you can refine by first line, headers, and a body.
-Then, you render the message. 
-You render it to a response message, and then you render the response message to what you need, for example an XML document.
+Then, you render the message, using one of the available renderings. 
+Most likely you render it to a response message, and then you render the response message to what you need, for example an XML document.
 
 
 ## Setup a request
