@@ -23,7 +23,7 @@ This is how you setup a request message:
 
 ```csharp
 
-var request = new Get(new Uri("http://www.enhanced-calm.com"), new Version(1, 1));
+var request = new Get(new Uri("http://www.enhanced-calm.com"));
 
 ```
 
@@ -32,7 +32,7 @@ Then, you can refine the headers:
 ```csharp
 
 var request = 
-	new Get(new Uri("http://www.enhanced-calm.com/newest-postings"), new Version(1, 1))
+	new Get(new Uri("http://www.enhanced-calm.com/newest-postings"))
 		.Refine(new Header("Content-Type", "application/json"))
 ```
 
@@ -41,7 +41,7 @@ And the body:
 ```csharp
 
 var request = 
-	new POST(new Uri("http://www.enhanced-calm.com/upload/"), new Version(1, 1))
+	new POST(new Uri("http://www.enhanced-calm.com/upload/"))
 		.Refine(new Header("Content-Type", "application/json"))
 		.Refine(new FileStream("~/my-jsons/important-posting.json", FileMode.Read));
 ```
@@ -53,7 +53,7 @@ This is how you render a request to a response:
 ```csharp
 var response =
 	await
-		new GET(new Uri("http://www.enhanced-calm.com/newest-postings"), new Version(1, 1))
+		new GET(new Uri("http://www.enhanced-calm.com/newest-postings"))
 			.Refine(new Header("Content-Type", "application/json"))
 			.Render(new AspNetResponse());
 ```
@@ -64,7 +64,7 @@ And from there on, you can render the response to what you need. For example, js
 
 var bodyText =
 	await 
-		new GET(new Uri("http://www.enhanced-calm.com/newest-postings"), new Version(1, 1))
+		new GET(new Uri("http://www.enhanced-calm.com/newest-postings"))
 			.Refine(new Header("Content-Type", "application/json"))
 			.Render(new AspNetResponse())
 			.Render(new BodyAsText());
