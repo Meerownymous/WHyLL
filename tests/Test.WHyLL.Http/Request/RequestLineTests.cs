@@ -78,7 +78,7 @@ namespace WHyLL.Http.Request.Test
             Assert.Throws<ArgumentException>(() =>
                 new RequestLine(
                     "DESTROY",
-                    new Uri("/slash/slash/boom"),
+                    new Uri("/slash/slash/boom", uriKind: UriKind.Relative),
                     new Version(1, 1)
                 ).AsString()
             );
