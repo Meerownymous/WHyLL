@@ -19,7 +19,7 @@ namespace WHyLL.Http.Request.Test
 				$"{method} /slash/slash/boom HTTP/1.1\r\n",
 				new RequestLine(
 					method,
-					new Uri("/slash/slash/boom"),
+					new Uri("/slash/slash/boom", uriKind: UriKind.Relative),
 					new Version(1, 1)
 				).AsString()
 			);
