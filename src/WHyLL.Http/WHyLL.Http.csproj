@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Headers\" />
+    <None Remove="MessageInput\" />
+    <None Remove="MessageInput\Bodies\" />
+    <None Remove="Rendering\" />
+    <None Remove="Request\" />
+    <None Remove="Request\Http2\" />
+    <None Remove="Request\Http3\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Headers\" />
+    <Folder Include="MessageInput\" />
+    <Folder Include="MessageInput\Bodies\" />
+    <Folder Include="Rendering\" />
+    <Folder Include="Request\" />
+    <Folder Include="Request\Http2\" />
+    <Folder Include="Request\Http3\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WHyLL\WHyLL.csproj" />
+  </ItemGroup>
+</Project>

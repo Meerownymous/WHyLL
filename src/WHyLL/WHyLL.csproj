@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tonga" Version="0.6.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Rendering\" />
+    <None Remove="Headers\" />
+    <None Remove="Message\" />
+    <None Remove="MessageInput\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Rendering\" />
+    <Folder Include="Headers\" />
+    <Folder Include="Message\" />
+    <Folder Include="MessageInput\" />
+  </ItemGroup>
+</Project>
