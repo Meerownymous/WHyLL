@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>Test.Whyre</RootNamespace>
+    <RootNamespace>Test.WHyLL</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +20,6 @@
     <Folder Include="Message\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Whyre\Whyre.csproj" />
     <ProjectReference Include="..\WHyLL\WHyLL.csproj" />
   </ItemGroup>
   <ItemGroup>

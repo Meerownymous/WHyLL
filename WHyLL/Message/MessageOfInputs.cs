@@ -15,7 +15,7 @@ namespace WHyLL.Message
         /// A <see cref="IMessage" built from <see cref="IMessageInput"s/>/>
         /// </summary>
         public MessageOfInputs(params IMessageInput[] inputs) : this(
-            AsEnumerable._(inputs)
+            AsEnumerable._(inputs) 
         )
         { }
 

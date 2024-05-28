@@ -1,27 +1,24 @@
-﻿using System;
-using Tonga.Text;
-using WHyLL.Headers;
-using Xunit;
+﻿using Xunit;
 
 namespace WHyLL.Headers.Tests
 {
-	public sealed class BasicAuthTests
+	public sealed class BearerTokenAuthTests
 	{
         [Fact]
         public void HasHeaderName()
         {
             Assert.Equal(
                 "Authorization",
-                new BasicAuth("user", "password").Key()
+                new BearerTokenAuth("34uuk22p3j23jre233ij").Key()
             );
         }
 
         [Fact]
-		public void EncodesCredentials()
+		public void IncludesToken()
 		{
 			Assert.Equal(
-                "Basic dXNlcjpwYXNzd29yZA==",
-				new BasicAuth("user", "password").Value()
+                "Bearer 34uuk22p3j23jre233ij",
+                new BearerTokenAuth("34uuk22p3j23jre233ij").Value()
 			);
         }
 	}

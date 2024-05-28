@@ -21,7 +21,7 @@ namespace WHyLL
 		IRendering<T> Refine(Stream body);
 
 		/// <summary>
-		/// Remders the output.
+		/// Renders the output.
 		/// </summary>
 		Task<T> Render();
 	}
