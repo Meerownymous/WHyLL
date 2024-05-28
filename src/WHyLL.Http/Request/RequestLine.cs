@@ -37,13 +37,20 @@ namespace WHyLL.Http.Request
         /// </summary>
         public RequestLine(string method, Uri resource, Version httpVersion) : this(
             new Method(method),
-			AsText._(
-				$"{(resource.Scheme.Equals("file") ?
-					""
-					:
-					$"{resource.Scheme}://{resource.Host}{(resource.Port != 80 ? $":{resource.Port}" : "")}"
-				)}{resource.PathAndQuery}"
-			),
+			AsText._(() =>
+			{
+				string result = resource.OriginalString;
+				if (resource.IsAbsoluteUri)
+				{
+					result =
+						$"{(resource.Scheme.Equals("file") ?
+							""
+							:
+							$"{resource.Scheme}://{resource.Host}{(resource.Port != 80 ? $":{resource.Port}" : "")}"
+						)}{resource.PathAndQuery}";
+				}
+				return result;
+			}),
 			httpVersion
 		)
 		{ }
