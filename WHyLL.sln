@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 		.editorconfig = .editorconfig
+		appveyor.yml = appveyor.yml
+		build.sh = build.sh
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WHyLL", "src\WHyLL\WHyLL.csproj", "{EAEA2EE1-691C-43B9-B171-8430D5ED6813}"
@@ -15,7 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.WHyLL", "tests\Test.WH
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WHyLL.Http", "src\WHyLL.Http\WHyLL.Http.csproj", "{C8846FA7-267F-490E-AEA6-C314965A10DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.WHyLL.Http", "Test.WHyLL.Http\Test.WHyLL.Http.csproj", "{B9596E3A-5A43-4B8E-BE5A-E6753382106B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build", "Build\Build.csproj", "{48F43342-6813-4971-BC27-968403392B4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.WHyLL.Http", "tests\Test.WHyLL.Http\Test.WHyLL.Http.csproj", "{3C97BE00-A077-4CE4-B56E-7FF105333A1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +39,14 @@ Global
 		{C8846FA7-267F-490E-AEA6-C314965A10DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8846FA7-267F-490E-AEA6-C314965A10DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8846FA7-267F-490E-AEA6-C314965A10DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B9596E3A-5A43-4B8E-BE5A-E6753382106B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B9596E3A-5A43-4B8E-BE5A-E6753382106B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B9596E3A-5A43-4B8E-BE5A-E6753382106B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B9596E3A-5A43-4B8E-BE5A-E6753382106B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48F43342-6813-4971-BC27-968403392B4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48F43342-6813-4971-BC27-968403392B4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48F43342-6813-4971-BC27-968403392B4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48F43342-6813-4971-BC27-968403392B4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C97BE00-A077-4CE4-B56E-7FF105333A1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C97BE00-A077-4CE4-B56E-7FF105333A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C97BE00-A077-4CE4-B56E-7FF105333A1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C97BE00-A077-4CE4-B56E-7FF105333A1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

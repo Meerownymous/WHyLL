@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\WHyLL.Http\WHyLL.Http.csproj" />
+    <ProjectReference Include="..\..\src\WHyLL.Http\WHyLL.Http.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Headers\" />

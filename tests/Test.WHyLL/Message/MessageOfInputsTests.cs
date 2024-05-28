@@ -1,5 +1,4 @@
-﻿using System;
-using Tonga.Bytes;
+﻿using Tonga.Bytes;
 using Tonga.IO;
 using Tonga.Text;
 using WHyLL.Headers;
