@@ -7,7 +7,7 @@ namespace WHyLL.Rendering
     /// <summary>
     /// A copy of the rendering message.
     /// </summary>
-	public sealed class MessageCopy : IRendering<IMessage>
+	public sealed class Clone : IRendering<IMessage>
 	{
         private readonly string firstLine;
         private readonly IEnumerable<IPair<string,string>> parts;
@@ -16,10 +16,10 @@ namespace WHyLL.Rendering
         /// <summary>
         /// A copy of the rendering message.
         /// </summary>
-        public MessageCopy() : this(string.Empty, None._<IPair<string, string>>(), new MemoryStream())
+        public Clone() : this(string.Empty, None._<IPair<string, string>>(), new MemoryStream())
         { }
 
-        private MessageCopy(string firstLine, IEnumerable<IPair<string, string>> parts, Stream body)
+        private Clone(string firstLine, IEnumerable<IPair<string, string>> parts, Stream body)
         {
             this.firstLine = firstLine;
             this.parts = parts;
@@ -28,24 +28,29 @@ namespace WHyLL.Rendering
 
         public IRendering<IMessage> Refine(string firstLine)
         {
-            return new MessageCopy(firstLine, this.parts, this.body);
+            return new Clone(firstLine, this.parts, this.body);
         }
 
         public IRendering<IMessage> Refine(IPair<string,string> part)
         {
-            return new MessageCopy(this.firstLine, Joined._(this.parts, part), this.body);
+            return new Clone(this.firstLine, Joined._(this.parts, part), this.body);
         }
 
         public IRendering<IMessage> Refine(Stream body)
         {
-            return new MessageCopy(this.firstLine, this.parts, body);
+            return new Clone(this.firstLine, this.parts, body);
         }
 
         public async Task<IMessage> Render()
         {
+            var bodyClone = new MemoryStream();
+            var pos = this.body.Position;
+            this.body.Seek(0, SeekOrigin.Begin);
+            this.body.CopyTo(bodyClone);
+            this.body.Seek(pos, SeekOrigin.Begin);
             return
                 await Task.FromResult(
-                    new SimpleMessage(this.firstLine, this.parts, this.body)
+                    new SimpleMessage(this.firstLine, this.parts, bodyClone)
                 );
         }
     }

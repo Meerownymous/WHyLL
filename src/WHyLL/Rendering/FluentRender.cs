@@ -1,5 +1,4 @@
-﻿using System;
-namespace WHyLL.Rendering
+﻿namespace WHyLL
 {
     public static class FluentRender
     {

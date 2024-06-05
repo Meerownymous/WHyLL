@@ -3,7 +3,7 @@ using Tonga.Enumerable;
 using Tonga.Text;
 using WHyLL.Message;
 
-namespace WHyLL.Http.Rendering
+namespace WHyLL.Rendering.Http
 {
     /// <summary>
     /// Renders a response message using Asp.Net Core HttpClient.

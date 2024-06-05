@@ -4,6 +4,7 @@ using Tonga.Text;
 using WHyLL.Headers;
 using WHyLL.Http.Request;
 using WHyLL.Rendering;
+using WHyLL.Rendering.Http;
 using Xunit;
 
 namespace WHyLL.Http.Rendering.Test

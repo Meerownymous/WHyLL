@@ -3,7 +3,7 @@ using Xunit;
 
 namespace WHyLL.Rendering.Test
 {
-    public sealed class MessageCopyTests
+    public sealed class CloneTests
     {
         [Theory]
         [InlineData("Test-Type", "Unit")]
@@ -14,7 +14,7 @@ namespace WHyLL.Rendering.Test
             Assert.Contains(
                 value,
                 (await
-                    new MessageCopy()
+                    new Clone()
                         .Refine(new Header("Test-Type", "Unit"))
                         .Refine(new Header("Test-Difficulty", "Easy"))
                         .Refine(new Header("Test-Difficulty", "Peasy"))
