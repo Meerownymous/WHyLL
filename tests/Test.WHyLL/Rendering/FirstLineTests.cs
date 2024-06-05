@@ -23,4 +23,3 @@ namespace WHyLL.Rendering.Test
 		}
 	}
 }
-
