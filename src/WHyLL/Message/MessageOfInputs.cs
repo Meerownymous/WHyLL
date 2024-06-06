@@ -38,15 +38,14 @@ namespace WHyLL.Message
             return message().Render(rendering);
         }
 
-        public IMessage With(string firstLine)
-        {
-            return message().With(firstLine);
-        }
+        public IMessage With(string firstLine) =>
+            message().With(firstLine);
 
-        public IMessage With(IPair<string, string> header)
-        {
-            return message().With(header);
-        }
+        public IMessage With(IEnumerable<IPair<string, string>> parts) =>
+            message().With(parts.ToArray());
+
+        public IMessage With(params IPair<string, string>[] parts) =>
+            message().With(parts);
 
         public IMessage WithBody(Stream body)
         {

@@ -46,25 +46,24 @@ namespace WHyLL.Message
             this.body = body;
         }
 
-        public IMessage With(string firstLine)
-        {
-            return new SimpleMessage(() => firstLine, this.parts, this.body);
-        }
+        public IMessage With(string firstLine) =>
+            new SimpleMessage(() => firstLine, this.parts, this.body);
 
-        public IMessage With(IPair<string, string> part)
+        public IMessage With(IEnumerable<IPair<string, string>> parts) =>
+            this.With(parts.ToArray());
+
+        public IMessage With(params IPair<string, string>[] parts)
         {
             return
                 new SimpleMessage(
                     this.firstLine,
-                    Joined._(this.parts, part),
+                    Joined._(this.parts, parts),
                     this.body
                 );
         }
 
-        public IMessage WithBody(Stream body)
-        {
-            return new SimpleMessage(this.firstLine, this.parts, body);
-        }
+        public IMessage WithBody(Stream body) =>
+            new SimpleMessage(this.firstLine, this.parts, body);
 
         public async Task<T> Render<T>(IRendering<T> rendering)
         {

@@ -1,5 +1,4 @@
-﻿using System;
-using Tonga;
+﻿using Tonga;
 
 namespace WHyLL.Message
 {
@@ -18,25 +17,20 @@ namespace WHyLL.Message
             this.origin = origin;
         }
 
-        public IMessage With(string firstLine)
-        {
-            return this.origin.With(firstLine);
-        }
+        public IMessage With(string firstLine) =>
+            this.origin.With(firstLine);
 
-        public IMessage With(IPair<string, string> parts)
-        {
-            return this.origin.With(parts);
-        }
+        public IMessage With(IEnumerable<IPair<string, string>> parts) =>
+            this.With(parts.ToArray());
 
-        public IMessage WithBody(Stream body)
-        {
-            return this.origin.WithBody(body);
-        }
+        public IMessage With(params IPair<string, string>[] parts) =>
+            this.origin.With(parts);
 
-        public Task<T> Render<T>(IRendering<T> rendering)
-        {
-            return this.origin.Render(rendering);
-        }
+        public IMessage WithBody(Stream body) =>
+            this.origin.WithBody(body);
+
+        public Task<T> Render<T>(IRendering<T> rendering) =>
+            this.origin.Render(rendering);
     }
 }
 

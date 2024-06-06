@@ -18,7 +18,12 @@ namespace WHyLL
         /// <summary>
         /// Refine the headers.
         /// </summary>
-        IMessage With(IPair<string,string> header);
+        IMessage With(params IPair<string, string>[] parts);
+
+        /// <summary>
+        /// Refine the headers.
+        /// </summary>
+        IMessage With(IEnumerable<IPair<string,string>> parts);
 
         /// <summary>
         /// Refine the body to the request.
