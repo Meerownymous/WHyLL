@@ -26,20 +26,17 @@ namespace WHyLL.Rendering
             this.body = body;
         }
 
-        public IRendering<IMessage> Refine(string firstLine)
-        {
-            return new Clone(firstLine, this.parts, this.body);
-        }
+        public IRendering<IMessage> Refine(string firstLine) =>
+            new Clone(firstLine, this.parts, this.body);
 
-        public IRendering<IMessage> Refine(IPair<string,string> part)
-        {
-            return new Clone(this.firstLine, Joined._(this.parts, part), this.body);
-        }
+        public IRendering<IMessage> Refine(IEnumerable<IPair<string, string>> parts) =>
+            this.Refine(parts.ToArray());
 
-        public IRendering<IMessage> Refine(Stream body)
-        {
-            return new Clone(this.firstLine, this.parts, body);
-        }
+        public IRendering<IMessage> Refine(params IPair<string,string>[] parts) =>
+            new Clone(this.firstLine, Joined._(this.parts, parts), this.body);
+
+        public IRendering<IMessage> Refine(Stream body) =>
+            new Clone(this.firstLine, this.parts, body);
 
         public async Task<IMessage> Render()
         {

@@ -39,20 +39,17 @@ namespace WHyLL.Rendering
             this.body = body;
         }
 
-        public IRendering<IMessage> Refine(string firstLine)
-        {
-            return new WithoutHeaders(this.shouldRemove, firstLine, this.parts, this.body);
-        }
+        public IRendering<IMessage> Refine(string firstLine) =>
+            new WithoutHeaders(this.shouldRemove, firstLine, this.parts, this.body);
 
-        public IRendering<IMessage> Refine(IPair<string, string> part)
-        {
-            return new WithoutHeaders(this.shouldRemove, this.firstLine, Joined._(this.parts, part), this.body);
-        }
+        public IRendering<IMessage> Refine(IEnumerable<IPair<string, string>> parts) =>
+            this.Refine(parts);
 
-        public IRendering<IMessage> Refine(Stream body)
-        {
-            return new WithoutHeaders(this.shouldRemove, this.firstLine, this.parts, body);
-        }
+        public IRendering<IMessage> Refine(params IPair<string, string>[] parts) =>
+            new WithoutHeaders(this.shouldRemove, this.firstLine, Joined._(this.parts, parts), this.body);
+
+        public IRendering<IMessage> Refine(Stream body) =>
+            new WithoutHeaders(this.shouldRemove, this.firstLine, this.parts, body);
 
         public async Task<IMessage> Render()
         {

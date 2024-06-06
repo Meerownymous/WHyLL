@@ -40,16 +40,22 @@ namespace WHyLL.Rendering
             return this;
         }
 
-        public IRendering<IMap<string, ICollection<string>>> Refine(IPair<string,string> part)
+        public IRendering<IMap<string, ICollection<string>>> Refine(IEnumerable<IPair<string, string>> parts) =>
+            Refine(parts.ToArray());
+
+        public IRendering<IMap<string, ICollection<string>>> Refine(params IPair<string,string>[] parts)
         {
-            var result = before;
-            var name = part.Key();
-                if (!before.Keys().Contains(name))
-                    result = before.With(AsPair._(name, AsCollection._(part.Value())));
+            var result = this.before;
+            foreach (var part in parts)
+            {
+                var name = part.Key();
+                if (!result.Keys().Contains(name))
+                    result = result.With(AsPair._(name, AsCollection._(part.Value())));
                 else
-                    result = before.With(
-                        AsPair._(name, Joined._(before[name], Tonga.Enumerable.Single._(part.Value())))
+                    result = result.With(
+                        AsPair._(name, Joined._(result[name], Tonga.Enumerable.Single._(part.Value())))
                     );
+            }
             
             return new AllHeaders(result);
         }

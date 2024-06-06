@@ -63,9 +63,13 @@ namespace WHyLL.Rendering.Http
             return new AspNetResponse(message, convert);
         }
 
-        public IRendering<IMessage> Refine(IPair<string, string> part)
+        public IRendering<IMessage> Refine(IEnumerable<IPair<string, string>> parts) =>
+            this.Refine(parts.ToArray());
+
+        public IRendering<IMessage> Refine(params IPair<string, string>[] parts)
         {
-            this.message.Headers.TryAddWithoutValidation(part.Key(), part.Value());
+            foreach(var part in parts)
+                this.message.Headers.TryAddWithoutValidation(part.Key(), part.Value());
             return new AspNetResponse(this.message, this.convert);
         }
 

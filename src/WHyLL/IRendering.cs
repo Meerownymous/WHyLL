@@ -13,12 +13,17 @@ namespace WHyLL
 		/// <summary>
 		/// Adds a header to the rendering.
 		/// </summary>
-		IRendering<T> Refine(IPair<string,string> header);
+		IRendering<T> Refine(params IPair<string,string>[] headers);
 
 		/// <summary>
-		/// Adds a body to the rendering.
+		/// Adds a header to the rendering.
 		/// </summary>
-		IRendering<T> Refine(Stream body);
+		IRendering<T> Refine(IEnumerable<IPair<string, string>> headers);
+
+        /// <summary>
+        /// Adds a body to the rendering.
+        /// </summary>
+        IRendering<T> Refine(Stream body);
 
 		/// <summary>
 		/// Renders the output.

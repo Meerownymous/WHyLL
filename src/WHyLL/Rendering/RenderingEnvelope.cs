@@ -20,8 +20,11 @@ namespace WHyLL.Rendering
         public IRendering<TOutput> Refine(string start) =>
             this.origin.Refine(start);
 
-        public IRendering<TOutput> Refine(IPair<string, string> header) =>
-            this.origin.Refine(header);
+        public IRendering<TOutput> Refine(IEnumerable<IPair<string, string>> parts) =>
+            this.Refine(parts.ToArray());
+
+        public IRendering<TOutput> Refine(params IPair<string, string>[] parts) =>
+            this.origin.Refine(parts);
 
         public IRendering<TOutput> Refine(Stream body) =>
             this.origin.Refine(body);

@@ -75,7 +75,10 @@ namespace WHyLL.Rendering.Http
         public IRendering<IMessage> Refine(string firstLine) =>
             new WithoutHttp(firstLine, this.parts, this.body);
 
-        public IRendering<IMessage> Refine(IPair<string, string> header) =>
+        public IRendering<IMessage> Refine(IEnumerable<IPair<string, string>> header) =>
+            this.Refine(parts.ToArray());
+
+        public IRendering<IMessage> Refine(params IPair<string, string>[] header) =>
             new WithoutHttp(this.firstLine, Joined._(this.parts, header), this.body);
 
         public IRendering<IMessage> Refine(Stream body) =>

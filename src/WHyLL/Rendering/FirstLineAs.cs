@@ -37,8 +37,8 @@ namespace WHyLL.Rendering
                 firstLine
             );
 
-        public IRendering<Output> Refine(IPair<string, string> header) => this;
-
+        public IRendering<Output> Refine(params IPair<string, string>[] parts) => this;
+        public IRendering<Output> Refine(IEnumerable<IPair<string, string>> parts) => this;
         public IRendering<Output> Refine(Stream body) => this;
 
         public Task<Output> Render() =>

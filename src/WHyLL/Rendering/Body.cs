@@ -28,10 +28,8 @@ namespace WHyLL.Rendering
             return this;
         }
 
-        public IRendering<Stream> Refine(IPair<string, string> part)
-        {
-            return this;
-        }
+        public IRendering<Stream> Refine(IEnumerable<IPair<string, string>> parts) => this;
+        public IRendering<Stream> Refine(IPair<string, string>[] parts) => this;
 
         public IRendering<Stream> Refine(Stream body)
         {

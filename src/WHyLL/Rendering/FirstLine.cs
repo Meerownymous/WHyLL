@@ -20,20 +20,10 @@ namespace WHyLL.Rendering
             this.firstLine = firstLine;
         }
 
-        public IRendering<string> Refine(string start)
-        {
-            return new FirstLine(start);
-        }
-
-        public IRendering<string> Refine(IPair<string, string> header)
-        {
-            return this;
-        }
-
-        public IRendering<string> Refine(Stream body)
-        {
-            return this;
-        }
+        public IRendering<string> Refine(string start) => new FirstLine(start);
+        public IRendering<string> Refine(params IPair<string, string>[] header) => this;
+        public IRendering<string> Refine(IEnumerable<IPair<string, string>> header) => this;
+        public IRendering<string> Refine(Stream body) => this;
 
         public Task<string> Render()
         {

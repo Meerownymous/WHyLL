@@ -32,18 +32,13 @@ namespace WHyLL.Rendering
         }
 
         public IRendering<Output> Refine(string firstLine) => this;
-
-        public IRendering<Output> Refine(IPair<string, string> header) =>
-            new HeadersAs<Output>(
-                this.render,
-                Joined._(this.parts, header)
-            );
+        public IRendering<Output> Refine(IEnumerable<IPair<string, string>> parts) =>
+            this.Refine(parts);
+        public IRendering<Output> Refine(params IPair<string, string>[] parts) =>
+            new HeadersAs<Output>(this.render, Joined._(this.parts, parts));
 
         public IRendering<Output> Refine(Stream body) =>
-            new HeadersAs<Output>(
-                this.render,
-                this.parts
-            );
+            new HeadersAs<Output>(this.render, this.parts);
 
         public Task<Output> Render() =>
             Task.Run(() => this.render(this.parts));

@@ -29,7 +29,9 @@ namespace WHyLL.Rendering
         }
 
         public IRendering<Output> Refine(string firstLine) => this;
-        public IRendering<Output> Refine(IPair<string, string> header) => this;
+
+        public IRendering<Output> Refine(IEnumerable<IPair<string, string>> parts) => this;
+        public IRendering<Output> Refine(IPair<string, string>[] parts) => this;
 
         public IRendering<Output> Refine(Stream body) =>
             new BodyAs<Output>(

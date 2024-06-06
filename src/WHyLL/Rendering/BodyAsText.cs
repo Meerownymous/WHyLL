@@ -1,4 +1,5 @@
 ﻿using Tonga;
+using Tonga.IO;
 using Tonga.Text;
 
 namespace WHyLL.Rendering
@@ -24,20 +25,11 @@ namespace WHyLL.Rendering
             this.body = body;
         }
 
-        public IRendering<string> Refine(string firstLine)
-        {
-            return this;
-        }
+        public IRendering<string> Refine(string firstLine) => this;
+        public IRendering<string> Refine(IEnumerable<IPair<string, string>> parts) => this;
+        public IRendering<string> Refine(IPair<string, string>[] parts) => this;
 
-        public IRendering<string> Refine(IPair<string, string> part)
-        {
-            return this;
-        }
-
-        public IRendering<string> Refine(Stream body)
-        {
-            return new BodyAsText(body);
-        }
+        public IRendering<string> Refine(Stream body) => new BodyAsText(body);
 
         public async Task<string> Render()
         {
