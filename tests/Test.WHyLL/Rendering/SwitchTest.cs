@@ -11,8 +11,8 @@ namespace WHyLL.Rendering.Test
                 "GET /testresult HTTP/1.1",
                 (await 
                     new Switch<string>(
-                        new Conditional<string>(firstLine => firstLine.StartsWith("POST"), new FirstLine()),
-                        new Conditional<string>(firstLine => firstLine.StartsWith("GET"), new FirstLine())
+                        new Case<string>(firstLine => firstLine.StartsWith("POST"), new FirstLine()),
+                        new Case<string>(firstLine => firstLine.StartsWith("GET"), new FirstLine())
                     )
                     .Refine("GET /testresult HTTP/1.1")
                     .Render()
@@ -25,8 +25,8 @@ namespace WHyLL.Rendering.Test
         {
             await Assert.ThrowsAsync<InvalidOperationException>(() =>
                     new Switch<string>(
-                        new Conditional<string>(firstLine => firstLine.StartsWith("POST"), new FirstLine()),
-                        new Conditional<string>(firstLine => firstLine.StartsWith("GET"), new FirstLine())
+                        new Case<string>(firstLine => firstLine.StartsWith("POST"), new FirstLine()),
+                        new Case<string>(firstLine => firstLine.StartsWith("GET"), new FirstLine())
                     )
                     .Refine("PUT /testresult HTTP/1.1")
                     .Render()

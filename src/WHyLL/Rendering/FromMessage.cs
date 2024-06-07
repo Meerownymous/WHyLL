@@ -4,6 +4,9 @@ using WHyLL.Message;
 
 namespace WHyLL.Rendering
 {
+    /// <summary>
+    /// Renders output from a message.
+    /// </summary>
     public sealed class FromMessage<TOutput> : IRendering<TOutput>
     {
         private readonly Func<IMessage, Task<TOutput>> render;
@@ -12,12 +15,18 @@ namespace WHyLL.Rendering
         private readonly IEnumerable<IPair<string, string>> parts;
         private readonly Stream body;
 
+        /// <summary>
+        /// Renders output from a message.
+        /// </summary>
         public FromMessage(
             Func<IMessage, Task<TOutput>> render) : this(
             render, string.Empty, None._<IPair<string,string>>(), new MemoryStream()
         )
         { }
 
+        /// <summary>
+        /// Renders output from a message.
+        /// </summary>
         private FromMessage(
             Func<IMessage, Task<TOutput>> render,
             string firstLine,
@@ -53,6 +62,20 @@ namespace WHyLL.Rendering
                         .WithBody(this.body)
                 );
         }
+    }
+
+    /// <summary>
+    /// Renders output from a message.
+    /// </summary>
+    public static class FromMessage
+    {
+        /// <summary>
+        /// Renders output from a message.
+        /// </summary>
+        public static FromMessage<TOutput> _<TOutput>(
+            Func<IMessage, Task<TOutput>> render
+        ) =>
+            new FromMessage<TOutput>(render);
     }
 }
 

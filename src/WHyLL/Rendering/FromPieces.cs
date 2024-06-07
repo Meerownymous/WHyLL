@@ -3,6 +3,9 @@ using Tonga.Enumerable;
 
 namespace WHyLL.Rendering
 {
+    /// <summary>
+    /// Renders output from pieces of a message.
+    /// </summary>
     public sealed class FromPieces<TOutput> : IRendering<TOutput>
     {
         private readonly Func<string, IEnumerable<IPair<string, string>>, Stream, Task<TOutput>> render;
@@ -11,12 +14,18 @@ namespace WHyLL.Rendering
         private readonly IEnumerable<IPair<string, string>> parts;
         private readonly Stream body;
 
+        /// <summary>
+        /// Renders output from pieces of a message.
+        /// </summary>
         public FromPieces(
             Func<string,IEnumerable<IPair<string,string>>,Stream, Task<TOutput>> render) : this(
             render, string.Empty, None._<IPair<string,string>>(), new MemoryStream()
         )
         { }
 
+        /// <summary>
+        /// Renders output from pieces of a message.
+        /// </summary>
         private FromPieces(
             Func<string, IEnumerable<IPair<string, string>>, Stream, Task<TOutput>> render,
             string firstLine,
@@ -46,6 +55,18 @@ namespace WHyLL.Rendering
         {
             return await this.render(this.firstLine, this.parts, this.body);
         }
+    }
+
+    public static class FromPieces
+    {
+        /// <summary>
+        /// Renders output from pieces of a message.
+        /// </summary>
+        public static FromPieces<TOutput> _<TOutput>(
+            Func<string, IEnumerable<IPair<string, string>>, Stream, Task<TOutput>> render
+        ) =>
+            new FromPieces<TOutput>(render);
+
     }
 }
 
