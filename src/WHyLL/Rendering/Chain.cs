@@ -9,7 +9,7 @@
         /// Chain of renderings. Result of the last rendering is returned.
         /// </summary>
         public Chain(IEnumerable<IRendering<TOutput>> chain) : base(
-            new FromMessage<TOutput[]>(async (msg) =>
+            new MessageAs<TOutput[]>(async (msg) =>
             {
                 var results = new List<TOutput>();
                 foreach (var rendering in chain)

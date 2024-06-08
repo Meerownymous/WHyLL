@@ -9,7 +9,7 @@
         /// Renders a fixed outcome.
         /// </summary>
         public Fixed(TOutput output) : base(
-            new FromPieces<TOutput>((x,y,z) => Task.FromResult(output))
+            new PiecesAs<TOutput>((x,y,z) => Task.FromResult(output))
         )
         { }
     }

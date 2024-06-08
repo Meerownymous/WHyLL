@@ -1,47 +1,38 @@
 ﻿using Tonga;
-using Tonga.Enumerable;
 
 namespace WHyLL.Rendering
 {
     /// <summary>
     /// Render headers of a message as output type.
     /// </summary>
-    public sealed class HeadersAs<Output> : IRendering<Output>
+    public sealed class HeadersAs<TOutput> : RenderingEnvelope<TOutput>
     {
-        private readonly Func<IEnumerable<IPair<string, string>>, Output> render;
-        private readonly IEnumerable<IPair<string, string>> parts;
-
         /// <summary>
         /// Render headers of a message as output type.
         /// </summary>
-        public HeadersAs(Func<IEnumerable<IPair<string, string>>, Output> render) : this(
-            render, None._<IPair<string, string>>()
+        public HeadersAs(Func<IEnumerable<IPair<string, string>>, TOutput> render) : this(
+            headers => Task.FromResult(render(headers))
         )
         { }
 
         /// <summary>
         /// Render headers of a message as output type.
         /// </summary>
-        private HeadersAs(
-            Func<IEnumerable<IPair<string, string>>, Output> render,
-            IEnumerable<IPair<string, string>> parts
+        public HeadersAs(Func<IEnumerable<IPair<string, string>>, Task<TOutput>> renderAsync) : base(
+            new PiecesAs<TOutput>((x,headers,z) => renderAsync(headers))
         )
-        {
-            this.render = render;
-            this.parts = parts;
-        }
+        { }
 
-        public IRendering<Output> Refine(string firstLine) => this;
-        public IRendering<Output> Refine(IEnumerable<IPair<string, string>> parts) =>
-            this.Refine(parts);
-        public IRendering<Output> Refine(params IPair<string, string>[] parts) =>
-            new HeadersAs<Output>(this.render, Joined._(this.parts, parts));
+    }
 
-        public IRendering<Output> Refine(Stream body) =>
-            new HeadersAs<Output>(this.render, this.parts);
-
-        public Task<Output> Render() =>
-            Task.Run(() => this.render(this.parts));
+    /// <summary>
+    /// Render headers of a message as output type.
+    /// </summary>
+    public static class HeadersAs
+    {
+        public static HeadersAs<TOutput> _<TOutput>(
+            Func<IEnumerable<IPair<string, string>>, Task<TOutput>> renderAsync
+        ) => new HeadersAs<TOutput>(renderAsync);
     }
 }
 
