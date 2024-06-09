@@ -12,9 +12,16 @@
         { }
     }
 
+    /// <summary>
+    /// Renders the body of a message as <see cref="Stream"/>
+    /// </summary>
     public static partial class MessageExtension
     {
-        public static async Task<Stream> Body(this IMessage message) => await message.Render(new Body());
+        /// <summary>
+        /// Renders the body of a message as <see cref="Stream"/>
+        /// </summary>
+        public static async Task<Stream> Body(this IMessage message) =>
+            await message.Render(new Body());
     }
 }
 

@@ -1,17 +1,28 @@
 ﻿namespace WHyLL.Rendering
 {
+    /// <summary>
+    /// Switches based on a given match function, if a rendering should happen.
+    /// Renders that one, and no following.
+    /// </summary>
     public sealed class Switch<TOutput> : RenderingEnvelope<TOutput>
     {
+        /// <summary>
+        /// Switches based on a given match function, if a rendering should happen.
+        /// Renders that one, and no following.
+        /// </summary>
         public Switch(params IMatch<TOutput>[] branches) : base(
-            new PiecesAs<TOutput>((firstLine, parts, body) =>
+            new PiecesAs<TOutput>(async (firstLine, parts, body) =>
             {
-                Task<TOutput> result = default(Task<TOutput>);
+                TOutput result = default(TOutput);
                 bool matched = false;
                 foreach(var match in branches)
                 {
                     matched = match.Matches(firstLine, parts, body);
-                    result = match.Consequence(firstLine, parts, body).Render();
-                    if (matched) break;
+                    if (matched)
+                    {
+                        result = await match.Consequence(firstLine, parts, body).Render();
+                        break;
+                    }
                 }
                 if (!matched)
                     throw new InvalidOperationException($"No target rendering found.");
