@@ -1,10 +1,9 @@
 ﻿using Tonga.Enumerable;
 using Tonga.Map;
 using WHyLL.Message;
-using WHyLL.Rendering;
 using Xunit;
 
-namespace Test.WHyLL.Rendering
+namespace WHyLL.Rendering.Test
 {
     public sealed class HeadersAsTest
     {

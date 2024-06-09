@@ -1,10 +1,20 @@
-﻿namespace WHyLL.Rendering
+﻿using Tonga.Enumerable;
+
+namespace WHyLL.Rendering
 {
     /// <summary>
     /// Chain of renderings. Result of the last rendering is returned.
     /// </summary>
     public sealed class Chain<TOutput> : RenderingEnvelope<TOutput[]>
     {
+        /// <summary>
+        /// Chain of renderings. Result of the last rendering is returned.
+        /// </summary>
+        public Chain(params IRendering<TOutput>[] chain) : this(
+            AsEnumerable._(chain)
+        )
+        { }
+
         /// <summary>
         /// Chain of renderings. Result of the last rendering is returned.
         /// </summary>

@@ -3,7 +3,7 @@ using Xunit;
 
 namespace WHyLL.Message.Test
 {
-    public sealed class AsyncMessageTest
+    public sealed class AsyncMessageTests
     {
         [Fact]
         public async void UsesAsyncFunction()

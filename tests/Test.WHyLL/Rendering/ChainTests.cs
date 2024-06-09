@@ -2,7 +2,7 @@
 using WHyLL.Message;
 using Xunit;
 
-namespace WHyLL.Rendering.Tests
+namespace WHyLL.Rendering.Test
 {
     public sealed class ChainTests
     {
@@ -26,7 +26,7 @@ namespace WHyLL.Rendering.Tests
         }
 
         [Fact]
-        public async void StopsAtExceptiopn()
+        public async void StopsAtException()
         {
             var rendered = 0;
             await Assert.ThrowsAsync<Exception>(async () =>

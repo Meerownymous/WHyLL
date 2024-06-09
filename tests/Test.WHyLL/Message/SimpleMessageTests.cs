@@ -1,14 +1,12 @@
-﻿using System;
-using Tonga;
+﻿using Tonga;
 using Tonga.Enumerable;
-using Tonga.Scalar;
 using WHyLL.Headers;
 using WHyLL.Rendering;
 using Xunit;
 
-namespace WHyLL.Message.Tests
+namespace WHyLL.Message.Test
 {
-	public sealed class SimpleMessageTests
+    public sealed class SimpleMessageTests
 	{
 		[Fact]
 		public async void IncludesFirstLine()

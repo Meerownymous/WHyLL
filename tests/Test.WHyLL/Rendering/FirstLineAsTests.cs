@@ -1,11 +1,7 @@
-﻿using System;
-using Tonga;
-using Tonga.Enumerable;
-using WHyLL.Message;
-using WHyLL.Rendering;
+﻿using WHyLL.Message;
 using Xunit;
 
-namespace Test.WHyLL.Rendering
+namespace WHyLL.Rendering.Test
 {
     public sealed class FirstLineAsTest
     {
