@@ -81,7 +81,6 @@ namespace WHyLL.Rendering.Test
         public async void SummarizesByLambda()
         {
             var result = "";
-
             await new SimpleMessage().Render(
                 Summarized._(
                     AsEnumerable._(
@@ -90,9 +89,7 @@ namespace WHyLL.Rendering.Test
                     )
                 )
             );
-
             Assert.Equal("AB", result);
         }
     }
 }
-
