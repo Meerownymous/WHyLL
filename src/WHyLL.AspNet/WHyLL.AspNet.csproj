@@ -9,15 +9,17 @@
   <ItemGroup>
     <None Remove="Request\" />
     <None Remove="Response\" />
+    <None Remove="Rendering\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Request\" />
     <Folder Include="Response\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WHyLL\WHyLL.csproj" />
+    <Folder Include="Rendering\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WHyLL.Http\WHyLL.Http.csproj" />
   </ItemGroup>
 </Project>

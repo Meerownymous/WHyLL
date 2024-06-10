@@ -8,10 +8,12 @@
     <ItemGroup>
         <None Remove="Request\" />
         <None Remove="Response\" />
+        <None Remove="Rendering\" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Request\" />
         <Folder Include="Response\" />
+        <Folder Include="Rendering\" />
     </ItemGroup>
     <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />

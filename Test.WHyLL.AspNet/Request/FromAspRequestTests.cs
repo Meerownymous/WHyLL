@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Tonga.IO;
-using WHyLL.AspNet.Request;
 using WHyLL.Rendering;
 using Xunit;
 
-namespace Test.WHyLL.AspNet.Request
+namespace WHyLL.AspNet.Request.Test
 {
     public sealed class FromAspRequestTests
     {

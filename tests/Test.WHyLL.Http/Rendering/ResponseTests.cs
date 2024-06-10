@@ -9,14 +9,14 @@ using Xunit;
 
 namespace WHyLL.Http.Rendering.Test
 {
-	public sealed class AspNetResponseTests
+	public sealed class HttpResponseTests
 	{
         [Fact]
         public async void ConfiguresRequestUri()
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
-                new Response(
+                new HttpResponse(
                     message =>
                     {
                         result = message;
@@ -49,7 +49,7 @@ namespace WHyLL.Http.Rendering.Test
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
-                new Response(
+                new HttpResponse(
                     message =>
                     {
                         result = message;
@@ -74,7 +74,7 @@ namespace WHyLL.Http.Rendering.Test
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
-                new Response(
+                new HttpResponse(
                     message =>
                     {
                         result = message;
@@ -100,7 +100,7 @@ namespace WHyLL.Http.Rendering.Test
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
-                new Response(
+                new HttpResponse(
                     message =>
                     {
                         result = message;
@@ -120,7 +120,7 @@ namespace WHyLL.Http.Rendering.Test
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
-                new Response(
+                new HttpResponse(
                     message =>
                     {
                         result = message;
@@ -141,7 +141,7 @@ namespace WHyLL.Http.Rendering.Test
             Assert.Equal(
                 "HTTP/1.1 200 OK\r\n",
                 await
-                    new Response(
+                    new HttpResponse(
                         new HttpResponseMessage(System.Net.HttpStatusCode.OK)
                     )
                     .Render()
@@ -158,7 +158,7 @@ namespace WHyLL.Http.Rendering.Test
             Assert.Contains(
                 "call Saul",
                 (await
-                    new Response(response)
+                    new HttpResponse(response)
                     .Render()
                     .Render(new AllHeaders())
                 )["header"]
@@ -173,7 +173,7 @@ namespace WHyLL.Http.Rendering.Test
                 AsText._(
                     new AsInput(
                         await
-                            new Response(
+                            new HttpResponse(
                                 new HttpResponseMessage(System.Net.HttpStatusCode.OK)
                                 {
                                     Content =
@@ -196,7 +196,7 @@ namespace WHyLL.Http.Rendering.Test
             var output = new MemoryStream();
 
             await
-                new Response(
+                new HttpResponse(
                     message => Task.FromResult(
                         new HttpResponseMessage(System.Net.HttpStatusCode.OK)
                         {
