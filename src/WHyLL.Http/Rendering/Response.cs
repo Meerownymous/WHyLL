@@ -8,7 +8,7 @@ namespace WHyLL.Rendering.Http
     /// <summary>
     /// Renders a response message using Asp.Net Core HttpClient.
     /// </summary>
-    public sealed class AspNetResponse : IRendering<IMessage>
+    public sealed class Response : IRendering<IMessage>
     {
         private readonly HttpRequestMessage message;
         private readonly Func<HttpRequestMessage, Task<HttpResponseMessage>> convert;
@@ -16,7 +16,7 @@ namespace WHyLL.Rendering.Http
         /// <summary>
         /// Renders a response message using Asp.Net Core HttpClient.
         /// </summary>
-        public AspNetResponse(HttpClient client) : this(new HttpRequestMessage(),
+        public Response(HttpClient client) : this(new HttpRequestMessage(),
             message => client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead)
         )
         { }
@@ -24,7 +24,7 @@ namespace WHyLL.Rendering.Http
         /// <summary>
         /// Renders a response message using Asp.Net Core HttpClient.
         /// </summary>
-        public AspNetResponse(HttpResponseMessage result) : this(
+        public Response(HttpResponseMessage result) : this(
             new HttpRequestMessage(),
             message => Task.FromResult(result)
         )
@@ -33,7 +33,7 @@ namespace WHyLL.Rendering.Http
         /// <summary>
         /// Renders a response message using Asp.Net Core HttpClient.
         /// </summary>
-        public AspNetResponse(Func<HttpRequestMessage, Task<HttpResponseMessage>> convert) : this(
+        public Response(Func<HttpRequestMessage, Task<HttpResponseMessage>> convert) : this(
             new HttpRequestMessage(),
             convert.Invoke
         )
@@ -42,7 +42,7 @@ namespace WHyLL.Rendering.Http
         /// <summary>
         /// Renders a response message using Asp.Net Core HttpClient.
         /// </summary>
-        public AspNetResponse(HttpRequestMessage message, Func<HttpRequestMessage, Task<HttpResponseMessage>> convert)
+        public Response(HttpRequestMessage message, Func<HttpRequestMessage, Task<HttpResponseMessage>> convert)
         {
             this.message = message;
             this.convert = convert;
@@ -60,7 +60,7 @@ namespace WHyLL.Rendering.Http
                         "HTTP/"
                     ).AsString()
                 );
-            return new AspNetResponse(message, convert);
+            return new Response(message, convert);
         }
 
         public IRendering<IMessage> Refine(IEnumerable<IPair<string, string>> parts) =>
@@ -70,13 +70,13 @@ namespace WHyLL.Rendering.Http
         {
             foreach(var part in parts)
                 this.message.Headers.TryAddWithoutValidation(part.Key(), part.Value());
-            return new AspNetResponse(this.message, this.convert);
+            return new Response(this.message, this.convert);
         }
 
         public IRendering<IMessage> Refine(Stream body)
         {
             this.message.Content = new StreamContent(body);
-            return new AspNetResponse(this.message, this.convert);
+            return new Response(this.message, this.convert);
         }
 
         public async Task<IMessage> Render()
