@@ -27,6 +27,6 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\src\WHyLL.AspNet\WHyLL.AspNet.csproj" />
+      <ProjectReference Include="..\..\src\WHyLL.AspNet\WHyLL.AspNet.csproj" />
     </ItemGroup>
 </Project>

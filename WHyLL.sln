@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.WHyLL.Http", "tests\Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WHyLL.AspNet", "src\WHyLL.AspNet\WHyLL.AspNet.csproj", "{ABD09490-BBE0-4A68-90B9-DA2CC64D2498}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.WHyLL.AspNet", "Test.WHyLL.AspNet\Test.WHyLL.AspNet.csproj", "{98B2387E-06DF-4042-B353-899D5E2CF860}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.WHyLL.AspNet", "tests\Test.WHyLL.AspNet\Test.WHyLL.AspNet.csproj", "{7EFC175D-1915-404E-9C66-7D0E66F7FB46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,10 +55,10 @@ Global
 		{ABD09490-BBE0-4A68-90B9-DA2CC64D2498}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABD09490-BBE0-4A68-90B9-DA2CC64D2498}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABD09490-BBE0-4A68-90B9-DA2CC64D2498}.Release|Any CPU.Build.0 = Release|Any CPU
-		{98B2387E-06DF-4042-B353-899D5E2CF860}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{98B2387E-06DF-4042-B353-899D5E2CF860}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{98B2387E-06DF-4042-B353-899D5E2CF860}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{98B2387E-06DF-4042-B353-899D5E2CF860}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EFC175D-1915-404E-9C66-7D0E66F7FB46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EFC175D-1915-404E-9C66-7D0E66F7FB46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EFC175D-1915-404E-9C66-7D0E66F7FB46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EFC175D-1915-404E-9C66-7D0E66F7FB46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
