@@ -1,6 +1,7 @@
-﻿using Xunit;
+﻿using WHyLL.Http.Headers;
+using Xunit;
 
-namespace WHyLL.Http.Headers.Test
+namespace Test.WHyLL.Http.Headers
 {
 	public sealed class AcceptTests
 	{

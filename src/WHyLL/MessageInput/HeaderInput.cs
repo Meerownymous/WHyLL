@@ -6,10 +6,12 @@ namespace WHyLL.MessageInput
     /// <summary>
     /// Header input for a <see cref="IMessage"/>.
     /// </summary>
-	public sealed class HeaderInput : IMessageInput
+	public sealed class HeaderInput(IEnumerable<IPair<string,string>> headers) : MessageInputEnvelope(
+        new SimpleMessageInput(
+            msg => msg.With(headers)
+        )
+    )
 	{
-        private readonly IEnumerable<IPair<string, string>> headers;
-
         /// <summary>
         /// Header input for a <see cref="IMessage"/>.
         /// </summary>
@@ -17,21 +19,6 @@ namespace WHyLL.MessageInput
             AsEnumerable._(headers)
         )
         { }
-
-        /// <summary>
-        /// Header input for a <see cref="IMessage"/>.
-        /// </summary>
-        public HeaderInput(IEnumerable<IPair<string,string>> headers)
-		{
-            this.headers = headers;
-        }
-
-        public IMessage WriteTo(IMessage message)
-        {
-            foreach (var header in this.headers)
-                message = message.With(header);
-            return message;
-        }
     }
 }
 

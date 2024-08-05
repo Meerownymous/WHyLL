@@ -5,32 +5,22 @@ namespace WHyLL.Message
     /// <summary>
     /// Envelope for messages.
     /// </summary>
-	public abstract class MessageEnvelope : IMessage
+	public abstract class MessageEnvelope(IMessage origin) : IMessage
 	{
-        private readonly IMessage origin;
-
-        /// <summary>
-        /// Envelope for messages.
-        /// </summary>
-        public MessageEnvelope(IMessage origin)
-		{
-            this.origin = origin;
-        }
-
         public IMessage With(string firstLine) =>
-            this.origin.With(firstLine);
+            origin.With(firstLine);
 
-        public IMessage With(IEnumerable<IPair<string, string>> parts) =>
-            this.With(parts.ToArray());
+        public IMessage With(IEnumerable<IPair<string, string>> newParts) =>
+            this.With(newParts.ToArray());
 
-        public IMessage With(params IPair<string, string>[] parts) =>
-            this.origin.With(parts);
+        public IMessage With(params IPair<string, string>[] newParts) =>
+            origin.With(newParts);
 
-        public IMessage WithBody(Stream body) =>
-            this.origin.WithBody(body);
+        public IMessage WithBody(Stream newBody) =>
+            origin.WithBody(newBody);
 
         public Task<T> Render<T>(IRendering<T> rendering) =>
-            this.origin.Render(rendering);
+            origin.Render(rendering);
     }
 }
 

@@ -4,6 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +20,5 @@
     <Folder Include="Rendering\" />
     <Folder Include="Headers\" />
     <Folder Include="Message\" />
-    <Folder Include="MessageInput\" />
   </ItemGroup>
 </Project>

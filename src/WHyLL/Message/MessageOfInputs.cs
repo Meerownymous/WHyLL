@@ -41,11 +41,11 @@ namespace WHyLL.Message
         public IMessage With(string firstLine) =>
             message().With(firstLine);
 
-        public IMessage With(IEnumerable<IPair<string, string>> parts) =>
-            message().With(parts.ToArray());
+        public IMessage With(IEnumerable<IPair<string, string>> newParts) =>
+            message().With(newParts.ToArray());
 
-        public IMessage With(params IPair<string, string>[] parts) =>
-            message().With(parts);
+        public IMessage With(params IPair<string, string>[] newParts) =>
+            message().With(newParts);
 
         public IMessage WithBody(Stream body)
         {

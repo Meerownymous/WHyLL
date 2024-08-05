@@ -5,40 +5,30 @@ namespace WHyLL.Message
     /// <summary>
     /// Message from lambda function. This object is Sticky (remembers the func output).
     /// </summary>
-    public sealed class Lambda : IMessage
+    public sealed class Lambda(Func<IMessage> message) : IMessage
     {
-        private readonly Lazy<IMessage> message;
+        private readonly Lazy<IMessage> message = new(message);
 
-        /// <summary>
-        /// Message from lambda function. This object is Sticky (remembers the func output).
-        /// </summary>
-        public Lambda(Func<IMessage> message)
-        {
-            this.message = new Lazy<IMessage>(message);
-        }
+        public Task<T> Render<T>(IRendering<T> rendering) =>
+            message.Value.Render(rendering);
 
-        public Task<T> Render<T>(IRendering<T> rendering)
-        {
-            return this.message.Value.Render(rendering);
-        }
+        public IMessage With(string firstLine) =>
+            message.Value.With(firstLine);
 
-        public IMessage With(string firstLine)=>
-            this.message.Value.With(firstLine);
+        public IMessage With(IEnumerable<IPair<string, string>> newParts) =>
+            this.With(newParts.ToArray());
 
-        public IMessage With(IEnumerable<IPair<string, string>> parts) =>
-            this.With(parts.ToArray());
+        public IMessage With(params IPair<string, string>[] newParts) =>
+            this.message.Value.With(newParts);
 
-        public IMessage With(params IPair<string, string>[] parts) =>
-            this.message.Value.With(parts);
-
-        public IMessage WithBody(Stream body) =>
-            this.message.Value.WithBody(body);
+        public IMessage WithBody(Stream newBody) =>
+            this.message.Value.WithBody(newBody);
 
         /// <summary>
         /// Message from lambda function. This object is Sticky (remembers the func output).
         /// </summary>
         public static Lambda _(Func<IMessage> source) =>
-            new Lambda(source);
+            new(source);
     }
 }
 

@@ -22,30 +22,39 @@ namespace WHyLL.Http.Request
         /// HTTP POST Request.
         /// </summary>
         public Post(Uri uri, Version httpVersion, Stream body, params IPair<string, string>[] headers) : this(
-            uri, httpVersion, body, new HeaderInput(headers)
+            uri, 
+            httpVersion, 
+            Joined._<IMessageInput>(AsEnumerable._(new BodyInput(body)), 
+            new HeaderInput(headers))
         )
         { }
 
         /// <summary>
         /// HTTP POST Request.
         /// </summary>
-        public Post(Uri uri, Stream body, IMessageInput input, params IMessageInput[] more) : this(
-            uri, new Version(1,1), body, input, more
+        public Post(Uri uri, Stream body, params IMessageInput[] more) : this(
+            uri, new Version(1,1), Joined._(AsEnumerable._(new BodyInput(body)), more)
+        )
+        { }
+        
+        /// <summary>
+        /// HTTP POST Request.
+        /// </summary>
+        public Post(Uri uri, params IMessageInput[] more) : this(
+            uri, new Version(1,1), more
         )
         { }
 
         /// <summary>
         /// HTTP POST Request.
         /// </summary>
-        public Post(Uri uri, Version httpVersion, Stream body, IMessageInput input, params IMessageInput[] more) : base(
+        public Post(Uri uri, Version httpVersion, IEnumerable<IMessageInput> inputs) : base(
             new MessageOfInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
-                        new RequestLine("POST", uri, httpVersion).AsString(),
-                        None._<IPair<string, string>>(),
-                        body
+                        new RequestLine("POST", uri, httpVersion).AsString()
                     ),
-                    new Joined<IMessageInput>(input, more)
+                    inputs
                 )
             )
         )

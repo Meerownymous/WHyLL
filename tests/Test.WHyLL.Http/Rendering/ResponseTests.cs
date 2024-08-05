@@ -1,13 +1,14 @@
 ﻿using Tonga.Bytes;
 using Tonga.IO;
 using Tonga.Text;
+using WHyLL;
 using WHyLL.Headers;
 using WHyLL.Http.Request;
 using WHyLL.Rendering;
 using WHyLL.Rendering.Http;
 using Xunit;
 
-namespace WHyLL.Http.Rendering.Test
+namespace Test.WHyLL.Http.Rendering
 {
 	public sealed class HttpResponseTests
 	{
