@@ -1,5 +1,4 @@
-﻿using System;
-using Tonga.Map;
+﻿using Tonga.Map;
 using WHyLL.Message;
 
 namespace WHyLL.AspNet.Request
@@ -7,12 +6,8 @@ namespace WHyLL.AspNet.Request
     /// <summary>
     /// WHyLL message from asp request.
     /// </summary>
-    public sealed class FromAspRequest : MessageEnvelope
-    {
-        /// <summary>
-        /// WHyLL message from asp request.
-        /// </summary>
-        public FromAspRequest(Microsoft.AspNetCore.Http.HttpRequest request) : base(
+    public sealed class FromAspRequest(Microsoft.AspNetCore.Http.HttpRequest request) : 
+        MessageEnvelope(
             new Lambda(() =>
             {
                 var msg =
@@ -31,7 +26,6 @@ namespace WHyLL.AspNet.Request
                 return msg.WithBody(request.Body);
             })
         )
-        { }
-    }
+    { }
 }
 

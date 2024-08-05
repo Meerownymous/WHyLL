@@ -7,12 +7,8 @@ namespace WHyLL.AspNet.Response
     /// <summary>
     /// WHyLL message from asp response.
     /// </summary>
-    public sealed class FromAspResponse : MessageEnvelope
-    {
-        /// <summary>
-        /// WHyLL message from asp response.
-        /// </summary>
-        public FromAspResponse(Microsoft.AspNetCore.Http.HttpResponse response) : base(
+    public sealed class FromAspResponse(Microsoft.AspNetCore.Http.HttpResponse response) : 
+        MessageEnvelope(
             new Lambda(() =>
             {
                 var msg =
@@ -33,7 +29,6 @@ namespace WHyLL.AspNet.Response
                 return msg.WithBody(response.Body);
             })
         )
-        { }
-    }
+    { }
 }
 

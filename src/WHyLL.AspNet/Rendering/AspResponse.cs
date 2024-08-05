@@ -8,18 +8,8 @@ namespace WHyLL.AspNet.Rendering
     /// <summary>
     /// Renders a message as AspNetResponse into a HttpContext.
     /// </summary>
-    public sealed class AspResponse : RenderingEnvelope<HttpResponse>
-    {
-        /// <summary>
-        /// Renders a message as AspNetResponse into a HttpContext.
-        /// </summary>
-        public AspResponse() : this(new DefaultHttpContext())
-        { }
-
-        /// <summary>
-        /// Renders a message as AspNetResponse into a HttpContext.
-        /// </summary>
-        public AspResponse(HttpContext context) : base(MessageAs._(async msg =>
+    public sealed class AspResponse(HttpContext context) : RenderingEnvelope<HttpResponse>(
+        (MessageAs._(async msg =>
             {
                 context.Response.StatusCode = await msg.Render(new StatusCode());
                 var headers = await msg.Render(new AllHeaders());
@@ -35,6 +25,12 @@ namespace WHyLL.AspNet.Rendering
                 return context.Response;
             })
         )
+    )
+    {
+        /// <summary>
+        /// Renders a message as AspNetResponse into a HttpContext.
+        /// </summary>
+        public AspResponse() : this(new DefaultHttpContext())
         { }
     }
 }

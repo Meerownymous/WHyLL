@@ -12,7 +12,7 @@ namespace WHyLL.Rendering
         /// Rendering from scratch, with no inputs.
         /// </summary>
         public FromScratch(Func<TOutput> render) : base(
-            new PiecesAs<TOutput>((x, y, z) => Task.FromResult(render()))
+            new PiecesAs<TOutput>((_, _, _) => Task.FromResult(render()))
         )
         { }
 
@@ -20,7 +20,7 @@ namespace WHyLL.Rendering
         /// Rendering from scratch, with no inputs.
         /// </summary>
         public FromScratch(Func<Task<TOutput>> asyncRender) : base(
-            new PiecesAs<TOutput>((x,y,z) => asyncRender())
+            new PiecesAs<TOutput>((_,_,_) => asyncRender())
         )
         { }
     }
@@ -31,12 +31,12 @@ namespace WHyLL.Rendering
         /// Rendering from scratch, with no inputs.
         /// </summary>
         public static FromScratch<TOutput> _<TOutput>(Func<TOutput> render) =>
-            new FromScratch<TOutput>(render);
+            new(render);
 
         /// <summary>
         /// Rendering from scratch, with no inputs.
         /// </summary>
         public static FromScratch<TOutput> _<TOutput>(Func<Task<TOutput>> renderAsync) =>
-            new FromScratch<TOutput>(renderAsync);
+            new(renderAsync);
     }
 }

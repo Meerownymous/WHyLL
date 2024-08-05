@@ -6,7 +6,21 @@ namespace WHyLL.Http.Request
 	/// <summary>
 	/// The request line, first line of a http request.
 	/// </summary>
-	public sealed class RequestLine : TextEnvelope
+	public sealed class RequestLine(IText method, IText resource, Version httpVersion) : 
+		TextEnvelope(
+			AsText._(() =>
+				Joined._(
+					"",
+					Joined._(
+						AsText._(" "),
+						method,
+						resource,
+						AsText._($"HTTP/{httpVersion.ToString(2)}")
+					),
+					AsText._("\r\n")
+				).AsString()
+			)
+		)
 	{
         /// <summary>
         /// The request line, first line of a http request.
@@ -53,25 +67,6 @@ namespace WHyLL.Http.Request
 			}),
 			httpVersion
 		)
-		{ }
-
-        /// <summary>
-        /// The request line, first line of a http request.
-        /// </summary>
-        private RequestLine(IText method, IText resource, Version httpVersion) : base(
-			AsText._(() =>
-				Joined._(
-					"",
-					Joined._(
-						AsText._(" "),
-						method,
-						resource,
-						AsText._($"HTTP/{httpVersion.ToString(2)}")
-					),
-					AsText._("\r\n")
-				).AsString()
-            )
-        )
 		{ }
     }
 }

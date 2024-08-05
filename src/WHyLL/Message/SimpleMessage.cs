@@ -6,11 +6,13 @@ namespace WHyLL.Message
     /// <summary>
     /// Simple HTTP message.
     /// </summary>
-    public sealed class SimpleMessage : IMessage
+    public sealed class SimpleMessage(
+        Func<string> firstLine, 
+        IEnumerable<IPair<string,string>> parts, 
+        Stream body
+    ) : IMessage
     {
-        private readonly Func<string> firstLine;
-        private readonly IEnumerable<IPair<string, string>> parts;
-        private readonly Stream body;
+        private readonly Lazy<string> firstLine = new(firstLine);
 
         /// <summary>
         /// Simple HTTP message.
@@ -36,18 +38,8 @@ namespace WHyLL.Message
         )
         { }
 
-        /// <summary>
-        /// Simple HTTP message.
-        /// </summary>
-        public SimpleMessage(Func<string> firstLine, IEnumerable<IPair<string,string>> parts, Stream body)
-        {
-            this.firstLine = firstLine;
-            this.parts = parts;
-            this.body = body;
-        }
-
         public IMessage With(string firstLine) =>
-            new SimpleMessage(() => firstLine, this.parts, this.body);
+            new SimpleMessage(() => firstLine, parts, body);
 
         public IMessage With(IEnumerable<IPair<string, string>> newParts) =>
             this.With(newParts.ToArray());
@@ -56,19 +48,19 @@ namespace WHyLL.Message
         {
             return
                 new SimpleMessage(
-                    this.firstLine,
-                    Joined._(this.parts, newParts),
-                    this.body
+                    this.firstLine.Value,
+                    Joined._(parts, newParts),
+                    body
                 );
         }
 
         public IMessage WithBody(Stream newBody) =>
-            new SimpleMessage(this.firstLine, this.parts, newBody);
+            new SimpleMessage(this.firstLine.Value, parts, newBody);
 
         public async Task<T> Render<T>(IRendering<T> rendering)
         {
-            rendering = rendering.Refine(this.firstLine());
-            foreach (var part in this.parts)
+            rendering = rendering.Refine(this.firstLine.Value);
+            foreach (var part in parts)
                 rendering = rendering.Refine(part);
             rendering = rendering.Refine(body);
             return await rendering.Render();

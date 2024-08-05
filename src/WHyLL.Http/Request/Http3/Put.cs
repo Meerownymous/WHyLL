@@ -9,20 +9,8 @@ namespace WHyLL.Http3.Request
     /// <summary>
     /// HTTP PUT Request.
     /// </summary>
-    public sealed class Put : MessageEnvelope
-    {
-        /// <summary>
-        /// HTTP PUT Request.
-        /// </summary>
-        public Put(Uri uri, Stream body, params IPair<string, string>[] headers) : this(
-            uri, body, new HeaderInput(headers)
-        )
-        { }
-
-        /// <summary>
-        /// HTTP PUT Request.
-        /// </summary>
-        public Put(Uri uri, Stream body, IMessageInput input, params IMessageInput[] more) : base(
+    public sealed class Put(Uri uri, Stream body, IMessageInput input, params IMessageInput[] more) : 
+        MessageEnvelope(
             new MessageOfInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
@@ -33,6 +21,13 @@ namespace WHyLL.Http3.Request
                     new Joined<IMessageInput>(input, more)
                 )
             )
+        )
+    {
+        /// <summary>
+        /// HTTP PUT Request.
+        /// </summary>
+        public Put(Uri uri, Stream body, params IPair<string, string>[] headers) : this(
+            uri, body, new HeaderInput(headers)
         )
         { }
     }

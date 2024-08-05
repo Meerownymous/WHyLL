@@ -8,7 +8,7 @@ namespace WHyLL.Rendering.Http
     /// <summary>
     /// A WHyLL message where all http related data is removed from.
     /// </summary>
-    public sealed class WithoutHttp : IRendering<IMessage>
+    public sealed class WithoutHttp(string firstLine, IEnumerable<IPair<string, string>> parts, Stream body) : IRendering<IMessage>
     {
         private static readonly string[] methods =
         {
@@ -52,52 +52,35 @@ namespace WHyLL.Rendering.Http
             "X-UA-Compatible", "X-XSS-Protection"
         };
 
-        private readonly string firstLine;
-        private readonly IEnumerable<IPair<string, string>> parts;
-        private readonly Stream body;
-
         /// <summary>
         /// A WHyLL message where all http related data is removed from.
         /// </summary>
         public WithoutHttp() : this(string.Empty, None._<IPair<string, string>>(), new MemoryStream())
         { }
 
-        /// <summary>
-        /// A WHyLL message where all http related data is removed from.
-        /// </summary>
-        private WithoutHttp(string firstLine, IEnumerable<IPair<string, string>> parts, Stream body)
-        {
-            this.firstLine = firstLine;
-            this.parts = parts;
-            this.body = body;
-        }
-
         public IRendering<IMessage> Refine(string firstLine) =>
-            new WithoutHttp(firstLine, this.parts, this.body);
+            new WithoutHttp(firstLine, parts, body);
 
         public IRendering<IMessage> Refine(IEnumerable<IPair<string, string>> header) =>
             this.Refine(parts.ToArray());
 
         public IRendering<IMessage> Refine(params IPair<string, string>[] header) =>
-            new WithoutHttp(this.firstLine, Joined._(this.parts, header), this.body);
+            new WithoutHttp(firstLine, Joined._(parts, header), body);
 
         public IRendering<IMessage> Refine(Stream body) =>
-            new WithoutHttp(this.firstLine, this.parts, body);
+            new WithoutHttp(firstLine, parts, body);
 
-        public Task<IMessage> Render()
-        {
-            return
-                Task.Run<IMessage>(() =>
-                    new SimpleMessage(
-                        IsHttpRequestLine(this.firstLine) ? String.Empty : this.firstLine,
-                        Filtered._(
-                            part => !IsHttpHeader(part),
-                            this.parts
-                        ),
-                        this.body
-                    )
-                );
-        }
+        public Task<IMessage> Render() =>
+            Task.Run<IMessage>(() =>
+                new SimpleMessage(
+                    IsHttpRequestLine(firstLine) ? String.Empty : firstLine,
+                    Filtered._(
+                        part => !IsHttpHeader(part),
+                        parts
+                    ),
+                    body
+                )
+            );
 
         private static bool IsHttpHeader(IPair<string, string> part)
         {

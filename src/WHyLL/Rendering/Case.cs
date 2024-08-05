@@ -1,21 +1,17 @@
 ﻿using Tonga;
-using WHyLL;
 
 namespace WHyLL.Rendering
 {
     /// <summary>
     /// Case to be inserted into a <see cref="Switch{TOutput}"/>.
     /// </summary>
-    public sealed class Case<TOutput> : IMatch<TOutput>
+    public sealed class Case<TOutput>(Func<string, IEnumerable<IPair<string, string>>, Stream, bool> match, IRendering<TOutput> consequence) : IMatch<TOutput>
     {
-        private readonly Func<string, IEnumerable<IPair<string, string>>, Stream, bool> match;
-        private readonly IRendering<TOutput> consequence;
-
         /// <summary>
         /// Case to be inserted into a <see cref="Switch{TOutput}"/>.
         /// </summary>
         public Case(Func<string, bool> match, IRendering<TOutput> consequence) : this(
-            (firstLine, parts, body) => match(firstLine), consequence
+            (firstLine, _, _) => match(firstLine), consequence
         )
         { }
 
@@ -23,7 +19,7 @@ namespace WHyLL.Rendering
         /// Case to be inserted into a <see cref="Switch{TOutput}"/>.
         /// </summary>
         public Case(Func<IEnumerable<IPair<string, string>>, bool> match, IRendering<TOutput> consequence) : this(
-            (firstLine, parts, body) => match(parts), consequence
+            (_, parts, _) => match(parts), consequence
         )
         { }
 
@@ -31,18 +27,9 @@ namespace WHyLL.Rendering
         /// Case to be inserted into a <see cref="Switch{TOutput}"/>.
         /// </summary>
         public Case(Func<Stream, bool> match, IRendering<TOutput> consequence) : this(
-            (firstLine, parts, body) => match(body), consequence
+            (_, _, body) => match(body), consequence
         )
         { }
-
-        /// <summary>
-        /// Case to be inserted into a <see cref="Switch{TOutput}"/>.
-        /// </summary>
-        public Case(Func<string, IEnumerable<IPair<string, string>>, Stream, bool> match, IRendering<TOutput> consequence)
-        {
-            this.match = match;
-            this.consequence = consequence;
-        }
 
         public IRendering<TOutput> Consequence(
             string firstLine,
@@ -57,7 +44,7 @@ namespace WHyLL.Rendering
         }
 
         public bool Matches(string firstLine, IEnumerable<IPair<string, string>> parts, Stream body) =>
-            this.match(firstLine, parts, body);
+            match(firstLine, parts, body);
     }
 
     /// <summary>

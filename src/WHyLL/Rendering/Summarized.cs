@@ -2,7 +2,16 @@
 
 namespace WHyLL.Rendering
 {
-    public sealed class Summarized<TOutput> : RenderingEnvelope<TOutput>
+    public sealed class Summarized<TOutput>(Func<TOutput[], TOutput> summarize, IEnumerable<IRendering<TOutput>> chain) : 
+        RenderingEnvelope<TOutput>(
+            new MessageAs<TOutput>(async (msg) =>
+            {
+                var results = await msg.Render(new Chain<TOutput>(chain));
+                if (results.Length == 0)
+                    throw new ArgumentException("Summarized needs at least one rendering.");
+                return summarize(results);
+            })
+        )
     {
         /// <summary>
         /// Summarized chain of renderings. Result of the last rendering is returned.
@@ -28,20 +37,6 @@ namespace WHyLL.Rendering
             summarize, AsEnumerable._(chain)
         )
         { }
-
-        /// <summary>
-        /// Summarized chain of renderings. Result of the last rendering is returned.
-        /// </summary>
-        public Summarized(Func<TOutput[], TOutput> summarize, IEnumerable<IRendering<TOutput>> chain) : base(
-            new MessageAs<TOutput>(async (msg) =>
-                {
-                    var results = await msg.Render(new Chain<TOutput>(chain));
-                    if (results.Length == 0)
-                        throw new ArgumentException("Summarized needs at least one rendering.");
-                    return summarize(results);
-                })
-            )
-        { }
     }
 
     /// <summary>
@@ -53,19 +48,19 @@ namespace WHyLL.Rendering
         /// Summarized chain of renderings. Result of the last rendering is returned.
         /// </summary>
         public static Summarized<TOutput> _<TOutput>(params IRendering<TOutput>[] chain) =>
-            new Summarized<TOutput>(chain);
+            new(chain);
 
         /// <summary>
         /// Summarized chain of renderings. Result of the last rendering is returned.
         /// </summary>
         public static Summarized<TOutput> _<TOutput>(IEnumerable<IRendering<TOutput>> chain) =>
-            new Summarized<TOutput>(chain);
+            new(chain);
 
         /// <summary>
         /// Summarized chain of renderings. Result of the last rendering is returned.
         /// </summary>
         public static Summarized<TOutput> _<TOutput>(Func<TOutput[], TOutput> summarize, params IRendering<TOutput>[] chain) =>
-            new Summarized<TOutput>(summarize, chain);
+            new(summarize, chain);
 
         /// <summary>
         /// Summarized chain of renderings. Result of the last rendering is returned.
@@ -74,7 +69,7 @@ namespace WHyLL.Rendering
             Func<TOutput[], TOutput> summarize,
             IEnumerable<IRendering<TOutput>> chain
         ) =>
-            new Summarized<TOutput>(summarize, chain);
+            new(summarize, chain);
     }
 }
 

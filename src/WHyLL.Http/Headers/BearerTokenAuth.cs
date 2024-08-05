@@ -5,18 +5,12 @@ namespace WHyLL.Http.Headers
     /// <summary>
     /// Token Authorization header.
     /// </summary>
-    public sealed class BearerTokenAuth : PairEnvelope<string,string>
-	{
-        /// <summary>
-        /// Token Authorization header.
-        /// </summary>
-        public BearerTokenAuth(string token) : base(
-            AsPair._(
-				"Authorization",
-				() => $"Bearer {token}"
-			)
-		)
-		{ }
-	}
+    public sealed class BearerTokenAuth(string token) : PairEnvelope<string,string>(
+	    AsPair._(
+		    "Authorization",
+		    () => $"Bearer {token}"
+	    )
+	)
+	{ }
 }
 

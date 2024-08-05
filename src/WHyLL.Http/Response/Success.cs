@@ -8,19 +8,13 @@ namespace WHyLL.Http.Response
     /// <summary>
     /// Success response.
     /// </summary>
-    public sealed class Success : MessageEnvelope
-    {
-        /// <summary>
-        /// Success response.
-        /// </summary>
-        public Success() : base(
-            new SimpleMessage(
-                new ResponseLine((int)HttpStatusCode.OK),
-                new None<IPair<string, string>>(),
-                new MemoryStream(0)
-            )
+    public sealed class Success() : MessageEnvelope(
+        new SimpleMessage(
+            new ResponseLine((int)HttpStatusCode.OK),
+            new None<IPair<string, string>>(),
+            new MemoryStream(0)
         )
-        { }
-    }
+    )
+    { }
 }
 

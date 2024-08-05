@@ -9,20 +9,8 @@ namespace WHyLL.Http2.Request
     /// <summary>
     /// HTTP HEAD Request.
     /// </summary>
-    public sealed class Head : MessageEnvelope
-    {
-        /// <summary>
-        /// HTTP HEAD Request.
-        /// </summary>
-        public Head(Uri uri, params IPair<string, string>[] headers) : this(
-            uri, new HeaderInput(headers)
-        )
-        { }
-
-        /// <summary>
-        /// HTTP HEAD Request.
-        /// </summary>
-        public Head(Uri uri, IMessageInput input, params IMessageInput[] more) : base(
+    public sealed class Head(Uri uri, IMessageInput input, params IMessageInput[] more) : 
+        MessageEnvelope(
             new MessageOfInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
@@ -33,6 +21,13 @@ namespace WHyLL.Http2.Request
                     new Joined<IMessageInput>(input, more)
                 )
             )
+        )
+    {
+        /// <summary>
+        /// HTTP HEAD Request.
+        /// </summary>
+        public Head(Uri uri, params IPair<string, string>[] headers) : this(
+            uri, new HeaderInput(headers)
         )
         { }
     }

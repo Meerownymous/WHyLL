@@ -8,7 +8,19 @@ namespace WHyLL.Http.Request
     /// <summary>
     /// HTTP GET Request.
     /// </summary>
-    public sealed class Get : MessageEnvelope
+    public sealed class Get(Uri uri, Version httpVersion, IMessageInput input, params IMessageInput[] more) : 
+        MessageEnvelope(
+            new MessageOfInputs(
+                new Joined<IMessageInput>(
+                    new SimpleMessageInput(
+                        new RequestLine("GET", uri, httpVersion).AsString(),
+                        None._<IPair<string,string>>(),
+                        new MemoryStream()
+                    ),
+                    new Joined<IMessageInput>(input, more)
+                )
+            )
+        )
     {
         /// <summary>
         /// HTTP GET Request.
@@ -31,23 +43,6 @@ namespace WHyLL.Http.Request
         /// </summary>
         public Get(Uri uri, IMessageInput input, params IMessageInput[] more) : this(
             uri, new Version(1,1), input, more
-        )
-        { }
-
-        /// <summary>
-        /// HTTP GET Request.
-        /// </summary>
-        public Get(Uri uri, Version httpVersion, IMessageInput input, params IMessageInput[] more) : base(
-            new MessageOfInputs(
-                new Joined<IMessageInput>(
-                    new SimpleMessageInput(
-                        new RequestLine("GET", uri, httpVersion).AsString(),
-                        None._<IPair<string,string>>(),
-                        new MemoryStream()
-                    ),
-                    new Joined<IMessageInput>(input, more)
-                )
-            )
         )
         { }
     }

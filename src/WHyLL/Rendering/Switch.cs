@@ -4,13 +4,8 @@
     /// Switches based on a given match function, if a rendering should happen.
     /// Renders that one, and no following.
     /// </summary>
-    public sealed class Switch<TOutput> : RenderingEnvelope<TOutput>
-    {
-        /// <summary>
-        /// Switches based on a given match function, if a rendering should happen.
-        /// Renders that one, and no following.
-        /// </summary>
-        public Switch(params IMatch<TOutput>[] branches) : base(
+    public sealed class Switch<TOutput>(params IMatch<TOutput>[] branches) : 
+        RenderingEnvelope<TOutput>(
             new PiecesAs<TOutput>(async (firstLine, parts, body) =>
             {
                 TOutput result = default(TOutput);
@@ -29,7 +24,6 @@
                 return result;
             })
         )
-        { }
-    }
+    { }
 }
 

@@ -3,22 +3,10 @@
     /// <summary>
     /// Envelope for <see cref="IMessageInput"/>
     /// </summary>
-	public abstract class MessageInputEnvelope : IMessageInput
+	public abstract class MessageInputEnvelope(IMessageInput input) : IMessageInput
 	{
-        private readonly IMessageInput input;
-
-        /// <summary>
-        /// Envelope for <see cref="IMessageInput"/>
-        /// </summary>
-        public MessageInputEnvelope(IMessageInput input)
-		{
-            this.input = input;
-        }
-
-        public IMessage WriteTo(IMessage message)
-        {
-            return this.input.WriteTo(message);
-        }
+        public IMessage WriteTo(IMessage message) =>
+            input.WriteTo(message);
     }
 }
 

@@ -8,7 +8,19 @@ namespace WHyLL.Http.Request
     /// <summary>
     /// HTTP HEAD Request.
     /// </summary>
-    public sealed class Head : MessageEnvelope
+    public sealed class Head(Uri uri, Version httpVersion, IMessageInput input, params IMessageInput[] more) : 
+        MessageEnvelope(
+            new MessageOfInputs(
+                new Joined<IMessageInput>(
+                    new SimpleMessageInput(
+                        new RequestLine("HEAD", uri, httpVersion).AsString(),
+                        None._<IPair<string, string>>(),
+                        new MemoryStream()
+                    ),
+                    new Joined<IMessageInput>(input, more)
+                )
+            )
+        )
     {
         /// <summary>
         /// HTTP HEAD Request.
@@ -31,24 +43,6 @@ namespace WHyLL.Http.Request
         /// </summary>
         public Head(Uri uri, IMessageInput input, params IMessageInput[] more) : this(
             uri, new Version(1,1), input, more
-        )
-        { }
-
-
-        /// <summary>
-        /// HTTP HEAD Request.
-        /// </summary>
-        public Head(Uri uri, Version httpVersion, IMessageInput input, params IMessageInput[] more) : base(
-            new MessageOfInputs(
-                new Joined<IMessageInput>(
-                    new SimpleMessageInput(
-                        new RequestLine("HEAD", uri, httpVersion).AsString(),
-                        None._<IPair<string, string>>(),
-                        new MemoryStream()
-                    ),
-                    new Joined<IMessageInput>(input, more)
-                )
-            )
         )
         { }
     }

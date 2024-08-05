@@ -8,11 +8,11 @@ namespace WHyLL.Rendering.Http
     /// <summary>
     /// Renders a response message using Asp.Net Core HttpClient.
     /// </summary>
-    public sealed class HttpResponse : IRendering<IMessage>
+    public sealed class HttpResponse(
+        HttpRequestMessage message, 
+        Func<HttpRequestMessage, Task<HttpResponseMessage>> convert
+    ) : IRendering<IMessage>
     {
-        private readonly HttpRequestMessage message;
-        private readonly Func<HttpRequestMessage, Task<HttpResponseMessage>> convert;
-
         /// <summary>
         /// Renders a response message using Asp.Net Core HttpClient.
         /// </summary>
@@ -26,7 +26,7 @@ namespace WHyLL.Rendering.Http
         /// </summary>
         public HttpResponse(HttpResponseMessage result) : this(
             new HttpRequestMessage(),
-            message => Task.FromResult(result)
+            _ => Task.FromResult(result)
         )
         { }
 
@@ -39,21 +39,12 @@ namespace WHyLL.Rendering.Http
         )
         { }
 
-        /// <summary>
-        /// Renders a response message using Asp.Net Core HttpClient.
-        /// </summary>
-        public HttpResponse(HttpRequestMessage message, Func<HttpRequestMessage, Task<HttpResponseMessage>> convert)
-        {
-            this.message = message;
-            this.convert = convert;
-        }
-
         public IRendering<IMessage> Refine(string requestLine)
         {
             var pieces = RequestLineParts(requestLine);
-            this.message.Method = new HttpMethod(pieces[0]);
-            this.message.RequestUri = new Uri(pieces[1]);
-            this.message.Version =
+            message.Method = new HttpMethod(pieces[0]);
+            message.RequestUri = new Uri(pieces[1]);
+            message.Version =
                 new Version(
                     new TrimmedLeft(
                         new TrimmedRight(pieces[2], "\r\n"),
@@ -69,19 +60,19 @@ namespace WHyLL.Rendering.Http
         public IRendering<IMessage> Refine(params IPair<string, string>[] parts)
         {
             foreach(var part in parts)
-                this.message.Headers.TryAddWithoutValidation(part.Key(), part.Value());
-            return new HttpResponse(this.message, this.convert);
+                message.Headers.TryAddWithoutValidation(part.Key(), part.Value());
+            return new HttpResponse(message, convert);
         }
 
         public IRendering<IMessage> Refine(Stream body)
         {
-            this.message.Content = new StreamContent(body);
-            return new HttpResponse(this.message, this.convert);
+            message.Content = new StreamContent(body);
+            return new HttpResponse(message, convert);
         }
 
         public async Task<IMessage> Render()
         {
-            var aspResponse = await this.convert(this.message);
+            var aspResponse = await convert(message);
             return
                 new SimpleMessage(
                     $"HTTP/{aspResponse.Version} {(int)aspResponse.StatusCode} {aspResponse.ReasonPhrase}\r\n",
@@ -99,9 +90,7 @@ namespace WHyLL.Rendering.Http
                 );
         }
 
-        private static string[] RequestLineParts(string requestLine)
-        {
-            return requestLine.Split(" ");
-        }
+        private static string[] RequestLineParts(string requestLine) =>
+            requestLine.Split(" ");
     }
 }

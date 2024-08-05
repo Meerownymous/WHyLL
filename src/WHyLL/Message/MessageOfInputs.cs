@@ -1,15 +1,20 @@
-﻿using System;
-using Tonga;
+﻿using Tonga;
 using Tonga.Enumerable;
 
 namespace WHyLL.Message
 {
     /// <summary>
-    /// A <see cref="IMessage" built from <see cref="IMessageInput"s/>/>
+    /// A <see cref="IMessage"> built from <see cref="IMessageInput"s/>/>
     /// </summary>
-	public sealed class MessageOfInputs : IMessage
-	{
-        private readonly Func<IMessage> message;
+	public sealed class MessageOfInputs(IEnumerable<IMessageInput> inputs) : IMessage
+    {
+        private readonly Lazy<IMessage> message = new(() =>
+        {
+            IMessage result = new SimpleMessage();
+            foreach (var input in inputs)
+                result = input.WriteTo(result);
+            return result;
+        });
 
         /// <summary>
         /// A <see cref="IMessage" built from <see cref="IMessageInput"s/>/>
@@ -19,38 +24,20 @@ namespace WHyLL.Message
         )
         { }
 
-        /// <summary>
-        /// A <see cref="IMessage" built from <see cref="IMessageInput"s/>/>
-        /// </summary>
-        public MessageOfInputs(IEnumerable<IMessageInput> inputs)
-		{
-            this.message = () =>
-            {
-                IMessage message = new SimpleMessage();
-                foreach (var input in inputs)
-                    message = input.WriteTo(message);
-                return message;
-            };
-		}
-
-        public Task<T> Render<T>(IRendering<T> rendering)
-        {
-            return message().Render(rendering);
-        }
+        public Task<T> Render<T>(IRendering<T> rendering) =>
+            this.message.Value.Render(rendering);
 
         public IMessage With(string firstLine) =>
-            message().With(firstLine);
+            this.message.Value.With(firstLine);
 
         public IMessage With(IEnumerable<IPair<string, string>> newParts) =>
-            message().With(newParts.ToArray());
+            this.message.Value.With(newParts.ToArray());
 
         public IMessage With(params IPair<string, string>[] newParts) =>
-            message().With(newParts);
+            this.message.Value.With(newParts);
 
-        public IMessage WithBody(Stream body)
-        {
-            return message().WithBody(body);
-        }
+        public IMessage WithBody(Stream body) =>
+            this.message.Value.WithBody(body);
     }
 }
 

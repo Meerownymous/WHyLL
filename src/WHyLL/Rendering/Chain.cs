@@ -5,20 +5,8 @@ namespace WHyLL.Rendering
     /// <summary>
     /// Chain of renderings. Result of the last rendering is returned.
     /// </summary>
-    public sealed class Chain<TOutput> : RenderingEnvelope<TOutput[]>
-    {
-        /// <summary>
-        /// Chain of renderings. Result of the last rendering is returned.
-        /// </summary>
-        public Chain(params IRendering<TOutput>[] chain) : this(
-            AsEnumerable._(chain)
-        )
-        { }
-
-        /// <summary>
-        /// Chain of renderings. Result of the last rendering is returned.
-        /// </summary>
-        public Chain(IEnumerable<IRendering<TOutput>> chain) : base(
+    public sealed class Chain<TOutput>(IEnumerable<IRendering<TOutput>> chain) : 
+        RenderingEnvelope<TOutput[]>(
             new MessageAs<TOutput[]>(async (msg) =>
             {
                 var results = new List<TOutput>();
@@ -26,6 +14,13 @@ namespace WHyLL.Rendering
                     results.Add(await msg.Render(rendering));
                 return results.ToArray();
             })
+        )
+    {
+        /// <summary>
+        /// Chain of renderings. Result of the last rendering is returned.
+        /// </summary>
+        public Chain(params IRendering<TOutput>[] chain) : this(
+            AsEnumerable._(chain)
         )
         { }
     }
@@ -39,7 +34,7 @@ namespace WHyLL.Rendering
         /// Chain of renderings. Result of the last rendering is returned.
         /// </summary>
         public static Chain<TOutput> _<TOutput>(IEnumerable<IRendering<TOutput>> chain) =>
-            new Chain<TOutput>(chain);
+            new(chain);
     }
 }
 

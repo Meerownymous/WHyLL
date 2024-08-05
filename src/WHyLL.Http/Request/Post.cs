@@ -8,7 +8,17 @@ namespace WHyLL.Http.Request
     /// <summary>
     /// HTTP POST Request.
     /// </summary>
-    public sealed class Post : MessageEnvelope
+    public sealed class Post(Uri uri, Version httpVersion, IEnumerable<IMessageInput> inputs) : 
+        MessageEnvelope(
+            new MessageOfInputs(
+                new Joined<IMessageInput>(
+                    new SimpleMessageInput(
+                        new RequestLine("POST", uri, httpVersion).AsString()
+                    ),
+                    inputs
+                )
+            )
+        )
     {
         /// <summary>
         /// HTTP POST Request.
@@ -42,21 +52,6 @@ namespace WHyLL.Http.Request
         /// </summary>
         public Post(Uri uri, params IMessageInput[] more) : this(
             uri, new Version(1,1), more
-        )
-        { }
-
-        /// <summary>
-        /// HTTP POST Request.
-        /// </summary>
-        public Post(Uri uri, Version httpVersion, IEnumerable<IMessageInput> inputs) : base(
-            new MessageOfInputs(
-                new Joined<IMessageInput>(
-                    new SimpleMessageInput(
-                        new RequestLine("POST", uri, httpVersion).AsString()
-                    ),
-                    inputs
-                )
-            )
         )
         { }
     }

@@ -8,7 +8,19 @@ namespace WHyLL.Http.Request
     /// <summary>
     /// HTTP OPTIONS Request.
     /// </summary>
-    public sealed class Options : MessageEnvelope
+    public sealed class Options(Uri uri, Version httpVersion, IMessageInput input, params IMessageInput[] more) : 
+        MessageEnvelope(
+            new MessageOfInputs(
+                new Joined<IMessageInput>(
+                    new SimpleMessageInput(
+                        new RequestLine("OPTIONS", uri, httpVersion).AsString(),
+                        None._<IPair<string, string>>(),
+                        new MemoryStream()
+                    ),
+                    new Joined<IMessageInput>(input, more)
+                )
+            )
+        )
     {
         /// <summary>
         /// HTTP OPTIONS Request.
@@ -31,23 +43,6 @@ namespace WHyLL.Http.Request
         /// </summary>
         public Options(Uri uri, IMessageInput input, params IMessageInput[] more) : this(
             uri, new Version(1,1), input, more
-        )
-        { }
-
-        /// <summary>
-        /// HTTP OPTIONS Request.
-        /// </summary>
-        public Options(Uri uri, Version httpVersion, IMessageInput input, params IMessageInput[] more) : base(
-            new MessageOfInputs(
-                new Joined<IMessageInput>(
-                    new SimpleMessageInput(
-                        new RequestLine("OPTIONS", uri, httpVersion).AsString(),
-                        None._<IPair<string, string>>(),
-                        new MemoryStream()
-                    ),
-                    new Joined<IMessageInput>(input, more)
-                )
-            )
         )
         { }
     }

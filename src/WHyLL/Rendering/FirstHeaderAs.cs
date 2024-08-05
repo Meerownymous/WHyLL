@@ -5,24 +5,19 @@ namespace WHyLL.Rendering
     /// <summary>
     /// First header with the given name as output type.
     /// </summary>
-    public sealed class FirstHeaderAs<TOutput> : RenderingEnvelope<TOutput>
-    {
-        /// <summary>
-        /// First header with the given name as output type.
-        /// </summary>
-        public FirstHeaderAs(string name, Func<string,TOutput> mapping) : base(
+    public sealed class FirstHeaderAs<TOutput>(string name, Func<string,TOutput> mapping) : 
+        RenderingEnvelope<TOutput>(
             new HeadersAs<TOutput>(headers =>
                 mapping(
                     First._(
-                        header => header.Key() == name,
-                        headers,
-                        new ArgumentException($"Header '{name}' does not exist.")
-                    ).Value()
-                    .Value()
+                            header => header.Key() == name,
+                            headers,
+                            new ArgumentException($"Header '{name}' does not exist.")
+                        ).Value()
+                        .Value()
                 )
             )
         )
-        { }
-    }
+    { }
 }
 

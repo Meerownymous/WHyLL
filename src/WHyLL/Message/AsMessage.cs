@@ -8,14 +8,12 @@ namespace WHyLL.Message
     /// </summary>
     public sealed class AsMessage(string firstLine, IEnumerable<IPair<string,string>> parts, Stream body) : IMessage
     {
-        public async Task<T> Render<T>(IRendering<T> rendering)
-        {
-            return await
+        public async Task<T> Render<T>(IRendering<T> rendering) =>
+            await
                 rendering.Refine(firstLine)
                     .Refine(parts)
                     .Refine(body)
                     .Render();
-        }
 
         public IMessage With(string firstLine) =>
             new AsMessage(firstLine, parts, body);

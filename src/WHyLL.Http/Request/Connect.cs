@@ -8,7 +8,19 @@ namespace WHyLL.Http.Request
     /// <summary>
     /// HTTP CONNECT Request.
     /// </summary>
-    public sealed class Connect : MessageEnvelope
+    public sealed class Connect(Uri uri, Version httpVersion, IMessageInput input, params IMessageInput[] more) : 
+        MessageEnvelope(
+            new MessageOfInputs(
+                new Joined<IMessageInput>(
+                    new SimpleMessageInput(
+                        new RequestLine("CONNECT", uri, httpVersion).AsString(),
+                        None._<IPair<string, string>>(),
+                        new MemoryStream()
+                    ),
+                    new Joined<IMessageInput>(input, more)
+                )
+            )
+        )
     {
         /// <summary>
         /// HTTP CONNECT Request.
@@ -31,23 +43,6 @@ namespace WHyLL.Http.Request
         /// </summary>
         public Connect(Uri uri, IMessageInput input, params IMessageInput[] more) : this(
             uri, new Version(1,1), input, more
-        )
-        { }
-
-        /// <summary>
-        /// HTTP CONNECT Request.
-        /// </summary>
-        public Connect(Uri uri, Version httpVersion, IMessageInput input, params IMessageInput[] more) : base(
-            new MessageOfInputs(
-                new Joined<IMessageInput>(
-                    new SimpleMessageInput(
-                        new RequestLine("CONNECT", uri, httpVersion).AsString(),
-                        None._<IPair<string, string>>(),
-                        new MemoryStream()
-                    ),
-                    new Joined<IMessageInput>(input, more)
-                )
-            )
         )
         { }
     }

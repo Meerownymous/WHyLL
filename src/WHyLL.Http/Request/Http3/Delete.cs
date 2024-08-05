@@ -9,20 +9,8 @@ namespace WHyLL.Http3.Request
     /// <summary>
     /// HTTP DELETE Request.
     /// </summary>
-    public sealed class Delete : MessageEnvelope
-    {
-        /// <summary>
-        /// HTTP DELETE Request.
-        /// </summary>
-        public Delete(Uri uri, params IPair<string, string>[] headers) : this(
-            uri, new HeaderInput(headers)
-        )
-        { }
-
-        /// <summary>
-        /// HTTP DELETE Request.
-        /// </summary>
-        public Delete(Uri uri, IMessageInput input, params IMessageInput[] more) : base(
+    public sealed class Delete(Uri uri, IMessageInput input, params IMessageInput[] more) : 
+        MessageEnvelope(
             new MessageOfInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
@@ -33,6 +21,13 @@ namespace WHyLL.Http3.Request
                     new Joined<IMessageInput>(input, more)
                 )
             )
+        )
+    {
+        /// <summary>
+        /// HTTP DELETE Request.
+        /// </summary>
+        public Delete(Uri uri, params IPair<string, string>[] headers) : this(
+            uri, new HeaderInput(headers)
         )
         { }
     }
