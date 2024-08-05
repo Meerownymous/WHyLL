@@ -1,11 +1,12 @@
 ﻿using Tonga.Bytes;
 using Tonga.Scalar;
 using Tonga.Text;
-using Xunit;
-using WHyLL.Rendering;
 using WHyLL.Headers;
+using WHyLL.Http.Request;
+using WHyLL.Rendering;
+using Xunit;
 
-namespace WHyLL.Http.Request.Test
+namespace Test.WHyLL.Http.Request
 {
     public sealed class GetTests
     {

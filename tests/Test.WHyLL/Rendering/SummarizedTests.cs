@@ -56,7 +56,10 @@ namespace WHyLL.Rendering.Test
                     )
                 );
             }
-            catch(Exception ex){ }
+            catch (Exception)
+            {
+                // ignored
+            }
 
             Assert.Equal(1, rendered);
         }

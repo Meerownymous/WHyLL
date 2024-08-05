@@ -26,14 +26,14 @@ namespace WHyLL.Message
         public IMessage With(string firstLine) =>
             this.asyncMessage().Result.With(firstLine);
 
-        public IMessage With(IEnumerable<IPair<string, string>> parts) =>
-            this.With(parts.ToArray());
+        public IMessage With(IEnumerable<IPair<string, string>> newParts) =>
+            this.With(newParts.ToArray());
 
-        public IMessage With(params IPair<string, string>[] header) =>
-            this.asyncMessage().Result.With(header);
+        public IMessage With(params IPair<string, string>[] newParts) =>
+            this.asyncMessage().Result.With(newParts);
 
-        public IMessage WithBody(Stream body) =>
-            this.asyncMessage().Result.WithBody(body);
+        public IMessage WithBody(Stream newBody) =>
+            this.asyncMessage().Result.WithBody(newBody);
 
         public static AsyncMessage _(Func<Task<IMessage>> message) =>
             new AsyncMessage(message);

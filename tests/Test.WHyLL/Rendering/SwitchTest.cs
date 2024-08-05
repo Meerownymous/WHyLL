@@ -55,7 +55,11 @@ namespace WHyLL.Rendering.Test
                     .Refine("GET /testresult HTTP/1.1")
                     .Render();
             }
-            catch (Exception ex) { }
+            catch (Exception)
+            {
+                // ignored
+            }
+
             Assert.False(rendered);
         }
 

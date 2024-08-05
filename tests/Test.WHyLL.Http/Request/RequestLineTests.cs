@@ -1,6 +1,7 @@
-﻿using Xunit;
+﻿using WHyLL.Http.Request;
+using Xunit;
 
-namespace WHyLL.Http.Request.Test
+namespace Test.WHyLL.Http.Request
 {
 	public sealed class RequestLineTests
 	{

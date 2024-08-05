@@ -1,11 +1,13 @@
 ﻿using Tonga;
 using Tonga.Enumerable;
 using Tonga.Map;
+using WHyLL;
+using WHyLL.Message;
 using WHyLL.Rendering;
 using WHyLL.Rendering.Http;
 using Xunit;
 
-namespace WHyLL.Message.Test
+namespace Test.WHyLL.Http.Rendering
 {
     public sealed class WithoutHttpTest
     {

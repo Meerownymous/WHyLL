@@ -1,11 +1,9 @@
-﻿using System;
-using Tonga.IO;
-using Tonga.Text;
+﻿using Tonga.Text;
 using Xunit;
 
 namespace WHyLL.Rendering.Test
 {
-	public sealed class FirstLineTests
+    public sealed class FirstLineTests
 	{
 		[Fact]
 		public async void RendersFirstLine()

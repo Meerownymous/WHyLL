@@ -18,17 +18,17 @@ namespace WHyLL
         /// <summary>
         /// Refine the headers.
         /// </summary>
-        IMessage With(params IPair<string, string>[] parts);
+        IMessage With(params IPair<string, string>[] newParts);
 
         /// <summary>
         /// Refine the headers.
         /// </summary>
-        IMessage With(IEnumerable<IPair<string,string>> parts);
+        IMessage With(IEnumerable<IPair<string,string>> newParts);
 
         /// <summary>
         /// Refine the body to the request.
         /// </summary>
-        IMessage WithBody(Stream body);
+        IMessage WithBody(Stream newBody);
 
         /// <summary>
         /// Render the message to a response, a followup or something else.

@@ -49,21 +49,21 @@ namespace WHyLL.Message
         public IMessage With(string firstLine) =>
             new SimpleMessage(() => firstLine, this.parts, this.body);
 
-        public IMessage With(IEnumerable<IPair<string, string>> parts) =>
-            this.With(parts.ToArray());
+        public IMessage With(IEnumerable<IPair<string, string>> newParts) =>
+            this.With(newParts.ToArray());
 
-        public IMessage With(params IPair<string, string>[] parts)
+        public IMessage With(params IPair<string, string>[] newParts)
         {
             return
                 new SimpleMessage(
                     this.firstLine,
-                    Joined._(this.parts, parts),
+                    Joined._(this.parts, newParts),
                     this.body
                 );
         }
 
-        public IMessage WithBody(Stream body) =>
-            new SimpleMessage(this.firstLine, this.parts, body);
+        public IMessage WithBody(Stream newBody) =>
+            new SimpleMessage(this.firstLine, this.parts, newBody);
 
         public async Task<T> Render<T>(IRendering<T> rendering)
         {
