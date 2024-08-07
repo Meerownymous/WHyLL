@@ -20,5 +20,13 @@ namespace WHyLL.Http.Response
 			statusCode, new Version(1, 1)
 		)
 		{ }
+        
+		/// <summary>
+		/// The response line, first line of a http response.
+		/// </summary>
+		public ResponseLine(HttpStatusCode statusCode) : this(
+			Convert.ToInt32(statusCode), new Version(1, 1)
+		)
+		{ }
     }
 }

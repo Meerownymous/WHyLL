@@ -1,11 +1,13 @@
-﻿using Tonga.IO;
+﻿using System.Net;
+using Tonga.IO;
 using Tonga.Text;
+using WHyLL.AspNet.Rendering;
 using WHyLL.Headers;
 using WHyLL.Http.Response;
 using WHyLL.Message;
 using Xunit;
 
-namespace WHyLL.AspNet.Rendering.Test
+namespace Test.WHyLL.AspNet.Rendering
 {
     public sealed class AspResponseTests
     {
@@ -15,7 +17,7 @@ namespace WHyLL.AspNet.Rendering.Test
             Assert.Equal(
                 200,
                 (await new SimpleMessage()
-                    .With(new ResponseLine(200).AsString())
+                    .With(new ResponseLine(HttpStatusCode.OK).AsString())
                     .Render(new AspResponse())
                 ).StatusCode
             );
@@ -27,7 +29,7 @@ namespace WHyLL.AspNet.Rendering.Test
             Assert.Equal(
                 "there it is",
                 (await new SimpleMessage()
-                    .With(new ResponseLine(200).AsString())
+                    .With(new ResponseLine(HttpStatusCode.OK).AsString())
                     .With(new Header("whoomp", "there it is"))
                     .Render(new AspResponse())
                 ).Headers["whoomp"]

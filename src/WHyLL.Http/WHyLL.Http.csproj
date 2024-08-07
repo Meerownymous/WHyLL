@@ -18,12 +18,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Headers\" />
-    <Folder Include="MessageInput\" />
     <Folder Include="Rendering\" />
     <Folder Include="Request\" />
     <Folder Include="Request\Http2\" />
     <Folder Include="Request\Http3\" />
-    <Folder Include="Response\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WHyLL\WHyLL.csproj" />
