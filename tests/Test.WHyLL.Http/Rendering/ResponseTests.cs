@@ -18,7 +18,7 @@ namespace Test.WHyLL.Http.Rendering
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
-                new AsHttpResponse(
+                new HttpResponse(
                     message =>
                     {
                         result = message;
@@ -51,7 +51,7 @@ namespace Test.WHyLL.Http.Rendering
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
-                new AsHttpResponse(
+                new HttpResponse(
                     message =>
                     {
                         result = message;
@@ -76,7 +76,7 @@ namespace Test.WHyLL.Http.Rendering
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
-                new AsHttpResponse(
+                new HttpResponse(
                     message =>
                     {
                         result = message;
@@ -102,7 +102,7 @@ namespace Test.WHyLL.Http.Rendering
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
-                new AsHttpResponse(
+                new HttpResponse(
                     message =>
                     {
                         result = message;
@@ -122,7 +122,7 @@ namespace Test.WHyLL.Http.Rendering
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
-                new AsHttpResponse(
+                new HttpResponse(
                     message =>
                     {
                         result = message;
@@ -143,7 +143,7 @@ namespace Test.WHyLL.Http.Rendering
             Assert.Equal(
                 "HTTP/1.1 200 OK\r\n",
                 await
-                    new AsHttpResponse(
+                    new HttpResponse(
                         new HttpResponseMessage(System.Net.HttpStatusCode.OK)
                     )
                     .Render()
@@ -160,7 +160,7 @@ namespace Test.WHyLL.Http.Rendering
             Assert.Contains(
                 "call Saul",
                 (await
-                    new AsHttpResponse(response)
+                    new HttpResponse(response)
                     .Render()
                     .Render(new AllHeaders())
                 )["header"]
@@ -175,7 +175,7 @@ namespace Test.WHyLL.Http.Rendering
                 AsText._(
                     new AsInput(
                         await
-                            new AsHttpResponse(
+                            new HttpResponse(
                                 new HttpResponseMessage(System.Net.HttpStatusCode.OK)
                                 {
                                     Content =
@@ -198,7 +198,7 @@ namespace Test.WHyLL.Http.Rendering
             var output = new MemoryStream();
 
             await
-                new AsHttpResponse(
+                new HttpResponse(
                     message => Task.FromResult(
                         new HttpResponseMessage(System.Net.HttpStatusCode.OK)
                         {

@@ -43,7 +43,15 @@ namespace WHyLL.Http.Request
         /// HTTP POST Request.
         /// </summary>
         public Post(Uri uri, Stream body, IMessageInput input, params IMessageInput[] more) : this(
-            uri, new Version(1,1), Joined._(AsEnumerable._(new BodyInput(body)), more)
+            uri, new Version(1,1), Joined._(AsEnumerable._(new BodyInput(body)), Joined._(more, input))
+        )
+        { }
+        
+        /// <summary>
+        /// HTTP POST Request.
+        /// </summary>
+        public Post(Uri uri, Stream body) : this(
+            uri, new Version(1,1), Joined._(AsEnumerable._(new BodyInput(body)))
         )
         { }
         

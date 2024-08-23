@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Primitives;
 using WHyLL.Http.Rendering;
 using WHyLL.Rendering;
+using HttpResponse = Microsoft.AspNetCore.Http.HttpResponse;
 
 namespace WHyLL.AspNet.Rendering
 {

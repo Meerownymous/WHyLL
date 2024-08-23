@@ -8,7 +8,7 @@ namespace WHyLL.Http.Rendering
     /// <summary>
     /// Renders a response message using Asp.Net Core HttpClient.
     /// </summary>
-    public sealed class AsHttpResponse(
+    public sealed class HttpResponse(
         HttpRequestMessage message, 
         Func<HttpRequestMessage, Task<HttpResponseMessage>> convert
     ) : IRendering<IMessage>
@@ -16,7 +16,7 @@ namespace WHyLL.Http.Rendering
         /// <summary>
         /// Renders a response message using Asp.Net Core HttpClient.
         /// </summary>
-        public AsHttpResponse(HttpClient client) : this(new HttpRequestMessage(),
+        public HttpResponse(HttpClient client) : this(new HttpRequestMessage(),
             message => client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead)
         )
         { }
@@ -24,7 +24,7 @@ namespace WHyLL.Http.Rendering
         /// <summary>
         /// Renders a response message using Asp.Net Core HttpClient.
         /// </summary>
-        public AsHttpResponse(HttpResponseMessage result) : this(
+        public HttpResponse(HttpResponseMessage result) : this(
             new HttpRequestMessage(),
             _ => Task.FromResult(result)
         )
@@ -33,7 +33,7 @@ namespace WHyLL.Http.Rendering
         /// <summary>
         /// Renders a response message using Asp.Net Core HttpClient.
         /// </summary>
-        public AsHttpResponse(Func<HttpRequestMessage, Task<HttpResponseMessage>> convert) : this(
+        public HttpResponse(Func<HttpRequestMessage, Task<HttpResponseMessage>> convert) : this(
             new HttpRequestMessage(),
             convert.Invoke
         )
@@ -51,7 +51,7 @@ namespace WHyLL.Http.Rendering
                         "HTTP/"
                     ).AsString()
                 );
-            return new AsHttpResponse(message, convert);
+            return new HttpResponse(message, convert);
         }
 
         public IRendering<IMessage> Refine(IEnumerable<IPair<string, string>> parts) =>
@@ -61,13 +61,13 @@ namespace WHyLL.Http.Rendering
         {
             foreach(var part in parts)
                 message.Headers.TryAddWithoutValidation(part.Key(), part.Value());
-            return new AsHttpResponse(message, convert);
+            return new HttpResponse(message, convert);
         }
 
         public IRendering<IMessage> Refine(Stream body)
         {
             message.Content = new StreamContent(body);
-            return new AsHttpResponse(message, convert);
+            return new HttpResponse(message, convert);
         }
 
         public async Task<IMessage> Render()
