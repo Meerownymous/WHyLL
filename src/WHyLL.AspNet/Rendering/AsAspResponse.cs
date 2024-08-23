@@ -26,7 +26,8 @@ namespace WHyLL.AspNet.Rendering
                             );
 
                     await (await msg.Render(new Body())).CopyToAsync(context.Response.Body);
-                    context.Response.Body.Position = 0;
+                    if (context.Response.Body.CanSeek)
+                        context.Response.Body.Seek(0, SeekOrigin.Begin);
                     return context.Response;
                 })
             )
