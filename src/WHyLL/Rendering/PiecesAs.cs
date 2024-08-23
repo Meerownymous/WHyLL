@@ -9,7 +9,7 @@ namespace WHyLL.Rendering
     public sealed class PiecesAs<TOutput>(
         Func<string, IEnumerable<IPair<string, string>>, Stream, Task<TOutput>> render,
         string firstLine,
-        IEnumerable<IPair<string,string>> headers,
+        IEnumerable<IPair<string,string>> parts,
         Stream body
     ) : IRendering<TOutput>
     {
@@ -23,19 +23,19 @@ namespace WHyLL.Rendering
         { }
 
         public IRendering<TOutput> Refine(string start) =>
-            new PiecesAs<TOutput>(render, start, headers, body);
+            new PiecesAs<TOutput>(render, start, parts, body);
 
         public IRendering<TOutput> Refine(IEnumerable<IPair<string, string>> parts) =>
             this.Refine(parts.ToArray());
 
-        public IRendering<TOutput> Refine(params IPair<string, string>[] parts) =>
-            new PiecesAs<TOutput>(render, firstLine, Joined._(parts, parts), body);
+        public IRendering<TOutput> Refine(params IPair<string, string>[] newParts) =>
+            new PiecesAs<TOutput>(render, firstLine, Joined._(parts, newParts), body);
 
-        public IRendering<TOutput> Refine(Stream body) =>
-            new PiecesAs<TOutput>(render, firstLine, headers, body);
+        public IRendering<TOutput> Refine(Stream newBody) =>
+            new PiecesAs<TOutput>(render, firstLine, parts, newBody);
 
         public async Task<TOutput> Render() =>
-            await render(firstLine, headers, body);
+            await render(firstLine, parts, body);
     }
 
     /// <summary>

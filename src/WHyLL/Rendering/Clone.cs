@@ -15,17 +15,17 @@ namespace WHyLL.Rendering
         public Clone() : this(string.Empty, None._<IPair<string, string>>(), new MemoryStream())
         { }
 
-        public IRendering<IMessage> Refine(string firstLine) =>
-            new Clone(firstLine, parts, body);
+        public IRendering<IMessage> Refine(string newFirstLine) =>
+            new Clone(newFirstLine, parts, body);
 
-        public IRendering<IMessage> Refine(IEnumerable<IPair<string, string>> parts) =>
-            this.Refine(parts.ToArray());
+        public IRendering<IMessage> Refine(IEnumerable<IPair<string, string>> newParts) =>
+            this.Refine(newParts.ToArray());
 
-        public IRendering<IMessage> Refine(params IPair<string,string>[] parts) =>
-            new Clone(firstLine, Joined._(parts, parts), body);
+        public IRendering<IMessage> Refine(params IPair<string,string>[] newParts) =>
+            new Clone(firstLine, Joined._(parts, newParts), body);
 
-        public IRendering<IMessage> Refine(Stream body) =>
-            new Clone(firstLine, parts, body);
+        public IRendering<IMessage> Refine(Stream newBody) =>
+            new Clone(firstLine, parts, newBody);
 
         public async Task<IMessage> Render()
         {
