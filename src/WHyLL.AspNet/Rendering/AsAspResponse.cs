@@ -9,30 +9,28 @@ namespace WHyLL.AspNet.Rendering
     /// <summary>
     /// Renders a message as AspNetResponse into a HttpContext.
     /// </summary>
-    public sealed class AsAspResponse(HttpContext context) : RenderingEnvelope<HttpResponse>(
-        (MessageAs._(async msg =>
-            {
-                context.Response.StatusCode = await msg.Render(new StatusCode());
-                var headers = await msg.Render(new AllHeaders());
-
-                foreach (var headerName in headers.Keys())
-                    context.Response.Headers
-                        .Add(
-                            headerName,
-                            new StringValues(headers[headerName].ToArray())
-                        );
-
-                context.Response.Body = await msg.Render(new Body());
-                return context.Response;
-            })
-        )
-    )
+    public sealed class AsAspResponse : RenderingEnvelope<HttpResponse>
     {
-        /// <summary>
-        /// Renders a message as AspNetResponse into a HttpContext.
-        /// </summary>
-        public AsAspResponse() : this(new DefaultHttpContext())
+        public AsAspResponse(HttpContext context) : base
+        (
+            (new MessageAs<HttpResponse>(async msg =>
+                {
+                    context.Response.StatusCode = await msg.Render(new StatusCode());
+                    var headers = await msg.Render(new AllHeaders());
+
+                    foreach (var headerName in headers.Keys())
+                        context.Response.Headers
+                            .Add(
+                                headerName,
+                                new StringValues(headers[headerName].ToArray())
+                            );
+
+                    await (await msg.Render(new Body())).CopyToAsync(context.Response.Body);
+                    return context.Response;
+                })
+            )
+        )
         { }
+        
     }
 }
-
