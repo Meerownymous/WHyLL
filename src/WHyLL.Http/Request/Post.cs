@@ -23,15 +23,15 @@ namespace WHyLL.Http.Request
         /// <summary>
         /// HTTP POST Request.
         /// </summary>
-        public Post(Uri uri, Stream body, params IPair<string, string>[] headers) : this(
-            uri, new Version(1,1), body, headers
+        public Post(Uri uri, Stream body, IPair<string,string> header, params IPair<string, string>[] headers) : this(
+            uri, new Version(1,1), body, Joined._(headers, header)
         )
         { }
 
         /// <summary>
         /// HTTP POST Request.
         /// </summary>
-        public Post(Uri uri, Version httpVersion, Stream body, params IPair<string, string>[] headers) : this(
+        public Post(Uri uri, Version httpVersion, Stream body, IEnumerable<IPair<string, string>> headers) : this(
             uri, 
             httpVersion, 
             Joined._<IMessageInput>(AsEnumerable._(new BodyInput(body)), 
@@ -42,7 +42,7 @@ namespace WHyLL.Http.Request
         /// <summary>
         /// HTTP POST Request.
         /// </summary>
-        public Post(Uri uri, Stream body, params IMessageInput[] more) : this(
+        public Post(Uri uri, Stream body, IMessageInput input, params IMessageInput[] more) : this(
             uri, new Version(1,1), Joined._(AsEnumerable._(new BodyInput(body)), more)
         )
         { }
@@ -50,8 +50,8 @@ namespace WHyLL.Http.Request
         /// <summary>
         /// HTTP POST Request.
         /// </summary>
-        public Post(Uri uri, params IMessageInput[] more) : this(
-            uri, new Version(1,1), more
+        public Post(Uri uri, IMessageInput input, params IMessageInput[] more) : this(
+            uri, new Version(1,1), Joined._(more, input)
         )
         { }
     }

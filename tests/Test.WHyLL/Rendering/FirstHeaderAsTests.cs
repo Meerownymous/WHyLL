@@ -21,5 +21,20 @@ namespace WHyLL.Rendering.Test
 				).AsString()
 			);
 		}
+		
+		[Fact]
+		public async void IgnoresCase()
+		{
+			Assert.Equal(
+				"Valu the Bear",
+				AsText._(
+					(await
+						new FirstHeader("CHarAcTEr")
+							.Refine(AsPair._("character", "Valu the Bear"))
+							.Render()
+					)
+				).AsString()
+			);
+		}
 	}
 }

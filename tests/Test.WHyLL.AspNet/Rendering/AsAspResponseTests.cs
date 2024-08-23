@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Test.WHyLL.AspNet.Rendering
 {
-    public sealed class AspResponseTests
+    public sealed class AsAspResponseTests
     {
         [Fact]
         public async void RendersStatus()
@@ -18,7 +18,7 @@ namespace Test.WHyLL.AspNet.Rendering
                 200,
                 (await new SimpleMessage()
                     .With(new ResponseLine(HttpStatusCode.OK).AsString())
-                    .Render(new AspResponse())
+                    .Render(new AsAspResponse())
                 ).StatusCode
             );
         }
@@ -31,7 +31,7 @@ namespace Test.WHyLL.AspNet.Rendering
                 (await new SimpleMessage()
                     .With(new ResponseLine(HttpStatusCode.OK).AsString())
                     .With(new Header("whoomp", "there it is"))
-                    .Render(new AspResponse())
+                    .Render(new AsAspResponse())
                 ).Headers["whoomp"]
             );
         }
@@ -45,7 +45,7 @@ namespace Test.WHyLL.AspNet.Rendering
                     (await new SimpleMessage()
                         .With(new ResponseLine(200).AsString())
                         .WithBody(new AsInput("Clean Code").Stream())
-                        .Render(new AspResponse())
+                        .Render(new AsAspResponse())
                     ).Body
                 ).AsString()
             );

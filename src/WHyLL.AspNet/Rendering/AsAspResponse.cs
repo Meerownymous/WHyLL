@@ -8,7 +8,7 @@ namespace WHyLL.AspNet.Rendering
     /// <summary>
     /// Renders a message as AspNetResponse into a HttpContext.
     /// </summary>
-    public sealed class AspResponse(HttpContext context) : RenderingEnvelope<HttpResponse>(
+    public sealed class AsAspResponse(HttpContext context) : RenderingEnvelope<HttpResponse>(
         (MessageAs._(async msg =>
             {
                 context.Response.StatusCode = await msg.Render(new StatusCode());
@@ -30,7 +30,7 @@ namespace WHyLL.AspNet.Rendering
         /// <summary>
         /// Renders a message as AspNetResponse into a HttpContext.
         /// </summary>
-        public AspResponse() : this(new DefaultHttpContext())
+        public AsAspResponse() : this(new DefaultHttpContext())
         { }
     }
 }

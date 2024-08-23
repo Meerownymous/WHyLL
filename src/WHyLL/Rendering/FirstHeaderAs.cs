@@ -10,7 +10,7 @@ namespace WHyLL.Rendering
             new HeadersAs<TOutput>(headers =>
                 mapping(
                     First._(
-                            header => header.Key() == name,
+                            header => header.Key().Equals(name, StringComparison.OrdinalIgnoreCase),
                             headers,
                             new ArgumentException($"Header '{name}' does not exist.")
                         ).Value()
