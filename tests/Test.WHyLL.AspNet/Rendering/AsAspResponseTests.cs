@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Microsoft.AspNetCore.Http;
 using Tonga.IO;
 using Tonga.Text;
 using WHyLL.AspNet.Rendering;
@@ -18,7 +19,7 @@ namespace Test.WHyLL.AspNet.Rendering
                 200,
                 (await new SimpleMessage()
                     .With(new ResponseLine(HttpStatusCode.OK).AsString())
-                    .Render(new AsAspResponse())
+                    .Render(new AsAspResponse(new DefaultHttpContext()))
                 ).StatusCode
             );
         }
@@ -31,7 +32,7 @@ namespace Test.WHyLL.AspNet.Rendering
                 (await new SimpleMessage()
                     .With(new ResponseLine(HttpStatusCode.OK).AsString())
                     .With(new Header("whoomp", "there it is"))
-                    .Render(new AsAspResponse())
+                    .Render(new AsAspResponse(new DefaultHttpContext()))
                 ).Headers["whoomp"]
             );
         }
@@ -39,13 +40,17 @@ namespace Test.WHyLL.AspNet.Rendering
         [Fact]
         public async void RendersBody()
         {
+            var context = new DefaultHttpContext();
+            context.Response.Body = new MemoryStream();
+                
+                
             Assert.Equal(
                 "Clean Code",
                 AsText._(
                     (await new SimpleMessage()
                         .With(new ResponseLine(200).AsString())
                         .WithBody(new AsInput("Clean Code").Stream())
-                        .Render(new AsAspResponse())
+                        .Render(new AsAspResponse(context))
                     ).Body
                 ).AsString()
             );

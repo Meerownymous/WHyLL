@@ -26,6 +26,7 @@ namespace WHyLL.AspNet.Rendering
                             );
 
                     await (await msg.Render(new Body())).CopyToAsync(context.Response.Body);
+                    context.Response.Body.Position = 0;
                     return context.Response;
                 })
             )
