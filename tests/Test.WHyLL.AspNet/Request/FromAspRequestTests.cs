@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Tonga.IO;
+using WHyLL.AspNet.Request;
 using WHyLL.Rendering;
 using Xunit;
 
-namespace WHyLL.AspNet.Request.Test
+namespace Test.WHyLL.AspNet.Request
 {
     public sealed class FromAspRequestTests
     {
@@ -70,6 +71,23 @@ namespace WHyLL.AspNet.Request.Test
                 (await new FromAspRequest(
                     httpContext.Request
                 ).Render(new BodyAsText()))
+            );
+        }
+        
+        [Fact]
+        public async void AllowsBodyReplay()
+        {
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Method = "GET";
+            httpContext.Request.Path = "/your/shit/together";
+            httpContext.Request.Body = new AsInput("booody").Stream();
+
+            var msg = new FromAspRequest(httpContext.Request, allowBodyReplay: true);
+            await msg.Render(new BodyAsText());
+            Assert.Equal(
+                "booody",
+                (await msg.Render(new BodyAsText()))
+                .ReplaceLineEndings()
             );
         }
     }
