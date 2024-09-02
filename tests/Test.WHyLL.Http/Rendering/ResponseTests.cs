@@ -1,5 +1,6 @@
 ﻿using Tonga.Bytes;
 using Tonga.IO;
+using Tonga.Map;
 using Tonga.Text;
 using WHyLL;
 using WHyLL.Headers;
@@ -134,6 +135,27 @@ namespace Test.WHyLL.Http.Rendering
             Assert.Equal(
                 "Me so buried in bytestream",
                 AsText._(result.Content.ReadAsStream()).AsString()
+            );
+        }
+        
+        [Fact]
+        public async void AddsContentHeaders()
+        {
+            HttpRequestMessage result = new HttpRequestMessage();
+            await
+                new AsHttpResponse(
+                        message =>
+                        {
+                            result = message;
+                            return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK));
+                        })
+                    .Refine(new MemoryStream(AsBytes._("Me so buried in bytestream").Bytes()))
+                    .Refine(new AsPair<string, string>("Content-type", "text/plain"))
+                    .Render();
+
+            Assert.Equal(
+                "text/plain",
+                AsText._(result.Content.Headers.ContentType.ToString()).AsString()
             );
         }
 
