@@ -1,7 +1,7 @@
 ﻿using Tonga.Text;
 using Xunit;
 
-namespace WHyLL.Rendering.Test
+namespace WHyLL.Warp.Test
 {
     public sealed class FirstLineTests
 	{

@@ -57,13 +57,13 @@ namespace WHyLL.Message
         public IMessage WithBody(Stream newBody) =>
             new SimpleMessage(this.firstLine.Value, parts, newBody);
 
-        public async Task<T> Render<T>(IRendering<T> rendering)
+        public async Task<T> To<T>(IWarp<T> warp)
         {
-            rendering = rendering.Refine(this.firstLine.Value);
+            warp = warp.Refine(this.firstLine.Value);
             foreach (var part in parts)
-                rendering = rendering.Refine(part);
-            rendering = rendering.Refine(body);
-            return await rendering.Render();
+                warp = warp.Refine(part);
+            warp = warp.Refine(body);
+            return await warp.Render();
         }
     }
 }

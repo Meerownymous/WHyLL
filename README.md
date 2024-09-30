@@ -14,8 +14,8 @@ Body       //Can contain anything from Text to Downloads
 ```
 
 This is how the library is designed. There is a message, which you can refine by first line, headers, and a body.
-Then, you render the message, using one of the available renderings.
-Most likely you render it to a response message, and then you render the response message to what you need, for example an XML document.
+Then, you render the message, using one of the available warps.
+Most likely you render it to a response message, and then you warp the response message to what you need, for example an XML document.
 
 ## Setup a message
 This is how you setup a http GET message:
@@ -70,8 +70,8 @@ var bodyText =
 ## Http 2.0 and 3.0
 For using Http 2.0/3.0 in your requests, take the objects in the WHyLL.Request.Http2 or WHyLL.Request.Http3 namespaces.
 
-# Advanced rendering
-Use strategic rendering to build a control-flow in your app:
+# Advanced Warp
+Use strategic Warp to build a control-flow in your app:
 
 ```csharp
 var result =

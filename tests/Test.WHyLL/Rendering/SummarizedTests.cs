@@ -2,7 +2,7 @@
 using WHyLL.Message;
 using Xunit;
 
-namespace WHyLL.Rendering.Test
+namespace WHyLL.Warp.Test
 {
     public sealed class SummarizedTests
     {
@@ -10,7 +10,7 @@ namespace WHyLL.Rendering.Test
         public async void RendersAll()
         {
             var rendered = 0;
-            await new SimpleMessage().Render(
+            await new SimpleMessage().To(
                     Summarized._(
                         Repeated._(
                             FromScratch._(
@@ -28,7 +28,7 @@ namespace WHyLL.Rendering.Test
         {
             var rendered = 0;
             await Assert.ThrowsAsync<Exception>(async () =>
-                await new SimpleMessage().Render(
+                await new SimpleMessage().To(
                     Summarized._(
                         AsEnumerable._(
                             FromScratch._(() => rendered++),
@@ -46,7 +46,7 @@ namespace WHyLL.Rendering.Test
             var rendered = 0;
             try
             {
-                await new SimpleMessage().Render(
+                await new SimpleMessage().To(
                     Summarized._(
                         AsEnumerable._(
                             FromScratch._(() => rendered++),
@@ -69,7 +69,7 @@ namespace WHyLL.Rendering.Test
         {
             Assert.Equal(
                 "Last",
-                await new SimpleMessage().Render(
+                await new SimpleMessage().To(
                     Summarized._(
                         AsEnumerable._(
                             FromScratch._(() => "First"),
@@ -84,7 +84,7 @@ namespace WHyLL.Rendering.Test
         public async void SummarizesByLambda()
         {
             var result = "";
-            await new SimpleMessage().Render(
+            await new SimpleMessage().To(
                 Summarized._(
                     AsEnumerable._(
                         FromScratch._(() => result += "A"),

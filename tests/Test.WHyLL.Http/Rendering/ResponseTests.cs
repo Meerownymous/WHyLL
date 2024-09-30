@@ -4,22 +4,22 @@ using Tonga.Map;
 using Tonga.Text;
 using WHyLL;
 using WHyLL.Headers;
-using WHyLL.Http.Rendering;
 using WHyLL.Http.Request;
-using WHyLL.Rendering;
-using WHyLL.Rendering.Http;
+using WHyLL.Http.Warp;
+using WHyLL.Warp;
+using WHyLL.Warp;
 using Xunit;
 
-namespace Test.WHyLL.Http.Rendering
+namespace Test.WHyLL.Http.Warp
 {
-	public sealed class AsHttpResponseTests
+	public sealed class HttpWireTests
 	{
         [Fact]
         public async void ConfiguresRequestUri()
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
-                new AsHttpResponse(
+                new HttpWire(
                     message =>
                     {
                         result = message;
@@ -52,7 +52,7 @@ namespace Test.WHyLL.Http.Rendering
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
-                new AsHttpResponse(
+                new HttpWire(
                     message =>
                     {
                         result = message;
@@ -77,7 +77,7 @@ namespace Test.WHyLL.Http.Rendering
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
-                new AsHttpResponse(
+                new HttpWire(
                     message =>
                     {
                         result = message;
@@ -103,7 +103,7 @@ namespace Test.WHyLL.Http.Rendering
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
-                new AsHttpResponse(
+                new HttpWire(
                     message =>
                     {
                         result = message;
@@ -123,7 +123,7 @@ namespace Test.WHyLL.Http.Rendering
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
-                new AsHttpResponse(
+                new HttpWire(
                     message =>
                     {
                         result = message;
@@ -143,7 +143,7 @@ namespace Test.WHyLL.Http.Rendering
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
-                new AsHttpResponse(
+                new HttpWire(
                         message =>
                         {
                             result = message;
@@ -165,11 +165,11 @@ namespace Test.WHyLL.Http.Rendering
             Assert.Equal(
                 "HTTP/1.1 200 OK\r\n",
                 await
-                    new AsHttpResponse(
+                    new HttpWire(
                         new HttpResponseMessage(System.Net.HttpStatusCode.OK)
                     )
                     .Render()
-                    .Render(new FirstLine())
+                    .To(new FirstLine())
             );
         }
 
@@ -182,9 +182,9 @@ namespace Test.WHyLL.Http.Rendering
             Assert.Contains(
                 "call Saul",
                 (await
-                    new AsHttpResponse(response)
+                    new HttpWire(response)
                     .Render()
-                    .Render(new AllHeaders())
+                    .To(new AllHeaders())
                 )["header"]
             );
         }
@@ -197,7 +197,7 @@ namespace Test.WHyLL.Http.Rendering
                 AsText._(
                     new AsInput(
                         await
-                            new AsHttpResponse(
+                            new HttpWire(
                                 new HttpResponseMessage(System.Net.HttpStatusCode.OK)
                                 {
                                     Content =
@@ -208,7 +208,7 @@ namespace Test.WHyLL.Http.Rendering
                                         )
                                 })
                                 .Render()
-                                .Render(new Body())
+                                .To(new Body())
                     )
                 ).AsString()
             );
@@ -220,7 +220,7 @@ namespace Test.WHyLL.Http.Rendering
             var output = new MemoryStream();
 
             await
-                new AsHttpResponse(
+                new HttpWire(
                     message => Task.FromResult(
                         new HttpResponseMessage(System.Net.HttpStatusCode.OK)
                         {
@@ -237,7 +237,7 @@ namespace Test.WHyLL.Http.Rendering
                     )
                 )
                 .Render()
-                .Render(new Body());
+                .To(new Body());
 
             Assert.Equal(0, output.Length);
         }

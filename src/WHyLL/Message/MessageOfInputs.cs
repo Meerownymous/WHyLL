@@ -24,8 +24,8 @@ namespace WHyLL.Message
         )
         { }
 
-        public Task<T> Render<T>(IRendering<T> rendering) =>
-            this.message.Value.Render(rendering);
+        public Task<T> To<T>(IWarp<T> warp) =>
+            this.message.Value.To(warp);
 
         public IMessage With(string firstLine) =>
             this.message.Value.With(firstLine);

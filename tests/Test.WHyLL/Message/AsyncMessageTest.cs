@@ -1,4 +1,4 @@
-﻿using WHyLL.Rendering;
+﻿using WHyLL.Warp;
 using Xunit;
 
 namespace WHyLL.Message.Test
@@ -13,9 +13,9 @@ namespace WHyLL.Message.Test
                 (await new AsyncMessage(async () =>
                     await new SimpleMessage()
                         .With("BE /lazy lazytp/1.1")
-                        .Render(new Clone())
+                        .To(new Clone())
                     )
-                    .Render(new FirstLine())
+                    .To(new FirstLine())
                 )
             );
         }

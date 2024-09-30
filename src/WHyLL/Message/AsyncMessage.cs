@@ -1,5 +1,6 @@
 ﻿using Tonga;
-using WHyLL.Rendering;
+using WHyLL.Warp;
+using WHyLL.Warp;
 
 namespace WHyLL.Message
 {
@@ -8,8 +9,8 @@ namespace WHyLL.Message
     /// </summary>
     public sealed class AsyncMessage(Func<Task<IMessage>> asyncMessage) : IMessage
     {
-        public async Task<T> Render<T>(IRendering<T> rendering) =>
-            await asyncMessage().Render(rendering);
+        public async Task<T> To<T>(IWarp<T> warp) =>
+            await asyncMessage().To(warp);
 
         public IMessage With(string firstLine) =>
             asyncMessage().Result.With(firstLine);

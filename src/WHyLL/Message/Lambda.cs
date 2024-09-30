@@ -9,8 +9,8 @@ namespace WHyLL.Message
     {
         private readonly Lazy<IMessage> message = new(message);
 
-        public Task<T> Render<T>(IRendering<T> rendering) =>
-            message.Value.Render(rendering);
+        public Task<T> To<T>(IWarp<T> warp) =>
+            message.Value.To(warp);
 
         public IMessage With(string firstLine) =>
             message.Value.With(firstLine);

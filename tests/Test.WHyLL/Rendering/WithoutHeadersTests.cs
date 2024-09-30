@@ -1,9 +1,10 @@
 ﻿using Tonga.Enumerable;
 using Tonga.Map;
 using WHyLL.Message;
+using WHyLL.Warp;
 using Xunit;
 
-namespace WHyLL.Rendering.Test
+namespace WHyLL.Warp.Test
 {
     public sealed class WithoutHeadersTest
     {
@@ -21,8 +22,8 @@ namespace WHyLL.Rendering.Test
                         ),
                         new MemoryStream()
                     )
-                    .Render(new WithoutHeaders(header => header.Key() == "remove-me"))
-                    .Render(new AllHeaders())
+                    .To(new WithoutHeaders(header => header.Key() == "remove-me"))
+                    .To(new AllHeaders())
                 )
                 .Keys()
             );
@@ -42,8 +43,8 @@ namespace WHyLL.Rendering.Test
                         ),
                         new MemoryStream()
                     )
-                    .Render(new WithoutHeaders(header => header.Key() == "remove-me"))
-                    .Render(new AllHeaders())
+                    .To(new WithoutHeaders(header => header.Key() == "remove-me"))
+                    .To(new AllHeaders())
                 )
                 .Keys()
             );

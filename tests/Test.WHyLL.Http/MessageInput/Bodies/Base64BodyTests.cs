@@ -1,7 +1,7 @@
 using Tonga.Text;
 using WHyLL.Http.MessageInput.Bodies;
 using WHyLL.Message;
-using WHyLL.Rendering;
+using WHyLL.Warp;
 using Xunit;
 
 namespace Test.WHyLL.Http.MessageInput.Bodies;
@@ -17,7 +17,7 @@ public sealed class Base64BodyTests
                 await
                     new MessageOfInputs(
                         new Base64Body("I am 64")    
-                    ).Render(new BodyAsText())
+                    ).To(new BodyAsText())
             ).AsString()
         );
     }

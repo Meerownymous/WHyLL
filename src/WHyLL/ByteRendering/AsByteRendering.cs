@@ -1,20 +1,20 @@
 using Tonga;
 
-namespace WHyLL.ByteRendering;
+namespace WHyLL.ByteWarp;
 
-public sealed class AsByteRendering<TTarget>(Func<byte[], IEnumerable<IPair<string, byte[]>>, Stream, Task<TTarget>> render) : IByteRendering<TTarget>
+public sealed class AsByteWarp<TTarget>(Func<byte[], IEnumerable<IPair<string, byte[]>>, Stream, Task<TTarget>> render) : IByteWarp<TTarget>
 {
-    public AsByteRendering(Func<byte[], Task<TTarget>> render) : this(
+    public AsByteWarp(Func<byte[], Task<TTarget>> render) : this(
         (head, _, _) => render(head)
     )
     { }
     
-    public AsByteRendering(Func<IEnumerable<IPair<string,byte[]>>, Task<TTarget>> render) : this(
+    public AsByteWarp(Func<IEnumerable<IPair<string,byte[]>>, Task<TTarget>> render) : this(
         (_, attributes, _) => render(attributes)
     )
     { }
     
-    public AsByteRendering(Func<Stream, Task<TTarget>> render) : this(
+    public AsByteWarp(Func<Stream, Task<TTarget>> render) : this(
         (_, _, body) => render(body)
     )
     { }

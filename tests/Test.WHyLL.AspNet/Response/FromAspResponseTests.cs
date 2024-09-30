@@ -2,12 +2,12 @@
 using Microsoft.Extensions.Primitives;
 using Tonga.IO;
 using WHyLL.AspNet.Request;
-using WHyLL.Rendering;
+using WHyLL.Warp;
 using Xunit;
 
 namespace WHyLL.AspNet.Response.Test
 {
-    public sealed class FromAspRequestTests
+    public sealed class UnwrapAspRequestTests
     {
         [Fact]
         public async void ConvertsResponseLine()
@@ -17,9 +17,9 @@ namespace WHyLL.AspNet.Response.Test
 
             Assert.Equal(
                 "HTTP/1.1 200 OK",
-                await new FromAspResponse(
+                await new UnwrapAspResponse(
                     httpContext.Response
-                ).Render(new FirstLine())
+                ).To(new FirstLine())
             );
         }
 
@@ -33,9 +33,9 @@ namespace WHyLL.AspNet.Response.Test
 
             Assert.Equal(
                 "this out",
-                await new FromAspResponse(
+                await new UnwrapAspResponse(
                     httpContext.Response
-                ).Render(new FirstHeader("check"))
+                ).To(new FirstHeader("check"))
             );
         }
 
@@ -49,9 +49,9 @@ namespace WHyLL.AspNet.Response.Test
 
             Assert.Equal(
                 new string[] { "this out", "this also" },
-                (await new FromAspResponse(
+                (await new UnwrapAspResponse(
                     httpContext.Response
-                ).Render(new AllHeaders()))["check"]
+                ).To(new AllHeaders()))["check"]
             );
         }
 
@@ -64,9 +64,9 @@ namespace WHyLL.AspNet.Response.Test
 
             Assert.Equal(
                 "booody",
-                (await new FromAspResponse(
+                (await new UnwrapAspResponse(
                     httpContext.Response
-                ).Render(new BodyAsText()))
+                ).To(new BodyAsText()))
             );
         }
     }
