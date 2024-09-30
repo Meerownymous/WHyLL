@@ -3,7 +3,7 @@ using Tonga.IO;
 using Tonga.Text;
 using WHyLL.Headers;
 using WHyLL.MessageInput;
-using WHyLL.Rendering;
+using WHyLL.Warp;
 using Xunit;
 
 namespace WHyLL.Message.Test
@@ -20,7 +20,7 @@ namespace WHyLL.Message.Test
 						new HeaderInput(
 							new Header("Elegance", "Approved")
 						)
-					).Render(new AllHeaders())
+					).To(new AllHeaders())
 				)["Elegance"]
 			);
 		}
@@ -38,7 +38,7 @@ namespace WHyLL.Message.Test
 									new AsBytes("Insert me")
 								).Stream()
 							)
-						).Render(new Body())
+						).To(new Body())
 				).AsString()
             );
         }

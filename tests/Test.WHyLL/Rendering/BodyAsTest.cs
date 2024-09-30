@@ -3,7 +3,7 @@ using Tonga.Text;
 using WHyLL.Message;
 using Xunit;
 
-namespace WHyLL.Rendering.Test
+namespace WHyLL.Warp.Test
 {
     public sealed class BodyAsTest
     {
@@ -14,7 +14,7 @@ namespace WHyLL.Rendering.Test
                 "I am the body",
                 (await new SimpleMessage()
                     .WithBody(new AsInput("I am the body").Stream())
-                    .Render(
+                    .To(
                         new BodyAs<string>(body=>
                             AsText._(body).AsString()
                         )

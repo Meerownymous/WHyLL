@@ -1,5 +1,5 @@
-namespace WHyLL.ByteRendering;
+namespace WHyLL.ByteWarp;
 
-public sealed class HeadAs<TOutput>(Func<byte[], Task<TOutput>> render) : ByteRenderingEnvelope<TOutput>(
-    new AsByteRendering<TOutput>(bytes => render(bytes))
+public sealed class HeadAs<TOutput>(Func<byte[], Task<TOutput>> render) : ByteWarpEnvelope<TOutput>(
+    new AsByteWarp<TOutput>(bytes => render(bytes))
 );

@@ -11,12 +11,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Headers\" />
-    <None Remove="Rendering\" />
+    <None Remove="Warp\" />
     <None Remove="Request\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Headers\" />
-    <Folder Include="Rendering\" />
+    <Folder Include="Warp\" />
     <Folder Include="Request\" />
   </ItemGroup>
 

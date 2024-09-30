@@ -8,9 +8,9 @@ namespace WHyLL.Message
     /// </summary>
     public sealed class AsMessage(string firstLine, IEnumerable<IPair<string,string>> parts, Stream body) : IMessage
     {
-        public async Task<T> Render<T>(IRendering<T> rendering) =>
+        public async Task<T> To<T>(IWarp<T> warp) =>
             await
-                rendering.Refine(firstLine)
+                warp.Refine(firstLine)
                     .Refine(parts)
                     .Refine(body)
                     .Render();

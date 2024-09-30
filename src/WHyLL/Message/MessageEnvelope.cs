@@ -19,8 +19,8 @@ namespace WHyLL.Message
         public IMessage WithBody(Stream newBody) =>
             origin.WithBody(newBody);
 
-        public Task<T> Render<T>(IRendering<T> rendering) =>
-            origin.Render(rendering);
+        public Task<T> To<T>(IWarp<T> warp) =>
+            origin.To(warp);
     }
 }
 

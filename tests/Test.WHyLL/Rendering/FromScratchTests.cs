@@ -1,7 +1,7 @@
 ﻿using WHyLL.Message;
 using Xunit;
 
-namespace WHyLL.Rendering.Test
+namespace WHyLL.Warp.Test
 {
     public sealed class FromScratchTests
     {
@@ -10,7 +10,7 @@ namespace WHyLL.Rendering.Test
         {
             Assert.Equal(
                 201051,
-                await new SimpleMessage().Render(
+                await new SimpleMessage().To(
                     new FromScratch<int>(() => 201051)
                 )
             );

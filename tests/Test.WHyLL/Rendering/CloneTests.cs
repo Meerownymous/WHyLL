@@ -1,7 +1,8 @@
 ﻿using WHyLL.Headers;
+using WHyLL.Warp;
 using Xunit;
 
-namespace WHyLL.Rendering.Test
+namespace WHyLL.Warp.Test
 {
     public sealed class CloneTests
     {
@@ -19,7 +20,7 @@ namespace WHyLL.Rendering.Test
                         .Refine(new Header("Test-Difficulty", "Easy"))
                         .Refine(new Header("Test-Difficulty", "Peasy"))
                         .Render()
-                        .Render(new AllHeaders())
+                        .To(new AllHeaders())
                 )[key]
             );
         }

@@ -1,7 +1,7 @@
 ﻿using WHyLL.Message;
 using Xunit;
 
-namespace WHyLL.Rendering.Test
+namespace WHyLL.Warp.Test
 {
     public sealed class FirstLineAsTest
     {
@@ -12,7 +12,7 @@ namespace WHyLL.Rendering.Test
                 123,
                 (await new SimpleMessage()
                     .With("123")
-                    .Render(new FirstLineAs<int>(int.Parse))
+                    .To(new FirstLineAs<int>(int.Parse))
                 )
             );
         }

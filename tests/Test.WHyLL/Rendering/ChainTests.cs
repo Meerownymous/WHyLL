@@ -2,7 +2,7 @@
 using WHyLL.Message;
 using Xunit;
 
-namespace WHyLL.Rendering.Test
+namespace WHyLL.Warp.Test
 {
     public sealed class ChainTests
     {
@@ -12,7 +12,7 @@ namespace WHyLL.Rendering.Test
             var rendered = 0;
             Assert.Equal(
                 new[] { 1, 2, 3 },
-                await new SimpleMessage().Render(
+                await new SimpleMessage().To(
                     Chain._(
                         Repeated._(
                             FromScratch._(
@@ -30,7 +30,7 @@ namespace WHyLL.Rendering.Test
         {
             var rendered = 0;
             await Assert.ThrowsAsync<Exception>(async () =>
-                await new SimpleMessage().Render(
+                await new SimpleMessage().To(
                     Chain._(
                         AsEnumerable._(
                             FromScratch._(() => rendered++),
@@ -48,7 +48,7 @@ namespace WHyLL.Rendering.Test
             var rendered = 0;
             try
             {
-                await new SimpleMessage().Render(
+                await new SimpleMessage().To(
                     Chain._(
                         AsEnumerable._(
                             FromScratch._(() => rendered++),

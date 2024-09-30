@@ -3,7 +3,7 @@ using Tonga.Map;
 using WHyLL.Message;
 using Xunit;
 
-namespace WHyLL.Rendering.Test
+namespace WHyLL.Warp.Test
 {
     public sealed class HeadersAsTest
     {
@@ -15,7 +15,7 @@ namespace WHyLL.Rendering.Test
                 (await new SimpleMessage()
                     .With(AsPair._("A", "some value"))
                     .With(AsPair._("B", "some other value"))
-                    .Render(
+                    .To(
                         new HeadersAs<IEnumerable<string>>(headers =>
                             Mapped._(
                                 header => header.Key(),

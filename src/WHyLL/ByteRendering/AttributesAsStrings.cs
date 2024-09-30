@@ -3,9 +3,9 @@ using Tonga;
 using Tonga.Enumerable;
 using Tonga.Map;
 
-namespace WHyLL.ByteRendering;
+namespace WHyLL.ByteWarp;
 
-public sealed class AttributesAsStrings(Encoding enc) : ByteRenderingEnvelope<IEnumerable<IPair<string, string>>>(
+public sealed class AttributesAsStrings(Encoding enc) : ByteWarpEnvelope<IEnumerable<IPair<string, string>>>(
     new AttributesAs<IEnumerable<IPair<string, string>>>(
         attributes => Task.FromResult(
             Mapped._(

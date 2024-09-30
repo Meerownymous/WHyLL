@@ -3,7 +3,7 @@ using Tonga.Scalar;
 using Tonga.Text;
 using WHyLL.Headers;
 using WHyLL.Http.Request;
-using WHyLL.Rendering;
+using WHyLL.Warp;
 using Xunit;
 
 namespace Test.WHyLL.Http.Request
@@ -19,7 +19,7 @@ namespace Test.WHyLL.Http.Request
                     (await
                         new Get(new Uri("http://www.enhanced-calm.com"), new Version(1, 1))
                             .With(new Header("x-test", "successful"))
-                            .Render(new AllHeaders())
+                            .To(new AllHeaders())
                     )["x-test"]
                 ).Value()
             );
@@ -33,7 +33,7 @@ namespace Test.WHyLL.Http.Request
                 await
                     new Get(new Uri("http://www.enhanced-calm.com/old"), new Version(1, 1))
                         .With("POST http://www.enhanced-calm.com/enhance HTTP/3.0")
-                        .Render(new FirstLine())
+                        .To(new FirstLine())
                 
             );
         }
@@ -47,7 +47,7 @@ namespace Test.WHyLL.Http.Request
                     await
                         new Get(new Uri("http://www.enhanced-calm.com"), new Version(1, 1))
                             .WithBody(new MemoryStream(AsBytes._("success").Bytes()))
-                            .Render(new Body())
+                            .To(new Body())
                 ).AsString()
             );
         }

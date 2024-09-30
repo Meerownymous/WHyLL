@@ -1,8 +1,8 @@
 using System.Text;
 
-namespace WHyLL.ByteRendering;
+namespace WHyLL.ByteWarp;
 
-public sealed class HeadAsString(Encoding enc) : ByteRenderingEnvelope<string>(
+public sealed class HeadAsString(Encoding enc) : ByteWarpEnvelope<string>(
     new HeadAs<string>(head => Task.FromResult(enc.GetString(head)))
 )
 {

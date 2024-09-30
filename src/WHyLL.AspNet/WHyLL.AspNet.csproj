@@ -9,12 +9,12 @@
   <ItemGroup>
     <None Remove="Request\" />
     <None Remove="Response\" />
-    <None Remove="Rendering\" />
+    <None Remove="Warp\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Request\" />
     <Folder Include="Response\" />
-    <Folder Include="Rendering\" />
+    <Folder Include="Warp\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />

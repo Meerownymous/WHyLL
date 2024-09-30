@@ -2,12 +2,13 @@
 using Tonga.Enumerable;
 using Tonga.Map;
 using WHyLL;
+using WHyLL.Http.Warp;
 using WHyLL.Message;
-using WHyLL.Rendering;
-using WHyLL.Rendering.Http;
+using WHyLL.Warp;
+using WHyLL.Warp;
 using Xunit;
 
-namespace Test.WHyLL.Http.Rendering
+namespace Test.WHyLL.Http.Warp
 {
     public sealed class WithoutHttpTest
     {
@@ -25,8 +26,8 @@ namespace Test.WHyLL.Http.Rendering
                         ),
                         new MemoryStream()
                     )
-                    .Render(new WithoutHttp())
-                    .Render(new AllHeaders())
+                    .To(new WithoutHttp())
+                    .To(new AllHeaders())
                 )
                 .Keys()
             );
@@ -46,8 +47,8 @@ namespace Test.WHyLL.Http.Rendering
                         ),
                         new MemoryStream()
                     )
-                    .Render(new WithoutHeaders(header => header.Key() == "remove-me"))
-                    .Render(new AllHeaders())
+                    .To(new WithoutHeaders(header => header.Key() == "remove-me"))
+                    .To(new AllHeaders())
                 )
                 .Keys()
             );
@@ -62,8 +63,8 @@ namespace Test.WHyLL.Http.Rendering
                     None._<IPair<string, string>>(),
                     new MemoryStream()
                 )
-                .Render(new WithoutHttp())
-                .Render(new FirstLine())
+                .To(new WithoutHttp())
+                .To(new FirstLine())
             );
         }
     }

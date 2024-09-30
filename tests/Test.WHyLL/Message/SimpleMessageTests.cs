@@ -1,7 +1,7 @@
 ﻿using Tonga;
 using Tonga.Enumerable;
 using WHyLL.Headers;
-using WHyLL.Rendering;
+using WHyLL.Warp;
 using Xunit;
 
 namespace WHyLL.Message.Test
@@ -15,7 +15,7 @@ namespace WHyLL.Message.Test
                 "POST /kasten HTTP/1.1",
                 await
 					new SimpleMessage("POST /kasten HTTP/1.1", None._<IPair<string,string>>(), new MemoryStream())
-						.Render(new FirstLine())
+						.To(new FirstLine())
 			);
 		}
 
@@ -31,7 +31,7 @@ namespace WHyLL.Message.Test
                         new MemoryStream()
                     )
                     .With("PUT /putput/dear/pigeon HTTP/1.1")
-                    .Render(new FirstLine())
+                    .To(new FirstLine())
             );
         }
 
@@ -46,7 +46,7 @@ namespace WHyLL.Message.Test
                             Tonga.Enumerable.Single._(new Header("Accepted-Headwear", "Baseball-Cap")),
                             new MemoryStream()
                         )
-                        .Render(new AllHeaders())
+                        .To(new AllHeaders())
                     )["Accepted-Headwear"]
             );
         }
@@ -63,7 +63,7 @@ namespace WHyLL.Message.Test
                         new MemoryStream()
                     )
                     .With(new Header("Accepted-Headwear", "Underpants"))
-                    .Render(new AllHeaders())
+                    .To(new AllHeaders())
                 )["Accepted-Headwear"]
             );
         }

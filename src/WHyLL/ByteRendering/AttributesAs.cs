@@ -1,9 +1,9 @@
 using Tonga;
 
-namespace WHyLL.ByteRendering;
+namespace WHyLL.ByteWarp;
 
 public sealed class AttributesAs<TOutput>(
     Func<IEnumerable<IPair<string,byte[]>>, Task<TOutput>> render
-) : ByteRenderingEnvelope<TOutput>(
-    new AsByteRendering<TOutput>(attributes => render(attributes))
+) : ByteWarpEnvelope<TOutput>(
+    new AsByteWarp<TOutput>(attributes => render(attributes))
 );

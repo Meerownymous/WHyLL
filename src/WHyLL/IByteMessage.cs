@@ -33,6 +33,6 @@ namespace WHyLL
         /// <summary>
         /// Render the message to a response, a followup or something else.
         /// </summary>
-        Task<T> Render<T>(IByteRendering<T> rendering);
+        Task<T> Render<T>(IByteWarp<T> Warp);
     }
 }

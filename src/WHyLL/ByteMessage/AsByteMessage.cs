@@ -16,6 +16,6 @@ public sealed class AsByteMessage(byte[] head, IEnumerable<IPair<string,byte[]>>
     public IByteMessage WithBody(Stream newBody) =>
         new AsByteMessage(head, attributes, body);
 
-    public Task<T> Render<T>(IByteRendering<T> rendering) =>
-        rendering.Render(head, attributes, body);
+    public Task<T> Render<T>(IByteWarp<T> Warp) =>
+        Warp.Render(head, attributes, body);
 }

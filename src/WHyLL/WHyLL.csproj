@@ -11,13 +11,13 @@
     <PackageReference Include="Tonga" Version="0.9.0" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Rendering\" />
+    <None Remove="Warp\" />
     <None Remove="Headers\" />
     <None Remove="Message\" />
     <None Remove="MessageInput\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Rendering\" />
+    <Folder Include="Warp\" />
     <Folder Include="Headers\" />
     <Folder Include="Message\" />
   </ItemGroup>
