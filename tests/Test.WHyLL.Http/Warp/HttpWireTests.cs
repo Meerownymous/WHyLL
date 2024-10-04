@@ -2,11 +2,9 @@
 using Tonga.IO;
 using Tonga.Map;
 using Tonga.Text;
-using WHyLL;
 using WHyLL.Headers;
 using WHyLL.Http.Request;
 using WHyLL.Http.Warp;
-using WHyLL.Warp;
 using WHyLL.Warp;
 using Xunit;
 
@@ -34,8 +32,8 @@ namespace Test.WHyLL.Http.Warp
                     .Render();
 
             Assert.Equal(
-                result.RequestUri,
-                new Uri("http://www.enhanced-calm.com/resource")
+                new Uri("http://www.enhanced-calm.com/resource"),
+                result.RequestUri
             );
         }
 
@@ -109,6 +107,7 @@ namespace Test.WHyLL.Http.Warp
                         result = message;
                         return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK));
                     })
+                    .Refine(new RequestLine("GET", new Uri("http://www.enhanced-calm.com/resource")).AsString())
                     .Refine(new Header("better", "header"))
                     .Render();
 
@@ -129,6 +128,7 @@ namespace Test.WHyLL.Http.Warp
                         result = message;
                         return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK));
                     })
+                    .Refine(new RequestLine("GET", new Uri("http://www.enhanced-calm.com/resource")).AsString())
                     .Refine(new MemoryStream(AsBytes._("Me so buried in bytestream").Bytes()))
                     .Render();
 
@@ -149,6 +149,7 @@ namespace Test.WHyLL.Http.Warp
                             result = message;
                             return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK));
                         })
+                    .Refine(new RequestLine("GET", new Uri("http://www.enhanced-calm.com/resource")).AsString())
                     .Refine(new MemoryStream(AsBytes._("Me so buried in bytestream").Bytes()))
                     .Refine(new AsPair<string, string>("Content-type", "text/plain"))
                     .Render();
@@ -165,9 +166,10 @@ namespace Test.WHyLL.Http.Warp
             Assert.Equal(
                 "HTTP/1.1 200 OK\r\n",
                 await
-                    new HttpWire(
-                        new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                    new HttpWire(_ => 
+                        Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK))
                     )
+                    .Refine(new RequestLine("GET", new Uri("http://www.enhanced-calm.com/resource")).AsString())
                     .Render()
                     .To(new FirstLine())
             );
@@ -182,7 +184,8 @@ namespace Test.WHyLL.Http.Warp
             Assert.Contains(
                 "call Saul",
                 (await
-                    new HttpWire(response)
+                    new HttpWire(_ => Task.FromResult(response))
+                        .Refine(new RequestLine("GET", new Uri("http://www.enhanced-calm.com/resource")).AsString())
                     .Render()
                     .To(new AllHeaders())
                 )["header"]
@@ -197,16 +200,19 @@ namespace Test.WHyLL.Http.Warp
                 AsText._(
                     new AsInput(
                         await
-                            new HttpWire(
-                                new HttpResponseMessage(System.Net.HttpStatusCode.OK)
-                                {
-                                    Content =
-                                        new StreamContent(
-                                            new MemoryStream(
-                                                AsBytes._("I wanna be read lazyly").Bytes()
+                            new HttpWire(_ =>
+                                Task.FromResult(
+                                    new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                                    {
+                                        Content =
+                                            new StreamContent(
+                                                new MemoryStream(
+                                                    AsBytes._("I wanna be read lazyly").Bytes()
+                                                )
                                             )
-                                        )
-                                })
+                                    })
+                                )
+                                .Refine(new RequestLine("GET", new Uri("http://www.enhanced-calm.com/resource")).AsString())
                                 .Render()
                                 .To(new Body())
                     )
@@ -221,7 +227,7 @@ namespace Test.WHyLL.Http.Warp
 
             await
                 new HttpWire(
-                    message => Task.FromResult(
+                    _ => Task.FromResult(
                         new HttpResponseMessage(System.Net.HttpStatusCode.OK)
                         {
                             Content =
@@ -236,6 +242,7 @@ namespace Test.WHyLL.Http.Warp
                         }
                     )
                 )
+                .Refine(new RequestLine("GET", new Uri("http://www.enhanced-calm.com/resource")).AsString())
                 .Render()
                 .To(new Body());
 

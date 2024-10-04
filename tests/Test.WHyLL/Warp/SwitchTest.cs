@@ -1,6 +1,7 @@
-﻿using Xunit;
+﻿using WHyLL.Warp;
+using Xunit;
 
-namespace WHyLL.Warp.Test
+namespace Test.WHyLL.Warp
 {
     public sealed class SwitchTest
     {

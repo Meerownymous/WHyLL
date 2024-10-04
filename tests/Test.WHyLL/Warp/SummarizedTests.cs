@@ -1,8 +1,9 @@
 ﻿using Tonga.Enumerable;
 using WHyLL.Message;
+using WHyLL.Warp;
 using Xunit;
 
-namespace WHyLL.Warp.Test
+namespace Test.WHyLL.Warp
 {
     public sealed class SummarizedTests
     {

@@ -1,9 +1,10 @@
 ﻿using WHyLL.Message;
+using WHyLL.Warp;
 using Xunit;
 
-namespace WHyLL.Warp.Test
+namespace Test.WHyLL.Warp
 {
-    public sealed class FromScratchTests
+    public sealed class FixedTests
     {
         [Fact]
         public async void Renders()
@@ -11,7 +12,7 @@ namespace WHyLL.Warp.Test
             Assert.Equal(
                 201051,
                 await new SimpleMessage().To(
-                    new FromScratch<int>(() => 201051)
+                    new Fixed<int>(201051)
                 )
             );
         }

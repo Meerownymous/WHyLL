@@ -1,5 +1,6 @@
 ﻿using Tonga;
 using Tonga.Enumerable;
+using Tonga.Map;
 
 namespace WHyLL.MessageInput
 {
@@ -12,6 +13,14 @@ namespace WHyLL.MessageInput
         )
     )
 	{
+        /// <summary>
+        /// Header input for a <see cref="IMessage"/>.
+        /// </summary>
+        public HeaderInput(string header, string value) : this(
+            new AsPair<string, string>(header, value)
+        )
+        { }
+        
         /// <summary>
         /// Header input for a <see cref="IMessage"/>.
         /// </summary>

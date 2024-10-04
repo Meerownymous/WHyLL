@@ -1,9 +1,10 @@
 ﻿using Tonga.IO;
 using Tonga.Text;
 using WHyLL.Message;
+using WHyLL.Warp;
 using Xunit;
 
-namespace WHyLL.Warp.Test
+namespace Test.WHyLL.Warp
 {
     public sealed class BodyAsTest
     {
