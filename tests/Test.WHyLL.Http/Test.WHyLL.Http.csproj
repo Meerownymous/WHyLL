@@ -16,7 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Headers\" />
-    <Folder Include="Warp\" />
     <Folder Include="Request\" />
   </ItemGroup>
 
