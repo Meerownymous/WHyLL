@@ -17,7 +17,7 @@ namespace Test.WHyLL.Http.Request
         public void MakesRelativeResourceLine(string method)
 		{
 			Assert.Equal(
-				$"{method} /slash/slash/boom HTTP/1.1\r\n",
+				$"{method} /slash/slash/boom HTTP/1.1",
 				new RequestLine(
 					method,
 					new Uri("/slash/slash/boom", uriKind: UriKind.Relative),
@@ -38,7 +38,7 @@ namespace Test.WHyLL.Http.Request
         public void MakesAbsoluteResourceLine(string method)
         {
             Assert.Equal(
-                $"{method} http://www.enhanced-calm.com/slash/slash/boom HTTP/1.1\r\n",
+                $"{method} http://www.enhanced-calm.com/slash/slash/boom HTTP/1.1",
                 new RequestLine(
                     method,
                     new Uri("http://www.enhanced-calm.com/slash/slash/boom"),
@@ -51,7 +51,7 @@ namespace Test.WHyLL.Http.Request
         public void AddsQuery()
         {
             Assert.Equal(
-                $"GET http://www.enhanced-calm.com/resource?slash=boom HTTP/1.1\r\n",
+                $"GET http://www.enhanced-calm.com/resource?slash=boom HTTP/1.1",
                 new RequestLine(
                     "GET",
                     new Uri("http://www.enhanced-calm.com/resource?slash=boom"),
@@ -64,7 +64,7 @@ namespace Test.WHyLL.Http.Request
         public void AddsPort()
         {
             Assert.Equal(
-                $"GET http://www.enhanced-calm.com:1337/resource?slash=boom HTTP/1.1\r\n",
+                $"GET http://www.enhanced-calm.com:1337/resource?slash=boom HTTP/1.1",
                 new RequestLine(
                     "GET",
                     new Uri("http://www.enhanced-calm.com:1337/resource?slash=boom"),
@@ -100,7 +100,7 @@ namespace Test.WHyLL.Http.Request
         public void AllowsUnspecifiedResourceWhenOptionsRequest()
         {
             Assert.Equal(
-                "OPTIONS * HTTP/1.1\r\n",
+                "OPTIONS * HTTP/1.1",
                 new RequestLine(
                     "OPTIONS",
                     new Version(1, 1)

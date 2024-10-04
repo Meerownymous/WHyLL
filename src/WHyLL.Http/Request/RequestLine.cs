@@ -16,8 +16,7 @@ namespace WHyLL.Http.Request
 						method,
 						resource,
 						AsText._($"HTTP/{httpVersion.ToString(2)}")
-					),
-					AsText._("\r\n")
+					)
 				).AsString()
 			)
 		)
