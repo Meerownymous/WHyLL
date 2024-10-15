@@ -7,10 +7,10 @@ namespace WHyLL.Http.Request
     /// <summary>
     /// HTTP TRACE Request.
     /// </summary>
-    public sealed class Trace(Uri uri, Version httpVersion, IEnumerable<IPair<string, string>> headers) : 
+    public sealed class Trace(string url, Version httpVersion, IEnumerable<IPair<string, string>> headers) : 
         MessageEnvelope(
             new SimpleMessage(
-                new RequestLine("TRACE", uri, httpVersion),
+                new RequestLine("TRACE", url, httpVersion),
                 headers,
                 new MemoryStream()
             )
@@ -19,24 +19,24 @@ namespace WHyLL.Http.Request
         /// <summary>
         /// HTTP TRACE Request.
         /// </summary>
-        public Trace(Uri uri, params IPair<string, string>[] headers) : this(
-            uri, new Version(1,1), headers
+        public Trace(string url, params IPair<string, string>[] headers) : this(
+            url, new Version(1,1), headers
         )
         { }
 
         /// <summary>
         /// HTTP TRACE Request.
         /// </summary>
-        public Trace(Uri uri, Version httpVersion, params IPair<string, string>[] headers) : this(
-            uri, httpVersion, AsEnumerable._(headers)
+        public Trace(string url, Version httpVersion, params IPair<string, string>[] headers) : this(
+            url, httpVersion, AsEnumerable._(headers)
         )
         { }
 
         /// <summary>
         /// HTTP TRACE Request.
         /// </summary>
-        public Trace(Uri uri, IEnumerable<IPair<string, string>> headers) : this(
-            uri, new Version(1,1), headers
+        public Trace(string url, IEnumerable<IPair<string, string>> headers) : this(
+            url, new Version(1,1), headers
         )
         { }
     }

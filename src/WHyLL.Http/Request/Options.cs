@@ -8,12 +8,12 @@ namespace WHyLL.Http.Request
     /// <summary>
     /// HTTP OPTIONS Request.
     /// </summary>
-    public sealed class Options(Uri uri, Version httpVersion, IMessageInput input, params IMessageInput[] more) : 
+    public sealed class Options(string url, Version httpVersion, IMessageInput input, params IMessageInput[] more) : 
         MessageEnvelope(
             new MessageOfInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
-                        new RequestLine("OPTIONS", uri, httpVersion).AsString(),
+                        new RequestLine("OPTIONS", url, httpVersion).AsString(),
                         None._<IPair<string, string>>(),
                         new MemoryStream()
                     ),
@@ -25,24 +25,24 @@ namespace WHyLL.Http.Request
         /// <summary>
         /// HTTP OPTIONS Request.
         /// </summary>
-        public Options(Uri uri, params IPair<string, string>[] headers) : this(
-            uri, new Version(1,1), headers
+        public Options(string url, params IPair<string, string>[] headers) : this(
+            url, new Version(1,1), headers
         )
         { }
 
         /// <summary>
         /// HTTP OPTIONS Request.
         /// </summary>
-        public Options(Uri uri, Version httpVersion, params IPair<string, string>[] headers) : this(
-            uri, httpVersion, new HeaderInput(headers)
+        public Options(string url, Version httpVersion, params IPair<string, string>[] headers) : this(
+            url, httpVersion, new HeaderInput(headers)
         )
         { }
 
         /// <summary>
         /// HTTP OPTIONS Request.
         /// </summary>
-        public Options(Uri uri, IMessageInput input, params IMessageInput[] more) : this(
-            uri, new Version(1,1), input, more
+        public Options(string url, IMessageInput input, params IMessageInput[] more) : this(
+            url, new Version(1,1), input, more
         )
         { }
     }

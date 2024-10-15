@@ -8,12 +8,12 @@ namespace WHyLL.Http.Request
     /// <summary>
     /// HTTP PUT Request.
     /// </summary>
-    public sealed class Put(Uri uri, Version httpVersion, Stream body, IMessageInput input, params IMessageInput[] more) : 
+    public sealed class Put(string url, Version httpVersion, Stream body, IMessageInput input, params IMessageInput[] more) : 
         MessageEnvelope(
             new MessageOfInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
-                        new RequestLine("PUT", uri, httpVersion).AsString(),
+                        new RequestLine("PUT", url, httpVersion).AsString(),
                         None._<IPair<string, string>>(),
                         body
                     ),
@@ -25,24 +25,24 @@ namespace WHyLL.Http.Request
         /// <summary>
         /// HTTP PUT Request.
         /// </summary>
-        public Put(Uri uri, Stream body, params IPair<string, string>[] headers) : this(
-            uri, new Version(1,1), body, headers
+        public Put(string url, Stream body, params IPair<string, string>[] headers) : this(
+            url, new Version(1,1), body, headers
         )
         { }
 
         /// <summary>
         /// HTTP PUT Request.
         /// </summary>
-        public Put(Uri uri, Version httpVersion, Stream body, params IPair<string, string>[] headers) : this(
-            uri, httpVersion, body, new HeaderInput(headers)
+        public Put(string url, Version httpVersion, Stream body, params IPair<string, string>[] headers) : this(
+            url, httpVersion, body, new HeaderInput(headers)
         )
         { }
 
         /// <summary>
         /// HTTP PUT Request.
         /// </summary>
-        public Put(Uri uri, Stream body, IMessageInput input, params IMessageInput[] more) : this(
-            uri, new Version(1,1), body, input, more
+        public Put(string url, Stream body, IMessageInput input, params IMessageInput[] more) : this(
+            url, new Version(1,1), body, input, more
         )
         { }
     }

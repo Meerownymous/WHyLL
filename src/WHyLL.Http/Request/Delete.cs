@@ -8,7 +8,7 @@ namespace WHyLL.Http.Request
     /// <summary>
     /// HTTP DELETE Request.
     /// </summary>
-    public sealed class Delete(Uri uri, Version httpVersion, IMessageInput input, params IMessageInput[] more) : 
+    public sealed class Delete(string uri, Version httpVersion, IMessageInput input, params IMessageInput[] more) : 
         MessageEnvelope(
             new MessageOfInputs(
                 new Joined<IMessageInput>(
@@ -25,24 +25,24 @@ namespace WHyLL.Http.Request
         /// <summary>
         /// HTTP DELETE Request.
         /// </summary>
-        public Delete(Uri uri, params IPair<string, string>[] headers) : this(
-            uri, new Version(1,1), headers
+        public Delete(string url, params IPair<string, string>[] headers) : this(
+            url, new Version(1,1), headers
         )
         { }
 
         /// <summary>
         /// HTTP DELETE Request.
         /// </summary>
-        public Delete(Uri uri, Version httpVersion, params IPair<string, string>[] headers) : this(
-            uri, httpVersion, new HeaderInput(headers)
+        public Delete(string url, Version httpVersion, params IPair<string, string>[] headers) : this(
+            url, httpVersion, new HeaderInput(headers)
         )
         { }
 
         /// <summary>
         /// HTTP DELETE Request.
         /// </summary>
-        public Delete(Uri uri, IMessageInput input, params IMessageInput[] more) : this(
-            uri, new Version(1,1), input, more
+        public Delete(string url, IMessageInput input, params IMessageInput[] more) : this(
+            url, new Version(1,1), input, more
         )
         { }
     }

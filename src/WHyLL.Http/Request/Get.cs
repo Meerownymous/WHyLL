@@ -1,20 +1,22 @@
 ﻿using Tonga;
 using Tonga.Enumerable;
+using Tonga.Text;
 using WHyLL.Message;
 using WHyLL.MessageInput;
+using Joined = Tonga.Enumerable.Joined;
 
 namespace WHyLL.Http.Request
 {
     /// <summary>
     /// HTTP GET Request.
     /// </summary>
-    public sealed class Get(Uri uri, Version httpVersion, IEnumerable<IMessageInput> inputs) : 
+    public sealed class Get(Func<string> url, Version httpVersion, IEnumerable<IMessageInput> inputs) : 
         MessageEnvelope(
             new MessageOfInputs(
                 new Joined<IMessageInput>(
                     inputs,
                     new SimpleMessageInput(
-                        new RequestLine("GET", uri, httpVersion).AsString(),
+                        new RequestLine(new AsText("GET"), new AsText(url()), httpVersion).AsString(),
                         None._<IPair<string,string>>(),
                         new MemoryStream()
                     )
@@ -22,51 +24,55 @@ namespace WHyLL.Http.Request
             )
         )
     {
+        public Get(string url, Version httpVersion, IEnumerable<IMessageInput> inputs) : 
+            this(() => url, httpVersion, inputs)
+        { }
+        
         /// <summary>
         /// HTTP GET Request.
         /// </summary>
-        public Get(Uri uri, Version httpVersion, IMessageInput input, params IMessageInput[] inputs) :
-            this(uri, httpVersion, Joined._(inputs, input))
+        public Get(string url, Version httpVersion, IMessageInput input, params IMessageInput[] inputs) :
+            this(url, httpVersion, Joined._(inputs, input))
         { }
         
         
         /// <summary>
         /// HTTP GET Request.
         /// </summary>
-        public Get(Uri uri, IPair<string,string> header, params IPair<string, string>[] headers) : this(
-            uri, new Version(1,1), new HeaderInput(Joined._(headers, header))
+        public Get(string url, IPair<string,string> header, params IPair<string, string>[] headers) : this(
+            url, new Version(1,1), new HeaderInput(Joined._(headers, header))
         )
         { }
 
         /// <summary>
         /// HTTP GET Request.
         /// </summary>
-        public Get(Uri uri, Version httpVersion, IPair<string,string> header, params IPair<string, string>[] headers) : this(
-            uri, httpVersion, new HeaderInput(Joined._(headers, header))
+        public Get(string url, Version httpVersion, IPair<string,string> header, params IPair<string, string>[] headers) : this(
+            url, httpVersion, new HeaderInput(Joined._(headers, header))
         )
         { }
         
         /// <summary>
         /// HTTP GET Request.
         /// </summary>
-        public Get(Uri uri, Version httpVersion) : this(
-            uri, httpVersion, []
+        public Get(string url, Version httpVersion) : this(
+            url, httpVersion, []
         )
         { }
         
         /// <summary>
         /// HTTP GET Request.
         /// </summary>
-        public Get(Uri uri) : this(
-            uri, new Version(1,1), []
+        public Get(string url) : this(
+            url, new Version(1,1), []
         )
         { }
 
         /// <summary>
         /// HTTP GET Request.
         /// </summary>
-        public Get(Uri uri, IMessageInput input, params IMessageInput[] more) : this(
-            uri, new Version(1,1), input, more
+        public Get(string url, IMessageInput input, params IMessageInput[] more) : this(
+            url, new Version(1,1), input, more
         )
         { }
     }

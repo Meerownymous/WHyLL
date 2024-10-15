@@ -1,20 +1,19 @@
 ﻿using Tonga;
 using Tonga.Enumerable;
-using WHyLL.Http.Request;
 using WHyLL.Message;
 using WHyLL.MessageInput;
 
-namespace WHyLL.Http3.Request
+namespace WHyLL.Http.Request.Http3
 {
     /// <summary>
     /// HTTP POST Request.
     /// </summary>
-    public sealed class Post(Uri uri, Stream body, IMessageInput input, params IMessageInput[] more) : 
+    public sealed class Post(string url, Stream body, IMessageInput input, params IMessageInput[] more) : 
         MessageEnvelope(
             new MessageOfInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
-                        new RequestLine("POST", uri, new Version(3, 0)).AsString(),
+                        new RequestLine("POST", url, new Version(3, 0)).AsString(),
                         None._<IPair<string, string>>(),
                         body
                     ),
@@ -26,8 +25,8 @@ namespace WHyLL.Http3.Request
         /// <summary>
         /// HTTP POST Request.
         /// </summary>
-        public Post(Uri uri, Stream body, params IPair<string, string>[] headers) : this(
-            uri, body, new HeaderInput(headers)
+        public Post(string url, Stream body, params IPair<string, string>[] headers) : this(
+            url, body, new HeaderInput(headers)
         )
         { }
     }

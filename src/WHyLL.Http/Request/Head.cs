@@ -8,12 +8,12 @@ namespace WHyLL.Http.Request
     /// <summary>
     /// HTTP HEAD Request.
     /// </summary>
-    public sealed class Head(Uri uri, Version httpVersion, IMessageInput input, params IMessageInput[] more) : 
+    public sealed class Head(string url, Version httpVersion, IMessageInput input, params IMessageInput[] more) : 
         MessageEnvelope(
             new MessageOfInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
-                        new RequestLine("HEAD", uri, httpVersion).AsString(),
+                        new RequestLine("HEAD", url, httpVersion).AsString(),
                         None._<IPair<string, string>>(),
                         new MemoryStream()
                     ),
@@ -25,24 +25,24 @@ namespace WHyLL.Http.Request
         /// <summary>
         /// HTTP HEAD Request.
         /// </summary>
-        public Head(Uri uri, params IPair<string, string>[] headers) : this(
-            uri, new Version(1,1), headers
+        public Head(string url, params IPair<string, string>[] headers) : this(
+            url, new Version(1,1), headers
         )
         { }
 
         /// <summary>
         /// HTTP HEAD Request.
         /// </summary>
-        public Head(Uri uri, Version httpVersion, params IPair<string, string>[] headers) : this(
-            uri, httpVersion, new HeaderInput(headers)
+        public Head(string url, Version httpVersion, params IPair<string, string>[] headers) : this(
+            url, httpVersion, new HeaderInput(headers)
         )
         { }
 
         /// <summary>
         /// HTTP HEAD Request.
         /// </summary>
-        public Head(Uri uri, IMessageInput input, params IMessageInput[] more) : this(
-            uri, new Version(1,1), input, more
+        public Head(string url, IMessageInput input, params IMessageInput[] more) : this(
+            url, new Version(1,1), input, more
         )
         { }
     }

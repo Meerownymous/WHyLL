@@ -9,12 +9,12 @@ namespace WHyLL.Http3.Request
     /// <summary>
     /// HTTP GET Request.
     /// </summary>
-    public sealed class Get(Uri uri, IMessageInput input, params IMessageInput[] more) : 
+    public sealed class Get(string url, IMessageInput input, params IMessageInput[] more) : 
         MessageEnvelope(
             new MessageOfInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
-                        new RequestLine("GET", uri, new Version(2, 0)).AsString(),
+                        new RequestLine("GET", url, new Version(2, 0)).AsString(),
                         None._<IPair<string,string>>(),
                         new MemoryStream()
                     ),
@@ -26,8 +26,8 @@ namespace WHyLL.Http3.Request
         /// <summary>
         /// HTTP GET Request.
         /// </summary>
-        public Get(Uri uri, params IPair<string, string>[] headers) : this(
-            uri, new HeaderInput(headers)
+        public Get(string url, params IPair<string, string>[] headers) : this(
+            url, new HeaderInput(headers)
         )
         { }
     }

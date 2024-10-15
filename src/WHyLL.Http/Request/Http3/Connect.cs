@@ -9,12 +9,12 @@ namespace WHyLL.Http3
     /// <summary>
     /// HTTP CONNECT Request.
     /// </summary>
-    public sealed class Connect(Uri uri, IMessageInput input, params IMessageInput[] more) : 
+    public sealed class Connect(string url, IMessageInput input, params IMessageInput[] more) : 
         MessageEnvelope(
             new MessageOfInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
-                        new RequestLine("CONNECT", uri, new Version(3,0)).AsString(),
+                        new RequestLine("CONNECT", url, new Version(3,0)).AsString(),
                         None._<IPair<string, string>>(),
                         new MemoryStream()
                     ),
@@ -26,8 +26,8 @@ namespace WHyLL.Http3
         /// <summary>
         /// HTTP CONNECT Request.
         /// </summary>
-        public Connect(Uri uri, params IPair<string, string>[] headers) : this(
-            uri, new HeaderInput(headers)
+        public Connect(string url, params IPair<string, string>[] headers) : this(
+            url, new HeaderInput(headers)
         )
         { }
     }

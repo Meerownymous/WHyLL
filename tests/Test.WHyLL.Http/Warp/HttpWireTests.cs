@@ -26,7 +26,7 @@ namespace Test.WHyLL.Http.Warp
                     .Refine(
                         new RequestLine(
                             "GET",
-                            new Uri("http://www.enhanced-calm.com/resource")
+                            "http://www.enhanced-calm.com/resource"
                         ).AsString()
                     )
                     .Render();
@@ -59,7 +59,7 @@ namespace Test.WHyLL.Http.Warp
                     .Refine(
                         new RequestLine(
                             method,
-                            new Uri("http://www.enhanced-calm.com/resource")
+                            "http://www.enhanced-calm.com/resource"
                         ).AsString()
                     )
                     .Render();
@@ -84,7 +84,7 @@ namespace Test.WHyLL.Http.Warp
                     .Refine(
                         new RequestLine(
                             "GET",
-                            new Uri("http://www.enhanced-calm.com/resource"),
+                            "http://www.enhanced-calm.com/resource",
                             new Version(3,0)
                         ).AsString()
                     )
@@ -107,7 +107,7 @@ namespace Test.WHyLL.Http.Warp
                         result = message;
                         return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK));
                     })
-                    .Refine(new RequestLine("GET", new Uri("http://www.enhanced-calm.com/resource")).AsString())
+                    .Refine(new RequestLine("GET", "http://www.enhanced-calm.com/resource").AsString())
                     .Refine(new Header("better", "header"))
                     .Render();
 
@@ -128,7 +128,7 @@ namespace Test.WHyLL.Http.Warp
                         result = message;
                         return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK));
                     })
-                    .Refine(new RequestLine("GET", new Uri("http://www.enhanced-calm.com/resource")).AsString())
+                    .Refine(new RequestLine("GET", "http://www.enhanced-calm.com/resource").AsString())
                     .Refine(new MemoryStream(AsBytes._("Me so buried in bytestream").Bytes()))
                     .Render();
 
@@ -149,7 +149,7 @@ namespace Test.WHyLL.Http.Warp
                             result = message;
                             return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK));
                         })
-                    .Refine(new RequestLine("GET", new Uri("http://www.enhanced-calm.com/resource")).AsString())
+                    .Refine(new RequestLine("GET", "http://www.enhanced-calm.com/resource").AsString())
                     .Refine(new MemoryStream(AsBytes._("Me so buried in bytestream").Bytes()))
                     .Refine(new AsPair<string, string>("Content-type", "text/plain"))
                     .Render();
@@ -169,7 +169,7 @@ namespace Test.WHyLL.Http.Warp
                     new HttpWire(_ => 
                         Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK))
                     )
-                    .Refine(new RequestLine("GET", new Uri("http://www.enhanced-calm.com/resource")).AsString())
+                    .Refine(new RequestLine("GET", "http://www.enhanced-calm.com/resource").AsString())
                     .Render()
                     .To(new FirstLine())
             );
@@ -185,7 +185,7 @@ namespace Test.WHyLL.Http.Warp
                 "call Saul",
                 (await
                     new HttpWire(_ => Task.FromResult(response))
-                        .Refine(new RequestLine("GET", new Uri("http://www.enhanced-calm.com/resource")).AsString())
+                        .Refine(new RequestLine("GET", "http://www.enhanced-calm.com/resource").AsString())
                     .Render()
                     .To(new AllHeaders())
                 )["header"]
@@ -212,7 +212,7 @@ namespace Test.WHyLL.Http.Warp
                                             )
                                     })
                                 )
-                                .Refine(new RequestLine("GET", new Uri("http://www.enhanced-calm.com/resource")).AsString())
+                                .Refine(new RequestLine("GET", "http://www.enhanced-calm.com/resource").AsString())
                                 .Render()
                                 .To(new Body())
                     )
@@ -242,7 +242,7 @@ namespace Test.WHyLL.Http.Warp
                         }
                     )
                 )
-                .Refine(new RequestLine("GET", new Uri("http://www.enhanced-calm.com/resource")).AsString())
+                .Refine(new RequestLine("GET", "http://www.enhanced-calm.com/resource").AsString())
                 .Render()
                 .To(new Body());
 

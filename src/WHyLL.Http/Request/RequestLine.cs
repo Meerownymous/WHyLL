@@ -40,30 +40,17 @@ namespace WHyLL.Http.Request
         /// <summary>
         /// The request line, first line of a http request.
         /// </summary>
-        public RequestLine(string method, Uri resource) : this(
-			method, resource, new Version(1, 1)
+        public RequestLine(string method, string url) : this(
+			method, url, new Version(1, 1)
 		)
 		{ }
 
         /// <summary>
         /// The request line, first line of a http request.
         /// </summary>
-        public RequestLine(string method, Uri resource, Version httpVersion) : this(
+        public RequestLine(string method, string url, Version httpVersion) : this(
             new Method(method),
-			AsText._(() =>
-			{
-				string result = resource.OriginalString;
-				if (resource.IsAbsoluteUri)
-				{
-					result =
-						$"{(resource.Scheme.Equals("file") ?
-							""
-							:
-							$"{resource.Scheme}://{resource.Host}{(resource.Port != 80 ? $":{resource.Port}" : "")}"
-						)}{resource.PathAndQuery}";
-				}
-				return result;
-			}),
+			new AsText(url),
 			httpVersion
 		)
 		{ }

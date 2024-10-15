@@ -1,20 +1,19 @@
 ﻿using Tonga;
 using Tonga.Enumerable;
-using WHyLL.Http.Request;
 using WHyLL.Message;
 using WHyLL.MessageInput;
 
-namespace WHyLL.Http2.Request
+namespace WHyLL.Http.Request.Http2
 {
     /// <summary>
     /// HTTP HEAD Request.
     /// </summary>
-    public sealed class Head(Uri uri, IMessageInput input, params IMessageInput[] more) : 
+    public sealed class Head(string url, IMessageInput input, params IMessageInput[] more) : 
         MessageEnvelope(
             new MessageOfInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
-                        new RequestLine("HEAD", uri, new Version(2, 0)).AsString(),
+                        new RequestLine("HEAD", url, new Version(2, 0)).AsString(),
                         None._<IPair<string, string>>(),
                         new MemoryStream()
                     ),
@@ -26,8 +25,8 @@ namespace WHyLL.Http2.Request
         /// <summary>
         /// HTTP HEAD Request.
         /// </summary>
-        public Head(Uri uri, params IPair<string, string>[] headers) : this(
-            uri, new HeaderInput(headers)
+        public Head(string url, params IPair<string, string>[] headers) : this(
+            url, new HeaderInput(headers)
         )
         { }
     }

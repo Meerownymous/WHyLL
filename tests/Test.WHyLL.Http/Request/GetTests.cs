@@ -17,7 +17,7 @@ namespace Test.WHyLL.Http.Request
                 "successful",
                 First._(
                     (await
-                        new Get(new Uri("http://www.enhanced-calm.com"), new Version(1, 1))
+                        new Get("http://www.enhanced-calm.com", new Version(1, 1))
                             .With(new Header("x-test", "successful"))
                             .To(new AllHeaders())
                     )["x-test"]
@@ -31,7 +31,7 @@ namespace Test.WHyLL.Http.Request
             Assert.Equal(
                 "POST http://www.enhanced-calm.com/enhance HTTP/3.0",
                 await
-                    new Get(new Uri("http://www.enhanced-calm.com/old"), new Version(1, 1))
+                    new Get("http://www.enhanced-calm.com/old", new Version(1, 1))
                         .With("POST http://www.enhanced-calm.com/enhance HTTP/3.0")
                         .To(new FirstLine())
                 
@@ -45,7 +45,7 @@ namespace Test.WHyLL.Http.Request
                 "success",
                 AsText._(
                     await
-                        new Get(new Uri("http://www.enhanced-calm.com"), new Version(1, 1))
+                        new Get("http://www.enhanced-calm.com", new Version(1, 1))
                             .WithBody(new MemoryStream(AsBytes._("success").Bytes()))
                             .To(new Body())
                 ).AsString()

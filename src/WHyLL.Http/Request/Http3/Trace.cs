@@ -8,10 +8,10 @@ namespace WHyLL.Http3.Request
     /// <summary>
     /// HTTP TRACE Request.
     /// </summary>
-    public sealed class Trace(Uri uri, IEnumerable<IPair<string, string>> headers) : 
+    public sealed class Trace(string url, IEnumerable<IPair<string, string>> headers) : 
         MessageEnvelope(
             new SimpleMessage(
-                new RequestLine("TRACE", uri, new Version(3, 0)),
+                new RequestLine("TRACE", url, new Version(3, 0)),
                 headers,
                 new MemoryStream()
             )
@@ -20,8 +20,8 @@ namespace WHyLL.Http3.Request
         /// <summary>
         /// HTTP TRACE Request.
         /// </summary>
-        public Trace(Uri uri, params IPair<string, string>[] headers) : this(
-            uri, AsEnumerable._(headers)
+        public Trace(string url, params IPair<string, string>[] headers) : this(
+            url, AsEnumerable._(headers)
         )
         { }
     }
