@@ -7,23 +7,15 @@ namespace WHyLL.Warp
     /// <summary>
     /// Renders the Headers of a message.
     /// </summary>
-    public sealed class AllHeaders : IWarp<IMap<string, ICollection<string>>>
+    public sealed class AllHeaders(IMap<string,ICollection<string>> before) : 
+        IWarp<IMap<string, ICollection<string>>>
 	{
-        private readonly IMap<string, ICollection<string>> before;
 
         /// <summary>
         /// Renders the Headers of a message.
         /// </summary>
         public AllHeaders() : this(Tonga.Map.Empty._<string, ICollection<string>>())
         { }
-
-        /// <summary>
-        /// Renders the Headers of a message.
-        /// </summary>
-        private AllHeaders(IMap<string,ICollection<string>> before)
-		{
-            this.before = before;
-        }
 
         public IWarp<IMap<string, ICollection<string>>> Refine(string firstLine)
         {
@@ -32,7 +24,7 @@ namespace WHyLL.Warp
 
         public Task<IMap<string, ICollection<string>>> Render()
         {
-            return Task.FromResult(this.before);
+            return Task.FromResult(before);
         }
 
         public IWarp<IMap<string, ICollection<string>>> Refine(Stream body)
@@ -45,7 +37,7 @@ namespace WHyLL.Warp
 
         public IWarp<IMap<string, ICollection<string>>> Refine(params IPair<string,string>[] parts)
         {
-            var result = this.before;
+            var result = before;
             foreach (var part in parts)
             {
                 var name = part.Key();

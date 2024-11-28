@@ -3,8 +3,8 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Tonga;
 using Tonga.Enumerable;
+using Tonga.Optional;
 using Tonga.Text;
-using Xemo;
 
 namespace WHyLL.Warp;
 
@@ -23,7 +23,7 @@ public sealed class JsonBodyAs<TResult>(IOptional<JSchema> schema, Func<JObject,
                         .ReadToEndAsync()
                 ).AsString()
             );
-            if (schema.Has() && !json.IsValid(schema.Out(), out IList<ValidationError> errors))
+            if (schema.Has() && !json.IsValid(schema.Value(), out IList<ValidationError> errors))
             {
                 throw new ArgumentException(
                     new Paragraph(
