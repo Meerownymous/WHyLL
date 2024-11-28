@@ -3,11 +3,11 @@
 namespace WHyLL.Warp
 {
     /// <summary>
-    /// Renders output from a message.
+    /// Desired output from message.
     /// </summary>
-    public sealed class MessageAs<TOutput>(Func<IMessage, Task<TOutput>> render) : 
+    public sealed class MessageAs<TOutput>(Func<IMessage, Task<TOutput>> render) :
         WarpEnvelope<TOutput>(
-        new PiecesAs<TOutput>((firstLine, headers, body) =>
+            new PiecesAs<TOutput>((firstLine, headers, body) =>
                 render(
                     new SimpleMessage()
                         .With(firstLine)
@@ -16,7 +16,15 @@ namespace WHyLL.Warp
                 )
             )
         )
-    { }
+    {
+        /// <summary>
+        /// Desired output from message.
+        /// </summary>
+        public MessageAs(Func<IMessage, TOutput> render) : this(
+            message => Task.FromResult(render(message))
+        )
+        { }
+    }
 
     /// <summary>
     /// Renders output from a message.
