@@ -22,11 +22,11 @@ namespace WHyLL.Warp
         )
         { }
 
-        public IWarp<IMessage> Refine(string firstLine) =>
-            new WithoutHeaders(shouldRemove, firstLine, parts, body);
+        public IWarp<IMessage> Refine(string newFirstLine) =>
+            new WithoutHeaders(shouldRemove, newFirstLine, parts, body);
 
-        public IWarp<IMessage> Refine(IEnumerable<IPair<string, string>> parts) =>
-            this.Refine(parts);
+        public IWarp<IMessage> Refine(IEnumerable<IPair<string, string>> newParts) =>
+            new WithoutHeaders(shouldRemove, firstLine, Joined._(parts, parts), body);
 
         public IWarp<IMessage> Refine(params IPair<string, string>[] parts) =>
             new WithoutHeaders(shouldRemove, firstLine, Joined._(parts, parts), body);

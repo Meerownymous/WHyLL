@@ -17,7 +17,7 @@ namespace WHyLL.Warp
         public AllHeaders() : this(Tonga.Map.Empty._<string, ICollection<string>>())
         { }
 
-        public IWarp<IMap<string, ICollection<string>>> Refine(string firstLine)
+        public IWarp<IMap<string, ICollection<string>>> Refine(string newFirstLine)
         {
             return this;
         }
@@ -32,8 +32,8 @@ namespace WHyLL.Warp
             return this;
         }
 
-        public IWarp<IMap<string, ICollection<string>>> Refine(IEnumerable<IPair<string, string>> parts) =>
-            Refine(parts.ToArray());
+        public IWarp<IMap<string, ICollection<string>>> Refine(IEnumerable<IPair<string, string>> newParts) =>
+            Refine(newParts.ToArray());
 
         public IWarp<IMap<string, ICollection<string>>> Refine(params IPair<string,string>[] parts)
         {

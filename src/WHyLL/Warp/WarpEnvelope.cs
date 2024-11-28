@@ -7,11 +7,11 @@ namespace WHyLL.Warp;
 /// </summary>
 public abstract class WarpEnvelope<TOutput>(IWarp<TOutput> origin) : IWarp<TOutput>
 {
-    public IWarp<TOutput> Refine(string start) =>
-        origin.Refine(start);
+    public IWarp<TOutput> Refine(string newFirstLine) =>
+        origin.Refine(newFirstLine);
 
-    public IWarp<TOutput> Refine(IEnumerable<IPair<string, string>> parts) =>
-        this.Refine(parts.ToArray());
+    public IWarp<TOutput> Refine(IEnumerable<IPair<string, string>> newParts) =>
+        this.Refine(newParts.ToArray());
 
     public IWarp<TOutput> Refine(params IPair<string, string>[] parts) =>
         origin.Refine(parts);

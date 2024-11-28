@@ -22,11 +22,11 @@ public sealed class PiecesAs<TOutput>(
     )
     { }
 
-    public IWarp<TOutput> Refine(string start) =>
-        new PiecesAs<TOutput>(render, start, parts, body);
+    public IWarp<TOutput> Refine(string newFirstLine) =>
+        new PiecesAs<TOutput>(render, newFirstLine, parts, body);
 
-    public IWarp<TOutput> Refine(IEnumerable<IPair<string, string>> parts) =>
-        this.Refine(parts.ToArray());
+    public IWarp<TOutput> Refine(IEnumerable<IPair<string, string>> newParts) =>
+        this.Refine(newParts.ToArray());
 
     public IWarp<TOutput> Refine(params IPair<string, string>[] newParts) =>
         new PiecesAs<TOutput>(render, firstLine, Joined._(parts, newParts), body);
