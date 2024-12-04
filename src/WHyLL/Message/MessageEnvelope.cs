@@ -11,9 +11,6 @@ namespace WHyLL.Message
             origin.With(firstLine);
 
         public IMessage With(IEnumerable<IPair<string, string>> newParts) =>
-            this.With(newParts.ToArray());
-
-        public IMessage With(params IPair<string, string>[] newParts) =>
             origin.With(newParts);
 
         public IMessage WithBody(Stream newBody) =>

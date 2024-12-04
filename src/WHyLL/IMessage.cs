@@ -13,12 +13,7 @@ namespace WHyLL
         /// request-line (request message)
         /// or status-line (response message).
         /// </summary>
-        IMessage With(string firstLine);
-
-        /// <summary>
-        /// Refine the headers.
-        /// </summary>
-        IMessage With(params IPair<string, string>[] newParts);
+        IMessage With(string newFirstLine);
 
         /// <summary>
         /// Refine the headers.

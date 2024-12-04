@@ -15,9 +15,6 @@ namespace WHyLL.Message
             asyncMessage().Result.With(firstLine);
 
         public IMessage With(IEnumerable<IPair<string, string>> newParts) =>
-            this.With(newParts.ToArray());
-
-        public IMessage With(params IPair<string, string>[] newParts) =>
             asyncMessage().Result.With(newParts);
 
         public IMessage WithBody(Stream newBody) =>
