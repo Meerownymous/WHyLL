@@ -12,7 +12,7 @@ env:
   PROJECTS_TO_BUILD: |
     src/WHyLL/WHyLL.csproj
     src/WHyLL.AspNet/WHyLL.AspNet.csproj
-    src/WHyLL/WHyLL.Http.csproj
+    src/WHyLL.Http/WHyLL.Http.csproj
     tests/Test.WHyLL/Test.WHyLL.csproj
     tests/Test.WHyLL.AspNet/Test.WHyLL.AspNet.csproj
     tests/Test.WHyLL.Http/Test.WHyLL.Http.csproj
