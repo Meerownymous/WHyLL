@@ -131,6 +131,13 @@ jobs:
         shell: bash
         run: |
           for nupkg in ./*.nupkg; do
-            echo "Publishing $nupkg"
-            dotnet nuget push "$nupkg" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+            if [ -f "$nupkg" ]; then
+              echo "Found nupkg file: $nupkg"
+              echo "Publishing $nupkg"
+              dotnet nuget push "$nupkg" \
+                -k ${{ secrets.NUGET_API_KEY }} \
+                -s https://api.nuget.org/v3/index.json
+            else
+              echo "No .nupkg files found in the directory."
+            fi
           done
