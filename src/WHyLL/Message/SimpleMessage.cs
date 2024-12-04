@@ -38,21 +38,15 @@ namespace WHyLL.Message
         )
         { }
 
-        public IMessage With(string firstLine) =>
-            new SimpleMessage(() => firstLine, parts, body);
+        public IMessage With(string newFirstLine) =>
+            new SimpleMessage(() => newFirstLine, parts, body);
 
         public IMessage With(IEnumerable<IPair<string, string>> newParts) =>
-            this.With(newParts.ToArray());
-
-        public IMessage With(params IPair<string, string>[] newParts)
-        {
-            return
-                new SimpleMessage(
-                    this.firstLine.Value,
-                    Joined._(parts, newParts),
-                    body
-                );
-        }
+            new SimpleMessage(
+                this.firstLine.Value,
+                Joined._(parts, newParts),
+                body
+            );
 
         public IMessage WithBody(Stream newBody) =>
             new SimpleMessage(this.firstLine.Value, parts, newBody);

@@ -2,9 +2,10 @@
 {
     public static class WarpSmarts
     {
-        public static async Task<T> To<T>(this Task<IMessage> responseTask, IWarp<T> warp)
-        {
-            return await (await responseTask).To(warp);
-        }
+        /// <summary>
+        /// Fluent async chaining.
+        /// </summary>
+        public static async Task<T> To<T>(this Task<IMessage> responseTask, IWarp<T> warp) =>
+            await (await responseTask).To(warp);
     }
 }

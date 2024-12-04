@@ -3,12 +3,10 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Tonga;
 using Tonga.Enumerable;
+using Tonga.Optional;
 using Tonga.Text;
-using WHyLL;
-using WHyLL.Warp;
-using Xemo;
 
-namespace GarFuncL.Core.WHyLL;
+namespace WHyLL.Warp;
 
 /// <summary>
 /// Incoming body parsed as json, optionally validated and warped by
@@ -30,7 +28,7 @@ public sealed class JsonArrayBodyAs<TResult> : WarpEnvelope<TResult>
                             .ReadToEndAsync()
                     ).AsString()
                 );
-            if (schema.Has() && !json.IsValid(schema.Out(), out IList<ValidationError> errors))
+            if (schema.Has() && !json.IsValid(schema.Value(), out IList<ValidationError> errors))
             {
                 throw new ArgumentException(
                     new Paragraph(
