@@ -1,5 +1,6 @@
 using Newtonsoft.Json.Linq;
-using WHyLL.Warp;
+
+namespace WHyLL.Warp;
 
 /// <summary>
 /// Body as json array.

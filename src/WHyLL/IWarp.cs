@@ -8,7 +8,7 @@ namespace WHyLL
 		/// <summary>
 		/// Refines the start of the Warp.
 		/// </summary>
-		IWarp<T> Refine(string start);
+		IWarp<T> Refine(string newFirstLine);
 
 		/// <summary>
 		/// Adds a header to the Warp.
@@ -18,7 +18,7 @@ namespace WHyLL
 		/// <summary>
 		/// Adds a header to the Warp.
 		/// </summary>
-		IWarp<T> Refine(IEnumerable<IPair<string, string>> headers);
+		IWarp<T> Refine(IEnumerable<IPair<string, string>> newParts);
 
         /// <summary>
         /// Adds a body to the Warp.

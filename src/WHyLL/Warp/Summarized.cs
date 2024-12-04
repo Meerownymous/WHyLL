@@ -17,7 +17,7 @@ namespace WHyLL.Warp
         /// Summarized chain of Warps. Result of the last Warp is returned.
         /// </summary>
         public Summarized(params IWarp<TOutput>[] chain) : this(
-            (results) => results[results.Length-1], AsEnumerable._(chain)
+            results => results[results.Length-1], AsEnumerable._(chain)
         )
         { }
 
@@ -25,7 +25,7 @@ namespace WHyLL.Warp
         /// Summarized chain of Warps. Result of the last Warp is returned.
         /// </summary>
         public Summarized(IEnumerable<IWarp<TOutput>> chain) : this(
-            (results) => results[results.Length-1],
+            results => results[results.Length-1],
             chain
         )
         { }

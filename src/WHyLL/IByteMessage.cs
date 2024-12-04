@@ -14,12 +14,7 @@ namespace WHyLL
         /// or status-line (response message).
         /// </summary>
         IByteMessage With(byte[] head);
-
-        /// <summary>
-        /// Refine the headers.
-        /// </summary>
-        IByteMessage With(params IPair<string, byte[]>[] attributes);
-
+        
         /// <summary>
         /// Refine the headers.
         /// </summary>

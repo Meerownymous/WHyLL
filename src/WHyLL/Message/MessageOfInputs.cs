@@ -33,9 +33,6 @@ namespace WHyLL.Message
         public IMessage With(IEnumerable<IPair<string, string>> newParts) =>
             this.message.Value.With(newParts.ToArray());
 
-        public IMessage With(params IPair<string, string>[] newParts) =>
-            this.message.Value.With(newParts);
-
         public IMessage WithBody(Stream body) =>
             this.message.Value.WithBody(body);
     }

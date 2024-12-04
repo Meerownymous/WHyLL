@@ -6,9 +6,10 @@ using WHyLL.AspNet.Warp;
 using WHyLL.Headers;
 using WHyLL.Http.Response;
 using WHyLL.Message;
+using WHyLL;
 using Xunit;
 
-namespace Test.WHyLL.AspNet.Warp
+namespace Test.WHyLL.AspNet.Rendering
 {
     public sealed class AspResponseTests
     {

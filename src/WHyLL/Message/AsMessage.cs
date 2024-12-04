@@ -15,13 +15,10 @@ namespace WHyLL.Message
                     .Refine(body)
                     .Render();
 
-        public IMessage With(string firstLine) =>
-            new AsMessage(firstLine, parts, body);
+        public IMessage With(string newFirstLine) =>
+            new AsMessage(newFirstLine, parts, body);
 
         public IMessage With(IEnumerable<IPair<string, string>> newParts) =>
-            this.With(newParts.ToArray());
-
-        public IMessage With(params IPair<string, string>[] newParts) =>
             new AsMessage(firstLine, Joined._(parts, newParts), body);
 
         public IMessage WithBody(Stream newBody) =>

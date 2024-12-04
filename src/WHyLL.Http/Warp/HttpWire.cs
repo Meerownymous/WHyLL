@@ -83,15 +83,15 @@ namespace WHyLL.Http.Warp
             this.allowBodyReplay = allowBodyReplay;
         }
 
-        public IWarp<IMessage> Refine(string requestLine)
+        public IWarp<IMessage> Refine(string newFirstLine)
         {
             return new HttpWire(
-                new AsText(requestLine), this.headers, this.body, this.convert, this.allowBodyReplay
+                new AsText(newFirstLine), this.headers, this.body, this.convert, this.allowBodyReplay
             );
         }
 
-        public IWarp<IMessage> Refine(IEnumerable<IPair<string, string>> parts) =>
-            this.Refine(parts.ToArray());
+        public IWarp<IMessage> Refine(IEnumerable<IPair<string, string>> newParts) =>
+            this.Refine(newParts.ToArray());
 
         public IWarp<IMessage> Refine(params IPair<string, string>[] parts)
         {

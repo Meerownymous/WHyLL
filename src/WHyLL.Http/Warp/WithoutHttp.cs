@@ -58,10 +58,10 @@ namespace WHyLL.Http.Warp
         public WithoutHttp() : this(string.Empty, None._<IPair<string, string>>(), new MemoryStream())
         { }
 
-        public IWarp<IMessage> Refine(string firstLine) =>
-            new WithoutHttp(firstLine, parts, body);
+        public IWarp<IMessage> Refine(string newFirstLine) =>
+            new WithoutHttp(newFirstLine, parts, body);
 
-        public IWarp<IMessage> Refine(IEnumerable<IPair<string, string>> header) =>
+        public IWarp<IMessage> Refine(IEnumerable<IPair<string, string>> newParts) =>
             this.Refine(parts.ToArray());
 
         public IWarp<IMessage> Refine(params IPair<string, string>[] header) =>
