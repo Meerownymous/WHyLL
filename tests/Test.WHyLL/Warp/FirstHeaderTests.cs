@@ -51,5 +51,20 @@ namespace Test.WHyLL.Warp
 				).AsString()
 			);
 		}
+		
+		[Fact]
+		public async Task DoesNotUseFallbackWhenHeaderExists()
+		{
+			Assert.Equal(
+				"James",
+				AsText._(
+					await
+						new FirstHeader("character", "Pooh")
+							.Refine(AsPair._("character", "James"))
+							.Render()
+					
+				).AsString()
+			);
+		}
 	}
 }
