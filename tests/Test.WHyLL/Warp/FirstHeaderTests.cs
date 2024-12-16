@@ -1,21 +1,54 @@
 ﻿using Tonga.Map;
+using Tonga.Text;
 using WHyLL.Warp;
 using Xunit;
 
 namespace Test.WHyLL.Warp
 {
-    public sealed class FirstHeaderAsTests
+    public sealed class FirstHeaderTests
 	{
 		[Fact]
-		public async void RendersFirstHeaderAsOutputType()
+		public async Task RendersFirstHeader()
 		{
-			var time = DateTime.Today;
-			Assert.Equal(time,
-				(await
-					new FirstHeaderAs<DateTime>("Since", DateTime.Parse)
-						.Refine(AsPair._("Since", time.ToLongTimeString()))
-                        .Render()
-				)
+			Assert.Equal(
+				"Valu the Bear",
+				AsText._(
+					(await
+						new FirstHeader("Character")
+							.Refine(AsPair._("Character", "Valu the Bear"))
+                            .Refine(AsPair._("Character", "Mister Murphy"))
+                            .Render()
+					)
+				).AsString()
+			);
+		}
+		
+		[Fact]
+		public async Task IgnoresCase()
+		{
+			Assert.Equal(
+				"Valu the Bear",
+				AsText._(
+					(await
+						new FirstHeader("CHarAcTEr")
+							.Refine(AsPair._("character", "Valu the Bear"))
+							.Render()
+					)
+				).AsString()
+			);
+		}
+		
+		[Fact]
+		public async Task UsesFallback()
+		{
+			Assert.Equal(
+				"Pooh",
+				AsText._(
+					await
+						new FirstHeader("CHarAcTEr", "Pooh")
+							.Render()
+					
+				).AsString()
 			);
 		}
 	}
