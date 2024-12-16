@@ -13,7 +13,7 @@ public sealed class FirstHeaderAs<TOutput>(string name, Func<string, TOutput> ma
             {
                 if (header.Key().Equals(name, StringComparison.OrdinalIgnoreCase))
                 {
-                    mapping(header.Value());
+                    result = mapping(header.Value());
                     found = true;
                     break;
                 }
