@@ -205,14 +205,23 @@ public sealed class NugetReleaseTask : FrostingTask<BuildContext>
             var nugets = context.GetFiles($"{Settings.ArtifactPath}/*.nupkg");
             foreach (var package in nugets)
             {
-                context.NuGetPush(
-                package,
-                    new NuGetPushSettings
-                    {
-                        Source = Settings.NugetSource,
-                        ApiKey = Settings.NugetReleaseToken
-                    }
-                );
+                try
+                {
+                    context.NuGetPush(
+                        package,
+                        new NuGetPushSettings
+                        {
+                            Source = Settings.NugetSource,
+                            ApiKey = Settings.NugetReleaseToken
+                        }
+                    );
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+
             }
             var symbols = context.GetFiles($"{Settings.ArtifactPath}/*.snupkg");
             foreach (var symbol in symbols)
