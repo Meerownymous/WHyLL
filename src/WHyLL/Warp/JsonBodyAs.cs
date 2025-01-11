@@ -17,12 +17,14 @@ public sealed class JsonBodyAs<TResult>(IOptional<JSchema> schema, Func<JObject,
         new BodyAs<TResult>(async body =>
         {
             var json =
-            JObject.Parse(
-                new Base64Decoded(
+                JObject.Parse(
                     await new StreamReader(body, Encoding.UTF8)
                         .ReadToEndAsync()
-                ).AsString()
-            );
+                );
+            
+            if(body.CanSeek)
+                body.Seek(0, SeekOrigin.Begin);
+            
             if (schema.Has() && !json.IsValid(schema.Value(), out IList<ValidationError> errors))
             {
                 throw new ArgumentException(
@@ -47,6 +49,15 @@ public sealed class JsonBodyAs<TResult>(IOptional<JSchema> schema, Func<JObject,
     /// </summary>
     public JsonBodyAs(Func<JObject, ValueTask<TResult>> warp) : this(
         new OptEmpty<JSchema>(), warp
+    )
+    { }
+    
+    /// <summary>
+    /// Incoming body parsed as json, optionally validated and warped by
+    /// a given function.
+    /// </summary>
+    public JsonBodyAs(Func<JObject, TResult> warp) : this(
+        new OptEmpty<JSchema>(), body => ValueTask.FromResult(warp(body))
     )
     { }
     
