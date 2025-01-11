@@ -70,7 +70,7 @@ namespace Test.WHyLL.AspNet.Request
                 "booody",
                 (await new UnwrapAspRequest(
                     httpContext.Request
-                ).To(new BodyAsText()))
+                ).To(new BodyAsString()))
             );
         }
         
@@ -83,10 +83,10 @@ namespace Test.WHyLL.AspNet.Request
             httpContext.Request.Body = new AsInput("booody").Stream();
 
             var msg = new UnwrapAspRequest(httpContext.Request, allowBodyReplay: true);
-            await msg.To(new BodyAsText());
+            await msg.To(new BodyAsString());
             Assert.Equal(
                 "booody",
-                (await msg.To(new BodyAsText()))
+                (await msg.To(new BodyAsString()))
                 .ReplaceLineEndings()
             );
         }

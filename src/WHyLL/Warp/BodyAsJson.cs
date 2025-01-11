@@ -7,6 +7,6 @@ namespace WHyLL.Warp;
 /// </summary>
 public sealed class BodyAsJson() : WarpEnvelope<JObject>(
     new BodyAs<JObject>(async bodyStream =>
-        JObject.Parse(await new BodyAsText().Refine(bodyStream).Render())  
+        JObject.Parse(await new BodyAsString().Refine(bodyStream).Render())  
     )
 );

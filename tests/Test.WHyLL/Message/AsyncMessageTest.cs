@@ -1,7 +1,8 @@
-﻿using WHyLL.Warp;
+﻿using WHyLL.Message;
+using WHyLL.Warp;
 using Xunit;
 
-namespace WHyLL.Message.Test
+namespace Test.WHyLL.Message
 {
     public sealed class AsyncMessageTests
     {
