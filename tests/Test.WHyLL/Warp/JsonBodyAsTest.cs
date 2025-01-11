@@ -22,6 +22,6 @@ public sealed class JsonBodyAsTest
                     .WithBody(new AsInputStream(json.ToString()))
                     .To(new JsonBodyAs<JObject>(j => j));
         
-        Assert.Equal(json.ToString(), offered.ToString());
+        Assert.Equal(json.ToString(), offered.ToString()); 
     }
 }
