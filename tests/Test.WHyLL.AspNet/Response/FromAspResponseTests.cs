@@ -66,7 +66,7 @@ namespace WHyLL.AspNet.Response.Test
                 "booody",
                 (await new UnwrapAspResponse(
                     httpContext.Response
-                ).To(new BodyAsText()))
+                ).To(new BodyAsString()))
             );
         }
     }

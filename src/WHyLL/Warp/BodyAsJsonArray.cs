@@ -7,6 +7,6 @@ namespace WHyLL.Warp;
 /// </summary>
 public sealed class BodyAsJsonArray() : WarpEnvelope<JArray>(
     new BodyAs<JArray>(async bodyStream =>
-        JArray.Parse(await new BodyAsText().Refine(bodyStream).Render())  
+        JArray.Parse(await new BodyAsString().Refine(bodyStream).Render())  
     )
 );

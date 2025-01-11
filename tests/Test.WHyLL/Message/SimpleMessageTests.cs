@@ -1,15 +1,16 @@
 ﻿using Tonga;
 using Tonga.Enumerable;
 using WHyLL.Headers;
+using WHyLL.Message;
 using WHyLL.Warp;
 using Xunit;
 
-namespace WHyLL.Message.Test
+namespace Test.WHyLL.Message
 {
     public sealed class SimpleMessageTests
 	{
 		[Fact]
-		public async void IncludesFirstLine()
+		public async Task IncludesFirstLine()
 		{
 			Assert.Equal(
                 "POST /kasten HTTP/1.1",
@@ -20,7 +21,7 @@ namespace WHyLL.Message.Test
 		}
 
         [Fact]
-        public async void RefinesFirstLine()
+        public async Task RefinesFirstLine()
         {
             Assert.Equal(
                 "PUT /putput/dear/pigeon HTTP/1.1",
@@ -36,7 +37,7 @@ namespace WHyLL.Message.Test
         }
 
         [Fact]
-        public async void IncludesHeader()
+        public async Task IncludesHeader()
         {
             Assert.Contains(
                 "Baseball-Cap",
@@ -52,7 +53,7 @@ namespace WHyLL.Message.Test
         }
 
         [Fact]
-        public async void RefinesHeaders()
+        public async Task RefinesHeaders()
         {
             Assert.Contains(
                 "Underpants",

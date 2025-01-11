@@ -2,11 +2,12 @@
 using Tonga.IO;
 using Tonga.Text;
 using WHyLL.Headers;
+using WHyLL.Message;
 using WHyLL.MessageInput;
 using WHyLL.Warp;
 using Xunit;
 
-namespace WHyLL.Message.Test
+namespace Test.WHyLL.Message
 {
 	public sealed class MessageOfInputsTests
 	{

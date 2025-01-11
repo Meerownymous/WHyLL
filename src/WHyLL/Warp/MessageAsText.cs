@@ -19,7 +19,7 @@ public sealed class MessageAsText() : WarpEnvelope<string>(
             }
 
             sb.AppendLine();
-            var body = await msg.To(new BodyAsText());
+            var body = await msg.To(new BodyAsString());
             if (body.Length > 0)
                 sb.AppendLine(body);
             return sb.ToString();
