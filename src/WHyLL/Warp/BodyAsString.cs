@@ -6,7 +6,7 @@ namespace WHyLL.Warp;
 /// Renders the body of a message as <see cref="String"/>
 /// </summary>
 public sealed class BodyAsString(Encoding encoding) : WarpEnvelope<String>(
-    new PiecesAs<string>((_, _, body) =>
+    new PiecesAs<string>(async (_, _, body) =>
     {
         var result = "";
         var originalPosition = 0L;
@@ -19,12 +19,12 @@ public sealed class BodyAsString(Encoding encoding) : WarpEnvelope<String>(
             throw new ArgumentException(
                 "Cannot render body because stream position is not at 0 and cannot be moved. Consider activating replay via the AsAspResonse object.");
         using (var reader = new StreamReader(body, encoding, leaveOpen: true))
-            result = reader.ReadToEnd();
+            result = await reader.ReadToEndAsync();
         
         if(body.CanSeek)
             body.Seek(originalPosition, SeekOrigin.Begin);
 
-        return Task.FromResult(result);
+        return result;
     })
 )
 {
