@@ -15,7 +15,7 @@ public sealed class Base64BodyTests
             "I am 64",
             new Base64Decoded(
                 await
-                    new MessageOfInputs(
+                    new MessageWithInputs(
                         new Base64Body("I am 64")    
                     ).To(new BodyAsString())
             ).AsString()

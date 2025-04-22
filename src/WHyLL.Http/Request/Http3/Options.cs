@@ -10,7 +10,7 @@ namespace WHyLL.Http.Request.Http3
     /// </summary>
     public sealed class Options(string url, IMessageInput input, params IMessageInput[] more) : 
         MessageEnvelope(
-            new MessageOfInputs(
+            new MessageWithInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
                         new RequestLine("OPTIONS", url, new Version(3, 0)).AsString(),

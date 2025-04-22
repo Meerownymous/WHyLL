@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Test.WHyLL.Message
 {
-	public sealed class MessageOfInputsTests
+	public sealed class MessageWithInputsTests
 	{
 		[Fact]
 		public async void InsertsHeader()
@@ -17,7 +17,7 @@ namespace Test.WHyLL.Message
 			Assert.Contains(
 				"Approved",
 				(await
-					new MessageOfInputs(
+					new MessageWithInputs(
 						new HeaderInput(
 							new Header("Elegance", "Approved")
 						)
@@ -33,7 +33,7 @@ namespace Test.WHyLL.Message
                 "Insert me",
 				AsText._(
 					await
-						new MessageOfInputs(
+						new MessageWithInputs(
 							new BodyInput(
 								new AsInput(
 									new AsBytes("Insert me")

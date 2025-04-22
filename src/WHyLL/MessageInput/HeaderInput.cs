@@ -1,6 +1,10 @@
-﻿using Tonga;
+﻿using Newtonsoft.Json.Linq;
+using Tonga;
 using Tonga.Enumerable;
 using Tonga.Map;
+using WHyLL;
+using WHyLL.Message;
+using WHyLL.MessageInput;
 
 namespace WHyLL.MessageInput
 {
@@ -31,3 +35,15 @@ namespace WHyLL.MessageInput
     }
 }
 
+namespace BodyInputSmarts
+{
+    public static class HeaderInputSmarts
+    {
+        /// Message with header.
+        public static IMessage Header(this IMessage msg, string name, string value) => 
+            new MessageWithInputs(
+                msg,
+                new HeaderInput(name, value)
+            );
+    }
+}

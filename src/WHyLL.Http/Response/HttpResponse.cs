@@ -9,7 +9,7 @@ namespace WHyLL.Http.Response;
 /// A http response with given statuscode and optional content.
 /// </summary>
 public sealed class HttpResponse(HttpStatusCode httpStatusCode, IEnumerable<IMessageInput> inputs) : MessageEnvelope(
-    new MessageOfInputs(
+    new MessageWithInputs(
         new JoinedInput(
             inputs,
             new MessageInput.ResponseLine(httpStatusCode)

@@ -11,7 +11,7 @@ namespace WHyLL.Http3.Request
     /// </summary>
     public sealed class Get(string url, IMessageInput input, params IMessageInput[] more) : 
         MessageEnvelope(
-            new MessageOfInputs(
+            new MessageWithInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
                         new RequestLine("GET", url, new Version(2, 0)).AsString(),

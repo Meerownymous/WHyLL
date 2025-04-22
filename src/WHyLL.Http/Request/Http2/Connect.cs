@@ -11,7 +11,7 @@ namespace WHyLL.Http2.Request
     /// </summary>
     public sealed class Connect(string url, IMessageInput input, params IMessageInput[] more) : 
         MessageEnvelope(
-            new MessageOfInputs(
+            new MessageWithInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
                         new RequestLine("CONNECT", url, new Version(2,0)).AsString(),
