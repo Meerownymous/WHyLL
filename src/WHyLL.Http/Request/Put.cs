@@ -10,7 +10,7 @@ namespace WHyLL.Http.Request
     /// </summary>
     public sealed class Put(string url, Version httpVersion, Stream body, IMessageInput input, params IMessageInput[] more) : 
         MessageEnvelope(
-            new MessageOfInputs(
+            new MessageWithInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
                         new RequestLine("PUT", url, httpVersion).AsString(),

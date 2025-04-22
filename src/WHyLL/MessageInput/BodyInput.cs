@@ -1,4 +1,9 @@
-﻿namespace WHyLL.MessageInput
+﻿using Newtonsoft.Json.Linq;
+using WHyLL;
+using WHyLL.Message;
+using WHyLL.MessageInput;
+
+namespace WHyLL.MessageInput
 {
     /// <summary>
     /// Body input for a <see cref="IMessage"/>.
@@ -13,3 +18,13 @@
     }
 }
 
+namespace BodyInputSmarts
+{
+    public static class BodyInputSmarts
+    {
+        public static IMessage Body(this IMessage msg, Stream body) => 
+            new MessageWithInputs(
+                new BodyInput(body)
+            );
+    }
+}

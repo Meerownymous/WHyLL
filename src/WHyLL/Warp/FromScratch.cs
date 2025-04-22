@@ -1,13 +1,17 @@
-﻿using System;
-using WHyLL.Warp;
+﻿using WHyLL.Warp;
 
 namespace WHyLL.Warp
 {
-    /// <summary>
-    /// Warp from scratch, with no inputs.
-    /// </summary>
     public sealed class FromScratch<TOutput> : WarpEnvelope<TOutput>
     {
+        /// <summary>
+        /// Renders a fixed outcome.
+        /// </summary>
+        public FromScratch(TOutput output) : base(
+            new PiecesAs<TOutput>((_, _, _) => Task.FromResult(output))
+        )
+        { }
+
         /// <summary>
         /// Warp from scratch, with no inputs.
         /// </summary>
@@ -15,7 +19,7 @@ namespace WHyLL.Warp
             new PiecesAs<TOutput>((_, _, _) => Task.FromResult(render()))
         )
         { }
-
+        
         /// <summary>
         /// Warp from scratch, with no inputs.
         /// </summary>
@@ -28,15 +32,33 @@ namespace WHyLL.Warp
     public static class FromScratch
     {
         /// <summary>
-        /// Warp from scratch, with no inputs.
+        /// Rendering from scratch, with no inputs.
         /// </summary>
         public static FromScratch<TOutput> _<TOutput>(Func<TOutput> render) =>
             new(render);
 
         /// <summary>
-        /// Warp from scratch, with no inputs.
+        /// Rendering from scratch, with no inputs.
         /// </summary>
         public static FromScratch<TOutput> _<TOutput>(Func<Task<TOutput>> renderAsync) =>
             new(renderAsync);
+    }
+}
+
+namespace WHyLL
+{
+    public static class FromScratchSmarts
+    {
+        /// <summary>
+        /// Renders a fixed outcome.
+        /// </summary>
+        public static Task<TOutput> FromScratch<TOutput>(IMessage message, TOutput output) =>
+            message.To(new FromScratch<TOutput>(output));
+        
+        /// <summary>
+        /// Renders a fixed outcome.
+        /// </summary>
+        public static Task<TOutput> FromScratch<TOutput>(IMessage message, Func<Task<TOutput>> renderAsync) =>
+            message.To(new FromScratch<TOutput>(renderAsync));
     }
 }

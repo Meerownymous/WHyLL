@@ -11,7 +11,7 @@ namespace WHyLL.Http3.Request
     /// </summary>
     public sealed class Head(string url, IMessageInput input, params IMessageInput[] more) : 
         MessageEnvelope(
-            new MessageOfInputs(
+            new MessageWithInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
                         new RequestLine("HEAD", url, new Version(3, 0)).AsString(),

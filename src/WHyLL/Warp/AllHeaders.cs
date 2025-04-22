@@ -1,6 +1,7 @@
 ﻿using Tonga;
 using Tonga.Collection;
 using Tonga.Map;
+using WHyLL.Warp;
 
 namespace WHyLL.Warp
 {
@@ -17,20 +18,14 @@ namespace WHyLL.Warp
         public AllHeaders() : this(Tonga.Map.Empty._<string, ICollection<string>>())
         { }
 
-        public IWarp<IMap<string, ICollection<string>>> Refine(string newFirstLine)
-        {
-            return this;
-        }
+        public IWarp<IMap<string, ICollection<string>>> Refine(string newFirstLine) =>
+            this;
 
-        public Task<IMap<string, ICollection<string>>> Render()
-        {
-            return Task.FromResult(before);
-        }
+        public Task<IMap<string, ICollection<string>>> Render() =>
+            Task.FromResult(before);
 
-        public IWarp<IMap<string, ICollection<string>>> Refine(Stream body)
-        {
-            return this;
-        }
+        public IWarp<IMap<string, ICollection<string>>> Refine(Stream body) =>
+            this;
 
         public IWarp<IMap<string, ICollection<string>>> Refine(IEnumerable<IPair<string, string>> newParts) =>
             Refine(newParts.ToArray());
@@ -41,12 +36,9 @@ namespace WHyLL.Warp
             foreach (var part in parts)
             {
                 var name = part.Key();
-                if (!result.Keys().Contains(name))
-                    result = result.With(AsPair._(name, AsCollection._(part.Value())));
-                else
-                    result = result.With(
-                        AsPair._(name, Joined._(result[name], Tonga.Enumerable.Single._(part.Value())))
-                    );
+                result = result.With(!result.Keys().Contains(name) 
+                    ? AsPair._(name, AsCollection._(part.Value())) 
+                    : AsPair._(name, Joined._(result[name], Tonga.Enumerable.Single._(part.Value()))));
             }
             
             return new AllHeaders(result);
@@ -54,3 +46,11 @@ namespace WHyLL.Warp
     }
 }
 
+namespace WHyLL
+{
+    public static class AllHeadersSmarts
+    {
+        public static async Task<IMap<string, ICollection<string>>> AllHeaders(this IMessage msg) =>
+            await msg.To(new AllHeaders());
+    }
+}

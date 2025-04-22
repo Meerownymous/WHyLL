@@ -12,7 +12,7 @@ namespace WHyLL.Http.Request
     /// </summary>
     public sealed class Get(Func<string> url, Version httpVersion, IEnumerable<IMessageInput> inputs) : 
         MessageEnvelope(
-            new MessageOfInputs(
+            new MessageWithInputs(
                 new Joined<IMessageInput>(
                     inputs,
                     new SimpleMessageInput(

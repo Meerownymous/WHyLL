@@ -27,3 +27,13 @@ public sealed class Conditional<TOutcome>(
         no
     ){ }
 }
+
+public static class ConditionalSmarts
+{
+    public static Task<TOutcome> Conditional<TOutcome>(this IMessage message,
+        Func<IMessage, bool> condition,
+        IWarp<TOutcome> yes,
+        IWarp<TOutcome> no
+    ) =>
+        message.To(new Conditional<TOutcome>(condition, yes, no));
+}

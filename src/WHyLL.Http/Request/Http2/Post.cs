@@ -10,7 +10,7 @@ namespace WHyLL.Http.Request.Http2
     /// </summary>
     public sealed class Post(string url, Stream body, IMessageInput input, params IMessageInput[] more) : 
         MessageEnvelope(
-            new MessageOfInputs(
+            new MessageWithInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
                         new RequestLine("POST", url, new Version(2, 0)).AsString(),

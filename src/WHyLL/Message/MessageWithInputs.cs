@@ -6,21 +6,34 @@ namespace WHyLL.Message
     /// <summary>
     /// A <see cref="IMessage"> built from <see cref="IMessageInput"s/>/>
     /// </summary>
-	public sealed class MessageOfInputs(IEnumerable<IMessageInput> inputs) : IMessage
+	public sealed class MessageWithInputs(IMessage message, IEnumerable<IMessageInput> inputs) : IMessage
     {
+        /// <summary>
+        /// A <see cref="IMessage"> built from <see cref="IMessageInput"s/>/>
+        /// </summary>
+        public MessageWithInputs(IEnumerable<IMessageInput> inputs) : this(new SimpleMessage(), inputs)
+        { }
+        
         private readonly Lazy<IMessage> message = new(() =>
         {
-            IMessage result = new SimpleMessage();
             foreach (var input in inputs)
-                result = input.WriteTo(result);
-            return result;
+                message = input.WriteTo(message );
+            return message;
         });
 
         /// <summary>
         /// A <see cref="IMessage" built from <see cref="IMessageInput"s/>/>
         /// </summary>
-        public MessageOfInputs(params IMessageInput[] inputs) : this(
+        public MessageWithInputs(params IMessageInput[] inputs) : this(
             AsEnumerable._(inputs) 
+        )
+        { }
+        
+        /// <summary>
+        /// A <see cref="IMessage" built from <see cref="IMessageInput"s/>/>
+        /// </summary>
+        public MessageWithInputs(IMessage message, params IMessageInput[] inputs) : this(
+            message, AsEnumerable._(inputs) 
         )
         { }
 

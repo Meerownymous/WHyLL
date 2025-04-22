@@ -28,8 +28,8 @@ namespace Test.WHyLL.Warp
                 "2",
                 (await
                     new Switch<string>(
-                        new Case<string>(firstLine => firstLine.StartsWith("POST"), new Fixed<string>("1")),
-                        new Case<string>(firstLine => firstLine.StartsWith("GET"), new Fixed<string>("2")),
+                        new Case<string>(firstLine => firstLine.StartsWith("POST"), new FromScratch<string>("1")),
+                        new Case<string>(firstLine => firstLine.StartsWith("GET"), new FromScratch<string>("2")),
                         new Case<string>(firstLine => firstLine.StartsWith("GET"),
                             new FromScratch<string>(render: () => throw new Exception())
                         )

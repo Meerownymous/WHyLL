@@ -1,4 +1,7 @@
-﻿using Tonga.Map;
+﻿using Tonga.Enumerable;
+using Tonga.Map;
+using WHyLL.Headers;
+using WHyLL.Message;
 
 namespace WHyLL.Headers
 {
@@ -16,3 +19,16 @@ namespace WHyLL.Headers
 	}
 }
 
+namespace WHyLL
+{
+	public static class HeaderSmarts
+	{
+		public static IMessage Header(this IMessage message, string name, string value) =>
+			message.With(new Header(name, value));
+		public static IMessage Header(this IMessage message, string name, params string[] values) =>
+			message.With(
+				values.Mapped(value => new Header(name, value))
+			);
+	}
+		
+}
