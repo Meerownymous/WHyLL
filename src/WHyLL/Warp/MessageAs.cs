@@ -1,4 +1,6 @@
-﻿using WHyLL.Message;
+﻿using WHyLL;
+using WHyLL.Message;
+using WHyLL.Warp;
 
 namespace WHyLL.Warp
 {
@@ -41,3 +43,11 @@ namespace WHyLL.Warp
     }
 }
 
+public static class MessageAsSmarts
+{
+    public static Task<TOutput> As<TOutput>(this IMessage message, Func<IMessage, Task<TOutput>> render) => 
+        message.To(new MessageAs<TOutput>(render));
+    
+    public static Task<TOutput> As<TOutput>(this IMessage message, Func<IMessage, TOutput> render) => 
+        message.To(new MessageAs<TOutput>(render));
+}

@@ -1,4 +1,5 @@
 ﻿using Tonga;
+using WHyLL.Warp;
 
 namespace WHyLL.Warp
 {
@@ -7,7 +8,7 @@ namespace WHyLL.Warp
     /// </summary>
     public sealed class HeadersAs<TOutput>(Func<IEnumerable<IPair<string, string>>, Task<TOutput>> renderAsync) : 
         WarpEnvelope<TOutput>(
-            new PiecesAs<TOutput>((x,headers,z) => renderAsync(headers))
+            new PiecesAs<TOutput>((_, headers, _) => renderAsync(headers))
         )
     {
         /// <summary>
@@ -19,15 +20,17 @@ namespace WHyLL.Warp
         { }
 
     }
+}
 
-    /// <summary>
-    /// Render headers of a message as output type.
-    /// </summary>
-    public static class HeadersAs
+namespace WHyLL
+{
+    public static class HeadersAsSmarts
     {
-        public static HeadersAs<TOutput> _<TOutput>(
-            Func<IEnumerable<IPair<string, string>>, Task<TOutput>> renderAsync) =>
-            new(renderAsync);
+        public static Task<TOutput> HeadersAs<TOutput>(
+            IMessage message, 
+            Func<IEnumerable<IPair<string, string>>, Task<TOutput>> renderAsync
+        ) =>
+            message.To(new HeadersAs<TOutput>(renderAsync));
     }
 }
 

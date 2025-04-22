@@ -13,15 +13,14 @@ namespace Test.WHyLL.Warp
             var rendered = 0;
             Assert.Equal(
                 new[] { 1, 2, 3 },
-                await new SimpleMessage().To(
-                    Chain._(
+                await new SimpleMessage()
+                    .Chain(
                         Repeated._(
                             FromScratch._(
                                 () => Task.FromResult(++rendered)
                             ),
                             3
                         )
-                    )
                 )
             );
         }
@@ -31,15 +30,12 @@ namespace Test.WHyLL.Warp
         {
             var rendered = 0;
             await Assert.ThrowsAsync<Exception>(async () =>
-                await new SimpleMessage().To(
-                    Chain._(
-                        AsEnumerable._(
-                            FromScratch._(() => rendered++),
-                            FromScratch._<int>(render: () => throw new Exception("HALT STOP")),
-                            FromScratch._(() => rendered++)
-                        )
+                await new SimpleMessage()
+                    .Chain(
+                        FromScratch._(() => rendered++),
+                        FromScratch._<int>(render: () => throw new Exception("HALT STOP")),
+                        FromScratch._(() => rendered++)
                     )
-                )
             );
         }
 
@@ -49,15 +45,12 @@ namespace Test.WHyLL.Warp
             var rendered = 0;
             try
             {
-                await new SimpleMessage().To(
-                    Chain._(
-                        AsEnumerable._(
-                            FromScratch._(() => rendered++),
-                            FromScratch._<int>(render: () => throw new Exception("HALT STOP")),
-                            FromScratch._(() => rendered++)
-                        )
-                    )
-                );
+                await new SimpleMessage()
+                    .Chain(
+                        FromScratch._(() => rendered++),
+                        FromScratch._<int>(render: () => throw new Exception("HALT STOP")),
+                        FromScratch._(() => rendered++)
+                    );
             }
             catch (Exception)
             {

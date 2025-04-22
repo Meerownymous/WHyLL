@@ -1,4 +1,6 @@
-﻿namespace WHyLL.Warp
+﻿using WHyLL.Warp;
+
+namespace WHyLL.Warp
 {
     /// <summary>
     /// Render the body of a message as output type.
@@ -28,3 +30,14 @@
     }
 }
 
+namespace  WHyLL
+{
+    public static class BodyAsSmarts
+    {
+        /// <summary>
+        /// Body as Output using given render function.
+        /// </summary>
+        public static Task<Output> BodyAs<Output>(this IMessage message, Func<Stream,Output> render) => 
+            message.To(new BodyAs<Output>(render));
+    }
+}

@@ -1,6 +1,8 @@
 ﻿using Tonga;
 using Tonga.Enumerable;
+using WHyLL;
 using WHyLL.Message;
+using WHyLL.Warp;
 
 namespace WHyLL.Warp
 {
@@ -42,3 +44,7 @@ namespace WHyLL.Warp
     }
 }
 
+public static class CloneSmarts
+{
+    public static Task<IMessage> Clone(this IMessage message) => message.To(new Clone()); 
+}
