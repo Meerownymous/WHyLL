@@ -232,7 +232,7 @@ namespace Test.WHyLL.Http.Warp
                         {
                             Content =
                                 new StreamContent(
-                                    new TeeInputStream(
+                                    new TeeStream(
                                         new MemoryStream(
                                             AsBytes._("I wanna be read lazyly").Bytes()
                                         ),
