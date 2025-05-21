@@ -17,7 +17,7 @@ namespace WHyLL.MessageInput
         
         public IMessage WriteTo(IMessage message) =>
             message.WithBody(
-                new AsInputStream(
+                new AsStream(
                     JsonConvert.SerializeObject(json, formatting)
                 )    
             );

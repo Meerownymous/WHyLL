@@ -19,7 +19,7 @@ namespace WHyLL.MessageInput
         
         public IMessage WriteTo(IMessage message) =>
             message.WithBody(
-                new AsInputStream(body(), new UTF8Encoding())    
+                new AsStream(body(), new UTF8Encoding())    
             );
     }
 }

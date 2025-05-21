@@ -19,7 +19,7 @@ public sealed class JsonBodyAsTest
         var offered = 
             await 
                 new SimpleMessage()
-                    .WithBody(new AsInputStream(json.ToString()))
+                    .WithBody(new AsStream(json.ToString()))
                     .To(new JsonBodyAs<JObject>(j => j));
         
         Assert.Equal(json.ToString(), offered.ToString()); 
