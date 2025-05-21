@@ -13,7 +13,7 @@ namespace Test.WHyLL.Http.Warp
 	public sealed class HttpWireTests
 	{
         [Fact]
-        public async void ConfiguresRequestUri()
+        public async Task ConfiguresRequestUri()
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
@@ -46,7 +46,7 @@ namespace Test.WHyLL.Http.Warp
         [InlineData("OPTIONS")]
         [InlineData("TRACE")]
         [InlineData("CONNECT")]
-        public async void ConfiguresRequestMethod(string method)
+        public async Task ConfiguresRequestMethod(string method)
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
@@ -71,7 +71,7 @@ namespace Test.WHyLL.Http.Warp
         }
 
         [Fact]
-        public async void ConfiguresRequestHttpVersion()
+        public async Task ConfiguresRequestHttpVersion()
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
@@ -97,7 +97,7 @@ namespace Test.WHyLL.Http.Warp
         }
 
         [Fact]
-        public async void ConfiguresRequestHeader()
+        public async Task ConfiguresRequestHeader()
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
@@ -118,7 +118,7 @@ namespace Test.WHyLL.Http.Warp
         }
 
         [Fact]
-        public async void ConfiguresRequestContent()
+        public async Task ConfiguresRequestContent()
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
@@ -139,7 +139,7 @@ namespace Test.WHyLL.Http.Warp
         }
         
         [Fact]
-        public async void AddsContentHeaders()
+        public async Task AddsContentHeaders()
         {
             HttpRequestMessage result = new HttpRequestMessage();
             await
@@ -161,7 +161,7 @@ namespace Test.WHyLL.Http.Warp
         }
 
         [Fact]
-        public async void ConvertsResponseStatusLine()
+        public async Task ConvertsResponseStatusLine()
         {
             Assert.Equal(
                 "HTTP/1.1 200 OK\r\n",
@@ -176,7 +176,7 @@ namespace Test.WHyLL.Http.Warp
         }
 
         [Fact]
-        public async void ConvertsResponseHeaders()
+        public async Task ConvertsResponseHeaders()
         {
             var response = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
             response.Headers.TryAddWithoutValidation("header", "call Saul");
@@ -193,12 +193,12 @@ namespace Test.WHyLL.Http.Warp
         }
 
         [Fact]
-        public async void PassesResponseBody()
+        public async Task PassesResponseBody()
         {
             Assert.Equal(
                 "I wanna be read lazyly",
                 AsText._(
-                    new AsInput(
+                    new AsConduit(
                         await
                             new HttpWire(_ =>
                                 Task.FromResult(
@@ -221,7 +221,7 @@ namespace Test.WHyLL.Http.Warp
         }
 
         [Fact]
-        public async void DoesNotCopyResponseStreamToMemoryBeforeReading()
+        public async Task DoesNotCopyResponseStreamToMemoryBeforeReading()
         {
             var output = new MemoryStream();
 

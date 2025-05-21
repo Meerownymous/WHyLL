@@ -13,7 +13,7 @@ namespace Test.WHyLL.Warp
             Assert.Equal(
                 "I am the body",
                 await new SimpleMessage()
-                    .WithBody(new AsInput("I am the body").Stream())
+                    .WithBody(new AsConduit("I am the body").Stream())
                     .To(
                         new BodyAsString()
                     )
@@ -26,7 +26,7 @@ namespace Test.WHyLL.Warp
             Assert.Equal(
                 "I am the bödy",
                 await new SimpleMessage()
-                    .WithBody(new AsInput("I am the bödy").Stream())
+                    .WithBody(new AsConduit("I am the bödy").Stream())
                     .To(
                         new BodyAsString()
                     )
@@ -36,7 +36,7 @@ namespace Test.WHyLL.Warp
         [Fact]
         public async Task ResetsStreamAfterRender()
         {
-            var body = new AsInput("I am the bödy").Stream();
+            var body = new AsConduit("I am the bödy").Stream();
             body.Seek(9, SeekOrigin.Begin);
 
             await new SimpleMessage()
@@ -44,14 +44,14 @@ namespace Test.WHyLL.Warp
                 .To(new BodyAsString());
             Assert.Equal(
                 "bödy",
-                new StreamReader(body).ReadToEnd()
+                await new StreamReader(body).ReadToEndAsync()
             );
         }
         
         [Fact]
         public async Task RendersFullyWhenPositionNotZero()
         {
-            var body = new AsInput("I am the bödy").Stream();
+            var body = new AsConduit("I am the bödy").Stream();
             body.Seek(9, SeekOrigin.Begin);
 
             

@@ -3,24 +3,22 @@ using Tonga.Text;
 using WHyLL.Warp;
 using Xunit;
 
-namespace Test.WHyLL.Warp
+namespace Test.WHyLL.Warp;
+
+public sealed class BodyTests
 {
-	public sealed class BodyTests
+	[Fact]
+	public async Task RendersBody()
 	{
-		[Fact]
-		public async Task RendersBody()
-		{
-			Assert.Equal(
-				"I have a killer body",
-				AsText._(
-					(await
-						new Body()
-							.Refine(new AsInput("I have a killer body").Stream())
-							.Render()
-					)
-				).AsString()
-			);
-		}
+		Assert.Equal(
+			"I have a killer body",
+			AsText._(
+				(await
+					new Body()
+						.Refine(new AsConduit("I have a killer body").Stream())
+						.Render()
+				)
+			).AsString()
+		);
 	}
 }
-

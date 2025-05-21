@@ -14,7 +14,7 @@ namespace Test.WHyLL.Warp
             Assert.Equal(
                 "I am the body",
                 (await new SimpleMessage()
-                    .WithBody(new AsInput("I am the body").Stream())
+                    .WithBody(new AsConduit("I am the body").Stream())
                     .To(
                         new BodyAs<string>(body=>
                             AsText._(body).AsString()
@@ -27,7 +27,7 @@ namespace Test.WHyLL.Warp
         [Fact]
         public async Task SeeksStreamOrigin()
         {
-            var stream = new AsInput("I am the body").Stream();
+            var stream = new AsConduit("I am the body").Stream();
             stream.Seek(4, SeekOrigin.Begin);
             Assert.Equal(
                 "I am the body",

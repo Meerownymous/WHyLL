@@ -19,7 +19,7 @@ public sealed class Base64Body(Func<Stream> body) : MessageInputEnvelope(
             new Header("Content-Transfer-Encoding", "base64")
         ),
         new BodyInput(() =>
-            new AsInput(
+            new AsConduit(
                 new TextAsBase64(
                     new AsText(new StreamReader(body(), Encoding.UTF8))
                 ).AsString()
@@ -28,6 +28,6 @@ public sealed class Base64Body(Func<Stream> body) : MessageInputEnvelope(
     )
 )
 {
-    public Base64Body(string body) : this(() => new AsInput(body, Encoding.UTF8).Stream())
+    public Base64Body(string body) : this(() => new AsConduit(body, Encoding.UTF8).Stream())
     { }
 }

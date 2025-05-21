@@ -1,5 +1,4 @@
 ﻿using Tonga.IO;
-using Tonga.Text;
 using WHyLL.Message;
 using WHyLL.Warp;
 using Xunit;
@@ -14,7 +13,7 @@ namespace Test.WHyLL.Warp
             Assert.Equal(
                 "I am the body",
                 (await new SimpleMessage()
-                    .WithBody(new AsInput("{ text: 'I am the body' }").Stream())
+                    .WithBody(new AsConduit("{ text: 'I am the body' }").Stream())
                     .To(new BodyAsJson())
                 )["text"]
             );

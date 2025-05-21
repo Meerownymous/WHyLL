@@ -6,7 +6,6 @@ using WHyLL.AspNet.Warp;
 using WHyLL.Headers;
 using WHyLL.Http.Response;
 using WHyLL.Message;
-using WHyLL;
 using Xunit;
 
 namespace Test.WHyLL.AspNet.Rendering
@@ -14,7 +13,7 @@ namespace Test.WHyLL.AspNet.Rendering
     public sealed class AspResponseTests
     {
         [Fact]
-        public async void RendersStatus()
+        public async Task RendersStatus()
         {
             Assert.Equal(
                 200,
@@ -26,7 +25,7 @@ namespace Test.WHyLL.AspNet.Rendering
         }
 
         [Fact]
-        public async void RendersHeaders()
+        public async Task RendersHeaders()
         {
             Assert.Equal(
                 "there it is",
@@ -39,7 +38,7 @@ namespace Test.WHyLL.AspNet.Rendering
         }
         
         [Fact]
-        public async void RendersMultipleHeadersWithSameKey()
+        public async Task RendersMultipleHeadersWithSameKey()
         {
             Assert.Equal(
                 "there it is,there it idelli-diddeli-is",
@@ -53,7 +52,7 @@ namespace Test.WHyLL.AspNet.Rendering
         }
 
         [Fact]
-        public async void RendersBody()
+        public async Task RendersBody()
         {
             var context = new DefaultHttpContext();
             context.Response.Body = new MemoryStream();
@@ -64,7 +63,7 @@ namespace Test.WHyLL.AspNet.Rendering
                 AsText._(
                     (await new SimpleMessage()
                         .With(new ResponseLine(200).AsString())
-                        .WithBody(new AsInput("Clean Code").Stream())
+                        .WithBody(new AsConduit("Clean Code").Stream())
                         .To(new AspResponse(context))
                     ).Body
                 ).AsString()

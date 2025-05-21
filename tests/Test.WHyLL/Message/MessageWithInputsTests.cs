@@ -12,7 +12,7 @@ namespace Test.WHyLL.Message
 	public sealed class MessageWithInputsTests
 	{
 		[Fact]
-		public async void InsertsHeader()
+		public async Task InsertsHeader()
 		{
 			Assert.Contains(
 				"Approved",
@@ -27,7 +27,7 @@ namespace Test.WHyLL.Message
 		}
 
         [Fact]
-        public async void InsertsBody()
+        public async Task InsertsBody()
         {
             Assert.Equal(
                 "Insert me",
@@ -35,7 +35,7 @@ namespace Test.WHyLL.Message
 					await
 						new MessageWithInputs(
 							new BodyInput(
-								new AsInput(
+								new AsConduit(
 									new AsBytes("Insert me")
 								).Stream()
 							)

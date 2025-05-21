@@ -8,12 +8,12 @@ namespace Test.WHyLL.Warp
     public sealed class BodyAsJsonArrayTest
     {
         [Fact]
-        public async void RendersAsOutputType()
+        public async Task RendersAsOutputType()
         {
             Assert.Equal(
                 "I am the body",
                 (await new SimpleMessage()
-                    .WithBody(new AsInput("[{ text: 'I am the body'}]").Stream())
+                    .WithBody(new AsConduit("[{ text: 'I am the body'}]").Stream())
                     .To(new BodyAsJsonArray())
                 )[0]["text"]
             );

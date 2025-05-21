@@ -64,7 +64,7 @@ namespace Test.WHyLL.AspNet.Request
             var httpContext = new DefaultHttpContext();
             httpContext.Request.Method = "GET";
             httpContext.Request.Path = "/your/shit/together";
-            httpContext.Request.Body = new AsInput("booody").Stream();
+            httpContext.Request.Body = new AsConduit("booody").Stream();
 
             Assert.Equal(
                 "booody",
@@ -80,7 +80,7 @@ namespace Test.WHyLL.AspNet.Request
             var httpContext = new DefaultHttpContext();
             httpContext.Request.Method = "GET";
             httpContext.Request.Path = "/your/shit/together";
-            httpContext.Request.Body = new AsInput("booody").Stream();
+            httpContext.Request.Body = new AsConduit("booody").Stream();
 
             var msg = new UnwrapAspRequest(httpContext.Request, allowBodyReplay: true);
             await msg.To(new BodyAsString());

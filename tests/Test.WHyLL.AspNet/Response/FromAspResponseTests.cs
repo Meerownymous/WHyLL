@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Tonga.IO;
-using WHyLL.AspNet.Request;
+using WHyLL.AspNet.Response;
 using WHyLL.Warp;
 using Xunit;
 
-namespace WHyLL.AspNet.Response.Test
+namespace Test.WHyLL.AspNet.Response
 {
     public sealed class UnwrapAspRequestTests
     {
         [Fact]
-        public async void ConvertsResponseLine()
+        public async Task ConvertsResponseLine()
         {
             var httpContext = new DefaultHttpContext();
             httpContext.Response.StatusCode = 200;
@@ -24,7 +24,7 @@ namespace WHyLL.AspNet.Response.Test
         }
 
         [Fact]
-        public async void ConvertsHeaders()
+        public async Task ConvertsHeaders()
         {
             var httpContext = new DefaultHttpContext();
             httpContext.Response.StatusCode = 200;
@@ -40,15 +40,15 @@ namespace WHyLL.AspNet.Response.Test
         }
 
         [Fact]
-        public async void ConvertsMultipleHeadersWithSameKey()
+        public async Task ConvertsMultipleHeadersWithSameKey()
         {
             var httpContext = new DefaultHttpContext();
             httpContext.Response.StatusCode = 200;
             httpContext.Response.Headers
-                .Add("check", new StringValues(new string[] { "this out", "this also" }));
+                .Add("check", new StringValues(["this out", "this also"]));
 
             Assert.Equal(
-                new string[] { "this out", "this also" },
+                ["this out", "this also"],
                 (await new UnwrapAspResponse(
                     httpContext.Response
                 ).To(new AllHeaders()))["check"]
@@ -56,17 +56,17 @@ namespace WHyLL.AspNet.Response.Test
         }
 
         [Fact]
-        public async void ConvertsBody()
+        public async Task ConvertsBody()
         {
             var httpContext = new DefaultHttpContext();
             httpContext.Response.StatusCode = 200;
-            httpContext.Response.Body = new AsInput("booody").Stream();
+            httpContext.Response.Body = new AsConduit("booody").Stream();
 
             Assert.Equal(
                 "booody",
-                (await new UnwrapAspResponse(
+                await new UnwrapAspResponse(
                     httpContext.Response
-                ).To(new BodyAsString()))
+                ).To(new BodyAsString())
             );
         }
     }
