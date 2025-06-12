@@ -13,7 +13,7 @@ namespace WHyLL
         /// request-line (request message)
         /// or status-line (response message).
         /// </summary>
-        IMessage With(string newFirstLine);
+        IMessage With(IPrologue newPrologue);
 
         /// <summary>
         /// Refine the headers.

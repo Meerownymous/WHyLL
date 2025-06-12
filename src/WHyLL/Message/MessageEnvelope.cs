@@ -7,8 +7,8 @@ namespace WHyLL.Message
     /// </summary>
 	public abstract class MessageEnvelope(IMessage origin) : IMessage
 	{
-        public IMessage With(string firstLine) =>
-            origin.With(firstLine);
+        public IMessage With(IPrologue newPrologue) =>
+            origin.With(newPrologue);
 
         public IMessage With(IEnumerable<IPair<string, string>> newParts) =>
             origin.With(newParts);

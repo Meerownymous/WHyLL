@@ -2,6 +2,7 @@
 using Tonga.Enumerable;
 using WHyLL.Headers;
 using WHyLL.Message;
+using WHyLL.Prologue;
 using WHyLL.Warp;
 using Xunit;
 
@@ -10,13 +11,16 @@ namespace Test.WHyLL.Message
     public sealed class SimpleMessageTests
 	{
 		[Fact]
-		public async Task IncludesFirstLine()
+		public async Task IncludesPrologue()
 		{
 			Assert.Equal(
                 "POST /kasten HTTP/1.1",
                 await
-					new SimpleMessage("POST /kasten HTTP/1.1", None._<IPair<string,string>>(), new MemoryStream())
-						.To(new FirstLine())
+					new SimpleMessage(
+                        new AsPrologue(["POST", "/kasten", "HTTP/1.1"]), 
+                        new None<IPair<string,string>>(), 
+                        new MemoryStream()
+                    ).To(new Prologue())
 			);
 		}
 
@@ -27,12 +31,12 @@ namespace Test.WHyLL.Message
                 "PUT /putput/dear/pigeon HTTP/1.1",
                 await
                     new SimpleMessage(
-                        "POST /kasten HTTP/1.1",
-                        None._<IPair<string, string>>(),
+                        new AsPrologue(["POST", "/kasten", "HTTP/1.1"]),
+                        new None<IPair<string, string>>(),
                         new MemoryStream()
                     )
-                    .With("PUT /putput/dear/pigeon HTTP/1.1")
-                    .To(new FirstLine())
+                    .With(new AsPrologue(["PUT", "/putput/dear/pigeon","HTTP/1.1"]))
+                    .To(new Prologue())
             );
         }
 
@@ -43,8 +47,8 @@ namespace Test.WHyLL.Message
                 "Baseball-Cap",
                     (await
                         new SimpleMessage(
-                            "POST /kasten HTTP/1.1",
-                            Tonga.Enumerable.Single._(new Header("Accepted-Headwear", "Baseball-Cap")),
+                            new AsPrologue(["POST", "/kasten", "HTTP/1.1"]),
+                            new Header("Accepted-Headwear", "Baseball-Cap").AsSingle(),
                             new MemoryStream()
                         )
                         .To(new AllHeaders())
@@ -59,8 +63,8 @@ namespace Test.WHyLL.Message
                 "Underpants",
                 (await
                     new SimpleMessage(
-                        "POST /kasten HTTP/1.1",
-                        Tonga.Enumerable.Single._(new Header("Accepted-Headwear", "Baseball-Cap")),
+                        new AsPrologue(["POST", "/kasten", "HTTP/1.1"]),
+                        new Header("Accepted-Headwear", "Baseball-Cap").AsSingle(),
                         new MemoryStream()
                     )
                     .With(new Header("Accepted-Headwear", "Underpants"))

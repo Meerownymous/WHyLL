@@ -1,4 +1,5 @@
-﻿using WHyLL.Warp;
+﻿using WHyLL.Prologue;
+using WHyLL.Warp;
 using Xunit;
 
 namespace Test.WHyLL.Warp
@@ -6,42 +7,41 @@ namespace Test.WHyLL.Warp
     public sealed class SwitchTest
     {
         [Fact]
-        public async void FindsBranch()
+        public async Task FindsBranch()
         {
             Assert.Equal(
                 "GET /testresult HTTP/1.1",
                 (await 
                     new Switch<string>(
-                        new Case<string>(firstLine => firstLine.StartsWith("POST"), new FirstLine()),
-                        new Case<string>(firstLine => firstLine.StartsWith("GET"), new FirstLine())
+                        new Case<string>(prologue => prologue.Sequence()[0] == "POST" , new Prologue()),
+                        new Case<string>(prologue => prologue.Sequence()[0] == "GET", new Prologue())
                     )
-                    .Refine("GET /testresult HTTP/1.1")
+                    .Refine(new AsPrologue(["GET", "/testresult", "HTTP/1.1"]))
                     .Render()
                 )
             );
         }
 
         [Fact]
-        public async void RendersOnlyFirstMatch()
+        public async Task RendersOnlyFirstMatch()
         {
             Assert.Equal(
                 "2",
-                (await
+                await
                     new Switch<string>(
-                        new Case<string>(firstLine => firstLine.StartsWith("POST"), new FromScratch<string>("1")),
-                        new Case<string>(firstLine => firstLine.StartsWith("GET"), new FromScratch<string>("2")),
-                        new Case<string>(firstLine => firstLine.StartsWith("GET"),
+                        new Case<string>(p => p.Sequence()[0] == "POST", new FromScratch<string>("1")),
+                        new Case<string>(p => p.Sequence()[0] == "GET", new FromScratch<string>("2")),
+                        new Case<string>(p => p.Sequence()[0] == "GET",
                             new FromScratch<string>(render: () => throw new Exception())
                         )
                     )
-                    .Refine("GET /testresult HTTP/1.1")
+                    .Refine(new AsPrologue(["GET", "/testresult", "HTTP/1.1"]))
                     .Render()
-                )
             );
         }
 
         [Fact]
-        public async void NoMatchDoesNotRender()
+        public async Task NoMatchDoesNotRender()
         {
             var rendered = false;
 
@@ -49,11 +49,11 @@ namespace Test.WHyLL.Warp
             {
                 await
                     new Switch<string>(
-                        new Case<string>(firstLine => firstLine.StartsWith("POST"),
+                        new Case<string>(p => p.Sequence()[0] == "POST",
                             new FromScratch<string>(() => { rendered = true; return "boom"; })
                         )
                     )
-                    .Refine("GET /testresult HTTP/1.1")
+                    .Refine(new AsPrologue(["GET", "/testresult", "HTTP/1.1"]))
                     .Render();
             }
             catch (Exception)
@@ -69,10 +69,10 @@ namespace Test.WHyLL.Warp
         {
             await Assert.ThrowsAsync<InvalidOperationException>(() =>
                     new Switch<string>(
-                        new Case<string>(firstLine => firstLine.StartsWith("POST"), new FirstLine()),
-                        new Case<string>(firstLine => firstLine.StartsWith("GET"), new FirstLine())
+                        new Case<string>(p => p.Sequence()[0] == "POST", new Prologue()),
+                        new Case<string>(p => p.Sequence()[0] == "GET", new Prologue())
                     )
-                    .Refine("PUT /testresult HTTP/1.1")
+                    .Refine(new AsPrologue(["PUT", "/testresult", "HTTP/1.1"]))
                     .Render()
             );
         }

@@ -8,7 +8,7 @@ namespace WHyLL
 		/// <summary>
 		/// Refines the start of the Warp.
 		/// </summary>
-		IWarp<T> Refine(string newFirstLine);
+		IWarp<T> Refine(IPrologue newPrologue);
 
 		/// <summary>
 		/// Adds a header to the Warp.
@@ -23,7 +23,7 @@ namespace WHyLL
         /// <summary>
         /// Adds a body to the Warp.
         /// </summary>
-        IWarp<T> Refine(Stream body);
+        IWarp<T> Refine(Stream newBody);
 
 		/// <summary>
 		/// Renders the output.

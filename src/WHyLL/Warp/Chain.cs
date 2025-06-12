@@ -22,7 +22,7 @@ namespace WHyLL.Warp
         /// Chain of Warps. Result of the last Warp is returned.
         /// </summary>
         public Chain(params IWarp<TOutput>[] chain) : this(
-            AsEnumerable._(chain)
+            chain.AsEnumerable()
         )
         { }
     }

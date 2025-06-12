@@ -9,10 +9,10 @@ namespace WHyLL.Warp
     /// </summary>
     public sealed class MessageAs<TOutput>(Func<IMessage, Task<TOutput>> render) :
         WarpEnvelope<TOutput>(
-            new PiecesAs<TOutput>((firstLine, headers, body) =>
+            new PiecesAs<TOutput>((prologue, headers, body) =>
                 render(
                     new SimpleMessage()
-                        .With(firstLine)
+                        .With(prologue)
                         .With(headers)
                         .WithBody(body)
                 )

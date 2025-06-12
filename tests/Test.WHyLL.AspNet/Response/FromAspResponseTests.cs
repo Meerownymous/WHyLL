@@ -19,7 +19,7 @@ namespace Test.WHyLL.AspNet.Response
                 "HTTP/1.1 200 OK",
                 await new UnwrapAspResponse(
                     httpContext.Response
-                ).To(new FirstLine())
+                ).To(new Prologue())
             );
         }
 

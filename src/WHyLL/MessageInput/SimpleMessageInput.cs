@@ -1,4 +1,5 @@
 ﻿using Tonga;
+using Tonga.Enumerable;
 
 namespace WHyLL.MessageInput;
 /// <summary>
@@ -8,19 +9,25 @@ public sealed class SimpleMessageInput(
     params Func<IMessage, IMessage>[] transformations
 ) : IMessageInput
 {
-    public SimpleMessageInput(string firstLine) : this(
-        msg => msg.With(firstLine)
+    public SimpleMessageInput(IPrologue prologue) : this(
+        msg => msg.With(prologue)
     )
     { }
     
-    public SimpleMessageInput(string firstLine, IEnumerable<IPair<string,string>> headers) : this(
-        msg => msg.With(firstLine),
+    public SimpleMessageInput(IPrologue prologue, IEnumerable<IPair<string,string>> headers) : this(
+        msg => msg.With(prologue),
         msg => msg.With(headers)
     )
     { }
     
-    public SimpleMessageInput(string firstLine, IEnumerable<IPair<string,string>> headers, Stream body) : this(
-        msg => msg.With(firstLine),
+    public SimpleMessageInput(IPrologue prologue, Stream body) : this(
+        msg => msg.With(prologue),
+        msg => msg.WithBody(body)
+    )
+    { }
+    
+    public SimpleMessageInput(IPrologue prologue, IEnumerable<IPair<string,string>> headers, Stream body) : this(
+        msg => msg.With(prologue),
         msg => msg.With(headers),
         msg => msg.WithBody(body)
     )

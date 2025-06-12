@@ -18,7 +18,7 @@ namespace Test.WHyLL.AspNet.Rendering
             Assert.Equal(
                 200,
                 (await new SimpleMessage()
-                    .With(new ResponseLine(HttpStatusCode.OK).AsString())
+                    .With(new ResponsePrologue(HttpStatusCode.OK))
                     .To(new AspResponse(new DefaultHttpContext()))
                 ).StatusCode
             );
@@ -30,7 +30,7 @@ namespace Test.WHyLL.AspNet.Rendering
             Assert.Equal(
                 "there it is",
                 (await new SimpleMessage()
-                    .With(new ResponseLine(HttpStatusCode.OK).AsString())
+                    .With(new ResponsePrologue(HttpStatusCode.OK))
                     .With(new Header("whoomp", "there it is"))
                     .To(new AspResponse(new DefaultHttpContext()))
                 ).Headers["whoomp"]
@@ -43,7 +43,7 @@ namespace Test.WHyLL.AspNet.Rendering
             Assert.Equal(
                 "there it is,there it idelli-diddeli-is",
                 (await new SimpleMessage()
-                    .With(new ResponseLine(HttpStatusCode.OK).AsString())
+                    .With(new ResponsePrologue(HttpStatusCode.OK))
                     .With(new Header("whoomp", "there it is"))
                     .With(new Header("whoomp", "there it idelli-diddeli-is"))
                     .To(new AspResponse(new DefaultHttpContext()))
@@ -56,17 +56,15 @@ namespace Test.WHyLL.AspNet.Rendering
         {
             var context = new DefaultHttpContext();
             context.Response.Body = new MemoryStream();
-                
-                
             Assert.Equal(
                 "Clean Code",
-                AsText._(
                     (await new SimpleMessage()
-                        .With(new ResponseLine(200).AsString())
+                        .With(new ResponsePrologue(200))
                         .WithBody(new AsConduit("Clean Code").Stream())
                         .To(new AspResponse(context))
                     ).Body
-                ).AsString()
+                    .AsText()
+                    .Str()
             );
         }
     }

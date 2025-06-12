@@ -20,7 +20,7 @@ namespace Test.WHyLL.AspNet.Request
                 "GET /your/shit/together HTTP/1.1",
                 await new UnwrapAspRequest(
                     httpContext.Request
-                ).To(new FirstLine())
+                ).To(new Prologue())
             );  
         }
 

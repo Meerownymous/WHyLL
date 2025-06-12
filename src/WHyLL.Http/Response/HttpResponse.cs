@@ -12,7 +12,7 @@ public sealed class HttpResponse(HttpStatusCode httpStatusCode, IEnumerable<IMes
     new MessageWithInputs(
         new JoinedInput(
             inputs,
-            new MessageInput.ResponseLine(httpStatusCode)
+            new MessageInput.ResponsePrologue(httpStatusCode)
         )
     )
 )
@@ -23,7 +23,7 @@ public sealed class HttpResponse(HttpStatusCode httpStatusCode, IEnumerable<IMes
     /// </summary>
     public HttpResponse(HttpStatusCode statusCode, params IMessageInput[] inputs) : this(
         statusCode,
-        AsEnumerable._(inputs)
+        inputs.AsEnumerable()
     )
     { }
 }

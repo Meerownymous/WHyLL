@@ -13,14 +13,14 @@ namespace Test.WHyLL.Warp
         {
             Assert.Equal(
                 "I am the body",
-                (await new SimpleMessage()
+                await new SimpleMessage()
                     .WithBody(new AsConduit("I am the body").Stream())
                     .To(
-                        new BodyAs<string>(body=>
-                            AsText._(body).AsString()
+                        new BodyAs<string>(body => 
+                            body.AsText().Str()
                         )
                     )
-                )
+                
             );
         }
         
@@ -31,14 +31,12 @@ namespace Test.WHyLL.Warp
             stream.Seek(4, SeekOrigin.Begin);
             Assert.Equal(
                 "I am the body",
-                (await new SimpleMessage()
+                await new SimpleMessage()
                     .WithBody(stream)
                     .To(
-                        new BodyAs<string>(body=>
-                            AsText._(body).AsString()
-                        )
+                        new BodyAs<string>(body => body.AsText().Str())
                     )
-                )
+                
             );
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Tonga;
 using Tonga.Enumerable;
 using WHyLL.Message;
+using WHyLL.Prologue;
 
 namespace WHyLL.Warp
 {
@@ -10,7 +11,7 @@ namespace WHyLL.Warp
     /// </summary>
 	public sealed class WithoutHeaders(
         Func<IPair<string, string>, bool> shouldRemove,
-        string firstLine, IEnumerable<IPair<string, string>> parts, Stream body
+        IPrologue prologue, IEnumerable<IPair<string, string>> parts, Stream body
     ) : IWarp<IMessage>
     {
         /// <summary>
@@ -18,32 +19,29 @@ namespace WHyLL.Warp
         /// headers that do not match the allow function.
         /// </summary>
         public WithoutHeaders(Func<IPair<string, string>, bool> shouldRemove) : this(
-            shouldRemove, string.Empty, None._<IPair<string, string>>(), new MemoryStream()
+            shouldRemove, new Blank(), new None<IPair<string, string>>(), new MemoryStream()
         )
         { }
 
-        public IWarp<IMessage> Refine(string newFirstLine) =>
-            new WithoutHeaders(shouldRemove, newFirstLine, parts, body);
+        public IWarp<IMessage> Refine(IPrologue newPrologue) =>
+            new WithoutHeaders(shouldRemove, newPrologue, parts, body);
 
         public IWarp<IMessage> Refine(IEnumerable<IPair<string, string>> newParts) =>
-            new WithoutHeaders(shouldRemove, firstLine, Joined._(parts, newParts), body);
+            new WithoutHeaders(shouldRemove, prologue, parts.AsJoined(newParts), body);
 
         public IWarp<IMessage> Refine(params IPair<string, string>[] newParts) =>
-            new WithoutHeaders(shouldRemove, firstLine, Joined._(parts, newParts), body);
+            new WithoutHeaders(shouldRemove, prologue, parts.AsJoined(newParts), body);
 
         public IWarp<IMessage> Refine(Stream newBody) =>
-            new WithoutHeaders(shouldRemove, firstLine, parts, newBody);
+            new WithoutHeaders(shouldRemove, prologue, parts, newBody);
 
         public async Task<IMessage> Render()
         {
             return
                 await Task.FromResult(
                     new SimpleMessage(
-                        firstLine,
-                        Filtered._(
-                            header => !shouldRemove(header),
-                            parts
-                        ),
+                        prologue,
+                        parts.AsFiltered(header => !shouldRemove(header)),
                         body
                     )
                 );

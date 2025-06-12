@@ -9,22 +9,19 @@ namespace Test.WHyLL.Warp
     public sealed class HeadersAsTest
     {
         [Fact]
-        public async void RendersAsOutputType()
+        public async Task RendersAsOutputType()
         {
             Assert.Equal(
-                new string[] { "A", "B" },
-                (await new SimpleMessage()
-                    .With(AsPair._("A", "some value"))
-                    .With(AsPair._("B", "some other value"))
+                ["A", "B"],
+                await new SimpleMessage()
+                    .With(("A", "some value").AsPair())
+                    .With(("B", "some other value").AsPair())
                     .To(
                         new HeadersAs<IEnumerable<string>>(headers =>
-                            Mapped._(
-                                header => header.Key(),
-                                headers
-                            )
+                            headers.AsMapped(header => header.Key())
                         )
                     )
-                )
+                
             );
         }
     }

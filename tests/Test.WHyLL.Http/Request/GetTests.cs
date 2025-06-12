@@ -1,10 +1,13 @@
-﻿using Tonga.Bytes;
-using Tonga.Scalar;
+﻿using Tonga;
+using Tonga.Bytes;
+using Tonga.Enumerable;
+using Tonga.IO;
 using Tonga.Text;
 using WHyLL.Headers;
 using WHyLL.Http.Request;
 using WHyLL.Warp;
 using WHyLL.Message;
+using WHyLL.Prologue;
 using Xunit;
 
 namespace Test.WHyLL.Http.Request
@@ -12,11 +15,11 @@ namespace Test.WHyLL.Http.Request
     public sealed class GetTests
     {
         [Fact]
-        public async void RefinesByParts()
+        public async Task RefinesByParts()
         {
             Assert.Equal(
                 "successful",
-                First._(
+                new First<string>(
                     (await
                         new Get("http://www.enhanced-calm.com", new Version(1, 1))
                             .With(new Header("x-test", "successful"))
@@ -27,29 +30,29 @@ namespace Test.WHyLL.Http.Request
         }
 
         [Fact]
-        public async void RefinesByRequestLine()
+        public async Task RefinesByRequestLine()
         {
             Assert.Equal(
                 "POST http://www.enhanced-calm.com/enhance HTTP/3.0",
                 await
                     new Get("http://www.enhanced-calm.com/old", new Version(1, 1))
-                        .With("POST http://www.enhanced-calm.com/enhance HTTP/3.0")
-                        .To(new FirstLine())
+                        .With(new AsPrologue(["POST", "http://www.enhanced-calm.com/enhance", "HTTP/3.0"]))
+                        .To(new Prologue())
                 
             );
         }
 
         [Fact]
-        public async void RefinesByBody()
+        public async Task RefinesByBody()
         {
             Assert.Equal(
                 "success",
-                AsText._(
-                    await
-                        new Get("http://www.enhanced-calm.com", new Version(1, 1))
-                            .WithBody(new MemoryStream(AsBytes._("success").Bytes()))
-                            .To(new Body())
-                ).AsString()
+                await
+                    new Get("http://www.enhanced-calm.com", new Version(1, 1))
+                        .WithBody("success".AsStream())
+                        .To(new Body())
+                        .AsText()
+                        .Str()
             );
         }
     }

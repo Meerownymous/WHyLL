@@ -2,13 +2,14 @@
 using Tonga;
 using Tonga.Enumerable;
 using WHyLL.Message;
+using WHyLL.Prologue;
 
 namespace WHyLL.Http.Warp
 {
     /// <summary>
     /// A WHyLL message where all http related data is removed from.
     /// </summary>
-    public sealed class WithoutHttp(string firstLine, IEnumerable<IPair<string, string>> parts, Stream body) : IWarp<IMessage>
+    public sealed class WithoutHttp(IPrologue prologue, IEnumerable<IPair<string, string>> parts, Stream body) : IWarp<IMessage>
     {
         private static readonly string[] methods =
         {
@@ -55,29 +56,26 @@ namespace WHyLL.Http.Warp
         /// <summary>
         /// A WHyLL message where all http related data is removed from.
         /// </summary>
-        public WithoutHttp() : this(string.Empty, None._<IPair<string, string>>(), new MemoryStream())
+        public WithoutHttp() : this(new Blank(), new None<IPair<string, string>>(), new MemoryStream())
         { }
 
-        public IWarp<IMessage> Refine(string newFirstLine) =>
-            new WithoutHttp(newFirstLine, parts, body);
+        public IWarp<IMessage> Refine(IPrologue newPrologue) =>
+            new WithoutHttp(newPrologue, parts, body);
 
         public IWarp<IMessage> Refine(IEnumerable<IPair<string, string>> newParts) =>
             this.Refine(parts.ToArray());
 
         public IWarp<IMessage> Refine(params IPair<string, string>[] header) =>
-            new WithoutHttp(firstLine, Joined._(parts, header), body);
+            new WithoutHttp(prologue, parts.AsJoined(header), body);
 
-        public IWarp<IMessage> Refine(Stream body) =>
-            new WithoutHttp(firstLine, parts, body);
+        public IWarp<IMessage> Refine(Stream newBody) =>
+            new WithoutHttp(prologue, parts, newBody);
 
         public Task<IMessage> Render() =>
             Task.Run<IMessage>(() =>
                 new SimpleMessage(
-                    IsHttpRequestLine(firstLine) ? String.Empty : firstLine,
-                    Filtered._(
-                        part => !IsHttpHeader(part),
-                        parts
-                    ),
+                    IsHttpRequestLine(prologue) ? new Blank() : prologue,
+                    parts.AsFiltered(part => !IsHttpHeader(part)),
                     body
                 )
             );
@@ -91,13 +89,13 @@ namespace WHyLL.Http.Warp
                 || commonResponseHeaders.Contains(key, StringComparer.InvariantCultureIgnoreCase);
         }
 
-        private static bool IsHttpRequestLine(string firstLine)
+        private static bool IsHttpRequestLine(IPrologue prologue)
         {
             var pattern = "\\s+([^?\\s]+)((?:[?&][^&\\s]+)*)\\s+(HTTP/.*)";
             var isHttp = false;
             foreach (var method in WithoutHttp.methods)
             {
-                isHttp = Regex.IsMatch(firstLine, $"{method}{pattern}");
+                isHttp = Regex.IsMatch(string.Join(" ", prologue.Sequence()), $"{method}{pattern}");
                 if (isHttp) break;
             }
             return isHttp;

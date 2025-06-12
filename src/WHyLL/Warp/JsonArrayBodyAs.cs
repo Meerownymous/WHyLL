@@ -26,20 +26,15 @@ public sealed class JsonArrayBodyAs<TResult> : WarpEnvelope<TResult>
                     new Base64Decoded(
                         await new StreamReader(body, Encoding.UTF8)
                             .ReadToEndAsync()
-                    ).AsString()
+                    ).Str()
                 );
             if (schema.Has() && !json.IsValid(schema.Value(), out IList<ValidationError> errors))
             {
                 throw new ArgumentException(
-                    new Paragraph(
-                        "Input json is not valid:",
-                        Mapped._(
-                            error => error.Message,
-                            errors
-                        ).ToArray(),
-                        "json:",
+                    "Input json is not valid:\r\n"
+                    + string.Join("\r\n", errors.AsMapped(error => error.Message))
+                    + "json:",
                         json.ToString()
-                    ).AsString()
                 );
             }
             return await warp(json);

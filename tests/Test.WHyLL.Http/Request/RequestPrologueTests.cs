@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Test.WHyLL.Http.Request
 {
-	public sealed class RequestLineTests
+	public sealed class RequestPrologueTests
 	{
 		[Theory]
 		[InlineData("GET")]
@@ -18,11 +18,13 @@ namespace Test.WHyLL.Http.Request
 		{
 			Assert.Equal(
 				$"{method} /slash/slash/boom HTTP/1.1",
-				new RequestLine(
-					method,
-					"/slash/slash/boom",
-					new Version(1, 1)
-				).AsString()
+                string.Join(" ",
+				    new RequestPrologue(
+					    method,
+					    "/slash/slash/boom",
+					    new Version(1, 1)
+				    ).Sequence()
+                )
 			);
 		}
 
@@ -39,11 +41,13 @@ namespace Test.WHyLL.Http.Request
         {
             Assert.Equal(
                 $"{method} http://www.enhanced-calm.com/slash/slash/boom HTTP/1.1",
-                new RequestLine(
-                    method,
-                    "http://www.enhanced-calm.com/slash/slash/boom",
-                    new Version(1, 1)
-                ).AsString()
+                string.Join(" ",
+                    new RequestPrologue(
+                        method,
+                        "http://www.enhanced-calm.com/slash/slash/boom",
+                        new Version(1, 1)
+                    ).Sequence()
+                )
             );
         }
 
@@ -52,11 +56,13 @@ namespace Test.WHyLL.Http.Request
         {
             Assert.Equal(
                 $"GET http://www.enhanced-calm.com/resource?slash=boom HTTP/1.1",
-                new RequestLine(
-                    "GET",
-                    "http://www.enhanced-calm.com/resource?slash=boom",
-                    new Version(1, 1)
-                ).AsString()
+                string.Join(" ",
+                    new RequestPrologue(
+                        "GET",
+                        "http://www.enhanced-calm.com/resource?slash=boom",
+                        new Version(1, 1)
+                    ).Sequence()
+                )
             );
         }
 
@@ -65,11 +71,13 @@ namespace Test.WHyLL.Http.Request
         {
             Assert.Equal(
                 $"GET http://www.enhanced-calm.com:1337/resource?slash=boom HTTP/1.1",
-                new RequestLine(
-                    "GET",
-                    "http://www.enhanced-calm.com:1337/resource?slash=boom",
-                    new Version(1, 1)
-                ).AsString()
+                string.Join(" ",
+                    new RequestPrologue(
+                        "GET",
+                        "http://www.enhanced-calm.com:1337/resource?slash=boom",
+                        new Version(1, 1)
+                    ).Sequence()
+                )
             );
         }
 
@@ -77,11 +85,11 @@ namespace Test.WHyLL.Http.Request
         public void RejectsUnknownMethod()
         {
             Assert.Throws<ArgumentException>(() =>
-                new RequestLine(
+                new RequestPrologue(
                     "DESTROY",
                     "/slash/slash/boom",
                     new Version(1, 1)
-                ).AsString()
+                ).Sequence()
             );
         }
 
@@ -89,10 +97,10 @@ namespace Test.WHyLL.Http.Request
         public void RejectsUnspecifiedResourceWhenNotOptionsRequest()
         {
             Assert.Throws<ArgumentException>(() =>
-                new RequestLine(
+                new RequestPrologue(
                     "GET",
                     new Version(1, 1)
-                ).AsString()
+                ).Sequence()
             );
         }
 
@@ -101,10 +109,12 @@ namespace Test.WHyLL.Http.Request
         {
             Assert.Equal(
                 "OPTIONS * HTTP/1.1",
-                new RequestLine(
-                    "OPTIONS",
-                    new Version(1, 1)
-                ).AsString()
+                string.Join(" ",
+                    new RequestPrologue(
+                        "OPTIONS",
+                        new Version(1, 1)
+                    ).Sequence()
+                )
             );
         }
     }

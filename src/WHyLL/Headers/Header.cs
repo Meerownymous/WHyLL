@@ -8,8 +8,9 @@ namespace WHyLL.Headers
 	/// <summary>
 	/// Message Header.
 	/// </summary>
-	public sealed class Header(string name, Func<string> value) : 
-		PairEnvelope<string,string>(AsPair._(name, value))
+	public sealed class Header(string name, Func<string> value) : PairEnvelope<string,string>(
+		(name, value).AsPair()
+	)
 	{
         /// <summary>
         /// Message Header.
@@ -27,7 +28,7 @@ namespace WHyLL
 			message.With(new Header(name, value));
 		public static IMessage Header(this IMessage message, string name, params string[] values) =>
 			message.With(
-				values.Mapped(value => new Header(name, value))
+				values.AsMapped(value => new Header(name, value))
 			);
 	}
 		

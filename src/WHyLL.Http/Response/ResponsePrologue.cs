@@ -3,23 +3,28 @@ using Tonga.Text;
 using WHyLL;
 using WHyLL.Http.Response;
 using WHyLL.Message;
+using WHyLL.Prologue;
 
 namespace WHyLL.Http.Response
 {
 	/// <summary>
 	/// The response line, first line of a http response.
 	/// </summary>
-	public sealed class ResponseLine(int statusCode, Version httpVersion) : 
-		TextEnvelope(
-			AsText._(
-				$"HTTP/{httpVersion.Major}.{httpVersion.Minor} {statusCode} {Enum.GetName(typeof(HttpStatusCode), statusCode)}"
+	public sealed class ResponsePrologue(int statusCode, Version httpVersion) : 
+		PrologueEnvelope(
+			new AsPrologue(
+				[
+					$"HTTP/{httpVersion.Major}.{httpVersion.Minor}",
+					statusCode.ToString(),
+					Enum.GetName(typeof(HttpStatusCode), statusCode)
+				]
 			)
 		)
 	{
         /// <summary>
         /// The response line, first line of a http response.
         /// </summary>
-        public ResponseLine(int statusCode) : this(
+        public ResponsePrologue(int statusCode) : this(
 			statusCode, new Version(1, 1)
 		)
 		{ }
@@ -27,7 +32,7 @@ namespace WHyLL.Http.Response
 		/// <summary>
 		/// The response line, first line of a http response.
 		/// </summary>
-		public ResponseLine(HttpStatusCode statusCode) : this(
+		public ResponsePrologue(HttpStatusCode statusCode) : this(
 			Convert.ToInt32(statusCode), new Version(1, 1)
 		)
 		{ }
@@ -37,11 +42,11 @@ namespace WHyLL.Http.Response
 public static class ResponseLineSmarts
 {
 	public static IMessage ResponseLine(this IMessage msg, HttpStatusCode statusCode) => 
-		msg.With(new ResponseLine(statusCode));
+		msg.With(new ResponsePrologue(statusCode));
 	
 	public static IMessage ResponseLine(this IMessage msg, int statusCode) => 
-		msg.With(new ResponseLine(statusCode));
+		msg.With(new ResponsePrologue(statusCode));
 	
 	public static IMessage ResponseLine(this IMessage msg, int statusCode, Version httpVersion) => 
-		msg.With(new ResponseLine(statusCode, httpVersion));
+		msg.With(new ResponsePrologue(statusCode, httpVersion));
 }

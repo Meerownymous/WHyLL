@@ -13,8 +13,7 @@ namespace WHyLL.Http.Request
             new MessageWithInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
-                        new RequestLine("PUT", url, httpVersion).AsString(),
-                        None._<IPair<string, string>>(),
+                        new RequestPrologue("PUT", url, httpVersion),
                         body
                     ),
                     new Joined<IMessageInput>(input, more)

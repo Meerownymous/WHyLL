@@ -1,6 +1,7 @@
 ﻿using Tonga;
 using Tonga.Enumerable;
 using WHyLL.Message;
+using WHyLL.MessageInput;
 
 namespace WHyLL.Http.Request
 {
@@ -9,10 +10,11 @@ namespace WHyLL.Http.Request
     /// </summary>
     public sealed class Trace(string url, Version httpVersion, IEnumerable<IPair<string, string>> headers) : 
         MessageEnvelope(
-            new SimpleMessage(
-                new RequestLine("TRACE", url, httpVersion),
-                headers,
-                new MemoryStream()
+            new MessageWithInputs(
+                new SimpleMessageInput(
+                    new RequestPrologue("TRACE", url, httpVersion),
+                    headers
+                )
             )
         )
     {
@@ -28,7 +30,7 @@ namespace WHyLL.Http.Request
         /// HTTP TRACE Request.
         /// </summary>
         public Trace(string url, Version httpVersion, params IPair<string, string>[] headers) : this(
-            url, httpVersion, AsEnumerable._(headers)
+            url, httpVersion, headers.AsEnumerable()
         )
         { }
 

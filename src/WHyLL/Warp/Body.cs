@@ -2,7 +2,6 @@
 
 namespace WHyLL.Warp
 {
-
     /// <summary>
     /// Renders the body of a message as <see cref="Stream"/>
     /// </summary>

@@ -12,7 +12,7 @@ namespace WHyLL.Warp
         new MessageAs<string>(async msg =>
             {
                 StringBuilder sb = new();
-                sb.AppendLine((await msg.To(new FirstLine())).Trim());
+                sb.AppendLine((await msg.To(new Prologue())).Trim());
                 foreach (var headers in (await msg.To(new AllHeaders())).Pairs())
                 {
                     foreach (var value in headers.Value())

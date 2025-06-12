@@ -1,6 +1,7 @@
 ﻿using Tonga.Enumerable;
 using Tonga.Map;
 using WHyLL.Message;
+using WHyLL.Prologue;
 using WHyLL.Warp;
 using Xunit;
 
@@ -9,17 +10,17 @@ namespace Test.WHyLL.Warp
     public sealed class WithoutHeadersTest
     {
         [Fact]
-        public async void RemovesHeaders()
+        public async Task RemovesHeaders()
         {
             Assert.DoesNotContain(
                 "remove-me",
                 (
                     await new SimpleMessage(
-                        "DO /unittest TEST 0.1",
-                        AsEnumerable._(
-                            AsPair._("remove-me", "please"),
-                            AsPair._("leave-me", "please")
-                        ),
+                        new AsPrologue(["DO","/unittest", "TEST", "0.1"]),
+                        (
+                            ("remove-me", "please").AsPair(),
+                            ("leave-me", "please").AsPair()
+                        ).AsEnumerable(),
                         new MemoryStream()
                     )
                     .To(new WithoutHeaders(header => header.Key() == "remove-me"))
@@ -30,17 +31,17 @@ namespace Test.WHyLL.Warp
         }
 
         [Fact]
-        public async void PreservesUnmatchedHeaders()
+        public async Task PreservesUnmatchedHeaders()
         {
             Assert.Contains(
                 "leave-me",
                 (
                     await new SimpleMessage(
-                        "DO /unittest TEST 0.1",
-                        AsEnumerable._(
-                            AsPair._("remove-me", "please"),
-                            AsPair._("leave-me", "please")
-                        ),
+                            new AsPrologue(["DO","/unittest", "TEST", "0.1"]),
+                        (
+                            ("remove-me", "please").AsPair(),
+                            ("leave-me", "please").AsPair()
+                        ).AsEnumerable(),
                         new MemoryStream()
                     )
                     .To(new WithoutHeaders(header => header.Key() == "remove-me"))

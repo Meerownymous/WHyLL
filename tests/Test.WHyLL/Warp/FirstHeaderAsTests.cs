@@ -10,20 +10,22 @@ namespace Test.WHyLL.Warp
 		public async Task RendersFirstHeaderAsOutputType()
 		{
 			var time = DateTime.Today;
-			Assert.Equal(time,
-				(await
+			Assert.Equal(
+				time,
+				await
 					new FirstHeaderAs<DateTime>("Since", DateTime.Parse)
-						.Refine(AsPair._("Since", time.ToLongTimeString()))
+						.Refine(("Since", time.ToLongTimeString()).AsPair())
                         .Render()
-				)
 			);
 		}
 
 		[Fact] public async Task RendersFallbackIfNotFound()
 		{
-			Assert.Equal(1000,
+			Assert.Equal(
+				1000,
 				await
-					new FirstHeaderAs<int>("WhatTheHeaderIsGoingOn",
+					new FirstHeaderAs<int>(
+						"WhatTheHeaderIsGoingOn",
 						_ => 0,
 						1000
 					)

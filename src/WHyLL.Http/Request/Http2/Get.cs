@@ -14,9 +14,7 @@ namespace WHyLL.Http2.Request
             new MessageWithInputs(
                 new Joined<IMessageInput>(
                     new SimpleMessageInput(
-                        new RequestLine("GET", url, new Version(2, 0)).AsString(),
-                        None._<IPair<string,string>>(),
-                        new MemoryStream()
+                        new RequestPrologue("GET", url, new Version(2, 0))
                     ),
                     new Joined<IMessageInput>(input, more)
                 )

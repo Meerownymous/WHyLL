@@ -8,25 +8,22 @@ namespace Test.WHyLL.Warp
     public sealed class ChainTests
     {
         [Fact]
-        public async void RendersAll()
+        public async Task RendersAll()
         {
             var rendered = 0;
             Assert.Equal(
-                new[] { 1, 2, 3 },
+                [1, 2, 3],
                 await new SimpleMessage()
                     .Chain(
-                        Repeated._(
-                            FromScratch._(
-                                () => Task.FromResult(++rendered)
-                            ),
-                            3
-                        )
-                )
+                        FromScratch._(
+                            () => Task.FromResult(++rendered)
+                        ).AsRepeated(3)
+                    )
             );
         }
 
         [Fact]
-        public async void ThrowsException()
+        public async Task ThrowsException()
         {
             var rendered = 0;
             await Assert.ThrowsAsync<Exception>(async () =>
@@ -40,7 +37,7 @@ namespace Test.WHyLL.Warp
         }
 
         [Fact]
-        public async void StopsAtException()
+        public async Task StopsAtException()
         {
             var rendered = 0;
             try
@@ -56,7 +53,6 @@ namespace Test.WHyLL.Warp
             {
                 // ignored
             }
-
             Assert.Equal(1, rendered);
         }
     }

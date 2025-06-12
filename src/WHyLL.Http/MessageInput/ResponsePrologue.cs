@@ -1,15 +1,19 @@
 using System.Net;
 using WHyLL.MessageInput;
 
-namespace WHyLL.Http.MessageInput
-{
+namespace WHyLL.Http.MessageInput;
+
     /// <summary>
     /// The response line, first line of a http response.
     /// </summary>
-    public sealed class ResponseLine(int statusCode, Version httpVersion) : 
+    public sealed class ResponsePrologue(int statusCode, Version httpVersion) : 
         MessageInputEnvelope(
-            new FirstLineInput(
-                $"HTTP/{httpVersion.Major}.{httpVersion.Minor} {statusCode} {Enum.GetName(typeof(HttpStatusCode), statusCode)}"
+            new PrologueInput(
+                [
+                    $"HTTP/{httpVersion.Major}.{httpVersion.Minor}",
+                    statusCode.ToString(),
+                    Enum.GetName(typeof(HttpStatusCode), statusCode)
+                ]
             )
         )
     {
@@ -17,7 +21,7 @@ namespace WHyLL.Http.MessageInput
         /// <summary>
         /// The response line, first line of a http response.
         /// </summary>
-        public ResponseLine(HttpStatusCode statusCode) : this(
+        public ResponsePrologue(HttpStatusCode statusCode) : this(
             Convert.ToInt32(statusCode), new Version(1, 1)
         )
         { }
@@ -25,9 +29,8 @@ namespace WHyLL.Http.MessageInput
         /// <summary>
         /// The response line, first line of a http response.
         /// </summary>
-        public ResponseLine(int statusCode) : this(
+        public ResponsePrologue(int statusCode) : this(
             statusCode, new Version(1, 1)
         )
         { }
     }
-}

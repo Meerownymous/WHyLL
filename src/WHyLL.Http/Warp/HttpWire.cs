@@ -1,7 +1,9 @@
 ﻿using Tonga;
 using Tonga.Enumerable;
+using Tonga.Map;
 using Tonga.Text;
 using WHyLL.Message;
+using WHyLL.Prologue;
 
 namespace WHyLL.Http.Warp
 {
@@ -26,7 +28,7 @@ namespace WHyLL.Http.Warp
         ];
 
         private readonly IList<IPair<string, string>> headers;
-        private readonly IText firstLine;
+        private readonly IPrologue prologue;
         private readonly Stream body;
         private readonly Func<HttpRequestMessage, Task<HttpResponseMessage>> convert;
         private readonly bool allowBodyReplay;
@@ -35,7 +37,7 @@ namespace WHyLL.Http.Warp
         /// Renders a response message using Asp.Net Core HttpClient.
         /// </summary>
         public HttpWire(HttpClient client, bool allowBodyReplay = true) : this(
-            new AsText(""),
+            new Prologue.Blank(),
             new List<IPair<string, string>>(),
             new MemoryStream(),
             async msg => await client.SendAsync(msg, HttpCompletionOption.ResponseHeadersRead),
@@ -47,7 +49,7 @@ namespace WHyLL.Http.Warp
         /// Renders a response message using Asp.Net Core HttpClient.
         /// </summary>
         private HttpWire(HttpResponseMessage result, bool allowBodyReplay = true) : this(
-            new AsText(""),
+            new Prologue.Blank(),
             new List<IPair<string, string>>(),
             new MemoryStream(),
             _ => Task.FromResult(result),
@@ -59,7 +61,7 @@ namespace WHyLL.Http.Warp
         /// Renders a response message using Asp.Net Core HttpClient.
         /// </summary>
         public HttpWire(Func<HttpRequestMessage, Task<HttpResponseMessage>> convert, bool allowBodyReplay = true) : this(
-            new AsText(""),
+            new Prologue.Blank(),
             new List<IPair<string, string>>(),
             new MemoryStream(),
             convert.Invoke,
@@ -68,7 +70,7 @@ namespace WHyLL.Http.Warp
         { }
 
         private HttpWire(
-            IText firstLine,
+            IPrologue prologue,
             IList<IPair<string,string>> headers,
             Stream body,
             Func<HttpRequestMessage, Task<HttpResponseMessage>> convert,
@@ -76,17 +78,17 @@ namespace WHyLL.Http.Warp
             
         )
         {
-            this.firstLine = firstLine;
+            this.prologue = prologue;
             this.headers = headers;
             this.convert = convert;
             this.body = body;
             this.allowBodyReplay = allowBodyReplay;
         }
 
-        public IWarp<IMessage> Refine(string newFirstLine)
+        public IWarp<IMessage> Refine(IPrologue newPrologue)
         {
             return new HttpWire(
-                new AsText(newFirstLine), this.headers, this.body, this.convert, this.allowBodyReplay
+                newPrologue, this.headers, this.body, this.convert, this.allowBodyReplay
             );
         }
 
@@ -98,17 +100,17 @@ namespace WHyLL.Http.Warp
             foreach (var part in parts)
                 this.headers.Add(part);
             
-            return new HttpWire(this.firstLine, this.headers,this.body,  this.convert, this.allowBodyReplay);
+            return new HttpWire(this.prologue, this.headers,this.body,  this.convert, this.allowBodyReplay);
         }
 
         public IWarp<IMessage> Refine(Stream newBody)
         {
-            return new HttpWire(this.firstLine, this.headers, newBody, convert, this.allowBodyReplay);
+            return new HttpWire(this.prologue, this.headers, newBody, convert, this.allowBodyReplay);
         }
 
         public async Task<IMessage> Render()
         {
-            var request = RequestMessage(this.firstLine.AsString());
+            var request = RequestMessage(this.prologue);
             request.Content = new StreamContent(this.body);
             foreach (var header in headers)
             {
@@ -121,27 +123,28 @@ namespace WHyLL.Http.Warp
             var aspResponse = await convert(request);
             return
                 new SimpleMessage(
-                    $"HTTP/{aspResponse.Version} {(int)aspResponse.StatusCode} {aspResponse.ReasonPhrase}\r\n",
-                    Tonga.Enumerable.Joined._(
-                        Mapped._(
-                            header => 
-                                Mapped._(
-                                    value => Tonga.Map.AsPair._(header.Key, value),
-                                    header.Value
-                                ),
-                            aspResponse.Headers
-                        )
+                    new AsPrologue(
+                        [
+                            $"HTTP/{aspResponse.Version}",
+                            aspResponse.StatusCode.ToString(),
+                            aspResponse.ReasonPhrase
+                        ]
                     ),
+                    aspResponse
+                        .Headers
+                        .AsMapped(header => 
+                                header.Value.AsMapped(value => (header.Key, value).AsPair())
+                        ).AsJoined(),
                     allowBodyReplay 
                         ? new BufferingReadStream(await aspResponse.Content.ReadAsStreamAsync())
                         : await aspResponse.Content.ReadAsStreamAsync()
                 );
         }
 
-        private static HttpRequestMessage RequestMessage(string requestLine)
+        private static HttpRequestMessage RequestMessage(IPrologue prologue)
         {
             var result = new HttpRequestMessage();
-            var pieces = RequestLineParts(requestLine);
+            var pieces = prologue.Sequence();
             result.Method = new HttpMethod(pieces[0]);
             result.RequestUri = new Uri(pieces[1]);
             result.Version =
@@ -149,13 +152,10 @@ namespace WHyLL.Http.Warp
                     new TrimmedLeft(
                         new TrimmedRight(pieces[2], "\r\n"),
                         "HTTP/"
-                    ).AsString()
+                    ).Str()
                 );
             return result;
         }
-
-        private static string[] RequestLineParts(string requestLine) =>
-            requestLine.Split(" ");
 
         private static bool IsContentHeader(string header) =>
             contentHeaders.Contains(header, StringComparer.OrdinalIgnoreCase);

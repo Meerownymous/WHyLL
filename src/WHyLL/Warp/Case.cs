@@ -6,15 +6,15 @@ namespace WHyLL.Warp
     /// Case to be inserted into a <see cref="Switch{TOutput}"/>.
     /// </summary>
     public sealed class Case<TOutput>(
-        Func<string, IEnumerable<IPair<string, string>>, Stream, bool> match, 
+        Func<IPrologue, IEnumerable<IPair<string, string>>, Stream, bool> match, 
         IWarp<TOutput> consequence
     ) : IMatch<TOutput>
     {
         /// <summary>
         /// Case to be inserted into a <see cref="Switch{TOutput}"/>.
         /// </summary>
-        public Case(Func<string, bool> match, IWarp<TOutput> consequence) : this(
-            (firstLine, _, _) => match(firstLine), consequence
+        public Case(Func<IPrologue, bool> match, IWarp<TOutput> consequence) : this(
+            (prologue, _, _) => match(prologue), consequence
         )
         { }
 
@@ -35,19 +35,19 @@ namespace WHyLL.Warp
         { }
 
         public IWarp<TOutput> Consequence(
-            string firstLine,
+            IPrologue prologue,
             IEnumerable<IPair<string, string>> parts,
             Stream body
         )
         {
-            var result = consequence.Refine(firstLine).Refine(body);
+            var result = consequence.Refine(prologue).Refine(body);
             foreach (var part in parts)
                 result = result.Refine(part);
             return result;
         }
 
-        public bool Matches(string firstLine, IEnumerable<IPair<string, string>> parts, Stream body) =>
-            match(firstLine, parts, body);
+        public bool Matches(IPrologue prologue, IEnumerable<IPair<string, string>> parts, Stream body) =>
+            match(prologue, parts, body);
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ namespace WHyLL.Warp
         /// Case to be inserted into a <see cref="Switch{TOutput}"/>.
         /// </summary>
         public static Case<TOutput> _<TOutput>(
-            Func<string, bool> match, IWarp<TOutput> consequence
+            Func<IPrologue, bool> match, IWarp<TOutput> consequence
         ) =>
             new(match, consequence);
 
@@ -83,7 +83,7 @@ namespace WHyLL.Warp
         /// Case to be inserted into a <see cref="Switch{TOutput}"/>.
         /// </summary>
         public static Case<TOutput> _<TOutput>(
-            Func<string, IEnumerable<IPair<string, string>>, Stream, bool> match, IWarp<TOutput> consequence
+            Func<IPrologue, IEnumerable<IPair<string, string>>, Stream, bool> match, IWarp<TOutput> consequence
         ) =>
             new(match, consequence);
     }

@@ -5,55 +5,52 @@ using Xunit;
 
 namespace Test.WHyLL.Warp
 {
-    public sealed class SummarizedTests
+    public sealed class SummaryTests
     {
         [Fact]
-        public async void RendersAll()
+        public async Task RendersAll()
         {
             var rendered = 0;
             await new SimpleMessage().To(
-                    Summarized._(
-                        Repeated._(
-                            FromScratch._(
-                                () => Task.FromResult(++rendered)
-                            ),
-                            3
-                        )
+                new Summary<int>(
+                        FromScratch._(
+                            () => Task.FromResult(++rendered)
+                        ).AsRepeated(3)
                     )
                 );
             Assert.Equal(3, rendered);
         }
 
         [Fact]
-        public async void ThrowsException()
+        public async Task ThrowsException()
         {
             var rendered = 0;
             await Assert.ThrowsAsync<Exception>(async () =>
                 await new SimpleMessage().To(
-                    Summarized._(
-                        AsEnumerable._(
+                    new Summary<int>(
+                        (
                             FromScratch._(() => rendered++),
                             FromScratch._<int>(render: () => throw new Exception("HALT STOP")),
                             FromScratch._(() => rendered++)
-                        )
+                        ).AsEnumerable()
                     )
                 )
             );
         }
 
         [Fact]
-        public async void StopsAtException()
+        public async Task StopsAtException()
         {
             var rendered = 0;
             try
             {
                 await new SimpleMessage().To(
-                    Summarized._(
-                        AsEnumerable._(
+                    new Summary<int>(
+                        (
                             FromScratch._(() => rendered++),
                             FromScratch._<int>(render: () => throw new Exception("HALT STOP")),
                             FromScratch._(() => rendered++)
-                        )
+                        ).AsEnumerable()
                     )
                 );
             }
@@ -71,26 +68,26 @@ namespace Test.WHyLL.Warp
             Assert.Equal(
                 "Last",
                 await new SimpleMessage().To(
-                    Summarized._(
-                        AsEnumerable._(
+                    new Summary<string>(
+                        (
                             FromScratch._(() => "First"),
                             FromScratch._(() => "Last")
-                        )
+                        ).AsEnumerable()
                     )
                 )
             );
         }
 
         [Fact]
-        public async void SummarizesByLambda()
+        public async Task SummarizesByLambda()
         {
             var result = "";
             await new SimpleMessage().To(
-                Summarized._(
-                    AsEnumerable._(
+                new Summary<string>(
+                    (
                         FromScratch._(() => result += "A"),
                         FromScratch._(() => result += "B")
-                    )
+                    ).AsEnumerable()
                 )
             );
             Assert.Equal("AB", result);

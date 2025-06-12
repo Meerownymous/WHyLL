@@ -1,6 +1,8 @@
 ﻿using System.Net;
+using Tonga.Enumerable;
 using Tonga.Map;
 using WHyLL.Message;
+using WHyLL.Prologue;
 
 namespace WHyLL.AspNet.Response
 {
@@ -14,16 +16,19 @@ namespace WHyLL.AspNet.Response
                 var msg =
                     new SimpleMessage()
                         .With(
-                            $"HTTP/1.1 {response.StatusCode} {Enum.GetName(typeof(HttpStatusCode), response.StatusCode)}"
+                            new AsPrologue(
+                                [
+                                    "HTTP/1.1",
+                                    response.StatusCode.ToString(),
+                                    Enum.GetName(typeof(HttpStatusCode), response.StatusCode)
+                                ]
+                            )
                         );
 
                 foreach (var headerName in response.Headers.Keys)
                 {
                     msg = msg.With(
-                        Tonga.Enumerable.Mapped._(
-                            value => AsPair._(headerName, value),
-                            response.Headers[headerName]
-                        )
+                        response.Headers[headerName].AsMapped(value => (headerName, value).AsPair())
                     );
                 }
                 return msg.WithBody(response.Body);

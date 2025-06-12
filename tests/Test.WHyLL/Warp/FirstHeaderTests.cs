@@ -12,14 +12,11 @@ namespace Test.WHyLL.Warp
 		{
 			Assert.Equal(
 				"Valu the Bear",
-				AsText._(
-					(await
-						new FirstHeader("Character")
-							.Refine(AsPair._("Character", "Valu the Bear"))
-                            .Refine(AsPair._("Character", "Mister Murphy"))
-                            .Render()
-					)
-				).AsString()
+				await
+					new FirstHeader("Character")
+						.Refine(("Character", "Valu the Bear").AsPair())
+                        .Refine(("Character", "Mister Murphy").AsPair())
+                        .Render()
 			);
 		}
 		
@@ -27,14 +24,11 @@ namespace Test.WHyLL.Warp
 		public async Task IgnoresCase()
 		{
 			Assert.Equal(
-				"Valu the Bear",
-				AsText._(
-					(await
-						new FirstHeader("CHarAcTEr")
-							.Refine(AsPair._("character", "Valu the Bear"))
-							.Render()
-					)
-				).AsString()
+				"Valu the Bear", 
+				await
+					new FirstHeader("CHarAcTEr")
+						.Refine(("character", "Valu the Bear").AsPair())
+						.Render()
 			);
 		}
 		
@@ -43,12 +37,9 @@ namespace Test.WHyLL.Warp
 		{
 			Assert.Equal(
 				"Pooh",
-				AsText._(
-					await
-						new FirstHeader("CHarAcTEr", "Pooh")
-							.Render()
-					
-				).AsString()
+				await
+					new FirstHeader("CHarAcTEr", "Pooh")
+						.Render()
 			);
 		}
 		
@@ -57,13 +48,10 @@ namespace Test.WHyLL.Warp
 		{
 			Assert.Equal(
 				"James",
-				AsText._(
-					await
-						new FirstHeader("character", "Pooh")
-							.Refine(AsPair._("character", "James"))
-							.Render()
-					
-				).AsString()
+				await
+					new FirstHeader("character", "Pooh")
+						.Refine(("character", "James").AsPair())
+						.Render()
 			);
 		}
 	}

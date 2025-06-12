@@ -5,7 +5,7 @@ namespace WHyLL.Warp
 {
     public interface IMatch<TOutput>
     {
-        bool Matches(string firstLine, IEnumerable<IPair<string, string>> parts, Stream body);
-        IWarp<TOutput> Consequence(string firstLine, IEnumerable<IPair<string, string>> parts, Stream body);
+        bool Matches(IPrologue prologue, IEnumerable<IPair<string, string>> parts, Stream body);
+        IWarp<TOutput> Consequence(IPrologue prologue, IEnumerable<IPair<string, string>> parts, Stream body);
     }
 }

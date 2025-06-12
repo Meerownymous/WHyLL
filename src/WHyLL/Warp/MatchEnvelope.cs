@@ -8,18 +8,18 @@ namespace WHyLL.Warp
     public abstract class MatchEnvelope<TOutput>(IMatch<TOutput> match) : IMatch<TOutput>
     {
         public IWarp<TOutput> Consequence(
-            string firstLine,
+            IPrologue prologue,
             IEnumerable<IPair<string, string>> parts,
             Stream body
         ) =>
-            match.Consequence(firstLine, parts, body);
+            match.Consequence(prologue, parts, body);
 
         public bool Matches(
-            string firstLine,
+            IPrologue prologue,
             IEnumerable<IPair<string, string>> parts,
             Stream body
         ) =>
-            match.Matches(firstLine, parts, body);
+            match.Matches(prologue, parts, body);
     }
 }
 

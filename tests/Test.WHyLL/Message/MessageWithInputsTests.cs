@@ -1,4 +1,5 @@
-﻿using Tonga.Bytes;
+﻿using Tonga;
+using Tonga.Bytes;
 using Tonga.IO;
 using Tonga.Text;
 using WHyLL.Headers;
@@ -31,7 +32,6 @@ namespace Test.WHyLL.Message
         {
             Assert.Equal(
                 "Insert me",
-				AsText._(
 					await
 						new MessageWithInputs(
 							new BodyInput(
@@ -40,7 +40,8 @@ namespace Test.WHyLL.Message
 								).Stream()
 							)
 						).To(new Body())
-				).AsString()
+						.AsText()
+						.Str()
             );
         }
     }

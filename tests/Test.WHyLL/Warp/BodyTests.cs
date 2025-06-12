@@ -1,5 +1,5 @@
-﻿using Tonga.IO;
-using Tonga.Text;
+﻿using Tonga;
+using Tonga.IO;
 using WHyLL.Warp;
 using Xunit;
 
@@ -12,13 +12,12 @@ public sealed class BodyTests
 	{
 		Assert.Equal(
 			"I have a killer body",
-			AsText._(
-				(await
-					new Body()
-						.Refine(new AsConduit("I have a killer body").Stream())
-						.Render()
-				)
-			).AsString()
+			await
+				new Body()
+					.Refine(new AsConduit("I have a killer body").Stream())
+					.Render()
+					.AsText()
+					.Str()
 		);
 	}
 }

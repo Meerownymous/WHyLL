@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Tonga.Enumerable;
 using Tonga.Map;
 using WHyLL.Message;
+using WHyLL.Prologue;
 
 namespace WHyLL.AspNet.Request
 {
@@ -13,15 +15,14 @@ namespace WHyLL.AspNet.Request
             {
                 var msg =
                     new SimpleMessage()
-                        .With($"{request.Method} {request.Path} HTTP/1.1");
+                        .With(new AsPrologue([request.Method, request.Path, "HTTP/1.1"]));
 
                 foreach(var headerName in request.Headers.Keys)
                 {
                     msg = msg.With(
-                        Tonga.Enumerable.Mapped._(
-                            value => AsPair._(headerName, value),
-                            request.Headers[headerName]
-                        )
+                        request
+                            .Headers[headerName]
+                            .AsMapped(value => (headerName, value).AsPair())
                     );
                 }
                 if(allowBodyReplay) request.EnableBuffering();
