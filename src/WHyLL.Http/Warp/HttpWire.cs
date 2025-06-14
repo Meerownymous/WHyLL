@@ -126,7 +126,7 @@ namespace WHyLL.Http.Warp
                     new AsPrologue(
                         [
                             $"HTTP/{aspResponse.Version}",
-                            aspResponse.StatusCode.ToString(),
+                            ((int)aspResponse.StatusCode).ToString(),
                             aspResponse.ReasonPhrase
                         ]
                     ),

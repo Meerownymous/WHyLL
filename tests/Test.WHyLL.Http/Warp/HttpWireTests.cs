@@ -164,7 +164,7 @@ namespace Test.WHyLL.Http.Warp
         public async Task ConvertsResponseStatusLine()
         {
             Assert.Equal(
-                "HTTP/1.1 200 OK\r\n",
+                "HTTP/1.1 200 OK",
                 await
                     new HttpWire(_ => 
                         Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK))

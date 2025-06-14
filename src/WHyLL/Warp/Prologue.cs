@@ -8,7 +8,7 @@ namespace WHyLL.Warp
     /// Render the prologue of a request (request-line) or response (status-line)
     /// </summary>
     public sealed class Prologue() : WarpEnvelope<string>(
-        new PrologueAs<string>(line => string.Join(" ", line))
+        new PrologueAs<string>(line => string.Join(" ", line.Sequence()))
     );
 
 }

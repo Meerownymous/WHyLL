@@ -13,7 +13,7 @@ namespace WHyLL.Http.Warp
             var line = string.Join(" ", parts);
             if (!Regex.IsMatch(line, "^HTTP\\/\\d\\.\\d\\s\\d{3}\\s.*$"))
                 throw new ArgumentException($"'{line}' is not a valid http response.");
-            return Convert.ToInt32(parts);
+            return Convert.ToInt32(parts[1]);
         })
     );
 }
