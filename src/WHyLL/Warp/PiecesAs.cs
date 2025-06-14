@@ -21,7 +21,10 @@ namespace WHyLL.Warp
         /// </summary>
         public PiecesAs(
             Func<IPrologue, IEnumerable<IPair<string, string>>, Stream, Task<TOutput>> render) : this(
-            render, new Blank(), new None<IPair<string, string>>(), new MemoryStream()
+            render, 
+            new Blank(), 
+            new None<IPair<string, string>>(), 
+            new MemoryStream()
         )
         {
         }
