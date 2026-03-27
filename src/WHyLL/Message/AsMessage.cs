@@ -32,7 +32,7 @@ public static partial class MessageSmarts
     /// Stream as <see cref="IMessage"/>
     /// </summary>
     public static IMessage AsMessage(this Stream body) =>
-        new AsMessage(new Blank(), new None<IPair<string,string>>(), body);
+        new AsMessage(new Blank(), new Empty<IPair<string,string>>(), body);
     
     /// <summary>
     /// Stream as <see cref="IMessage"/>

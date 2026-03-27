@@ -14,7 +14,7 @@ public sealed class Connect(string url, IMessageInput input, params IMessageInpu
             new Joined<IMessageInput>(
                 new SimpleMessageInput(
                     new RequestPrologue("CONNECT", url, new Version(2,0)),
-                    new None<IPair<string, string>>(),
+                    new Empty<IPair<string, string>>(),
                     new MemoryStream()
                 ),
                 new Joined<IMessageInput>(input, more)

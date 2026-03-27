@@ -18,7 +18,7 @@ namespace Test.WHyLL.Message
                 await
 					new SimpleMessage(
                         new AsPrologue(["POST", "/kasten", "HTTP/1.1"]), 
-                        new None<IPair<string,string>>(), 
+                        new Empty<IPair<string, string>>(), 
                         new MemoryStream()
                     ).To(new Prologue())
 			);
@@ -32,7 +32,7 @@ namespace Test.WHyLL.Message
                 await
                     new SimpleMessage(
                         new AsPrologue(["POST", "/kasten", "HTTP/1.1"]),
-                        new None<IPair<string, string>>(),
+                        new Empty<IPair<string, string>>(),
                         new MemoryStream()
                     )
                     .With(new AsPrologue(["PUT", "/putput/dear/pigeon","HTTP/1.1"]))

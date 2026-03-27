@@ -1,8 +1,6 @@
 ﻿using Tonga;
-using Tonga.Bytes;
 using Tonga.Enumerable;
 using Tonga.IO;
-using Tonga.Text;
 using WHyLL.Headers;
 using WHyLL.Http.Request;
 using WHyLL.Warp;
@@ -19,7 +17,7 @@ namespace Test.WHyLL.Http.Request
         {
             Assert.Equal(
                 "successful",
-                new First<string>(
+                new FirstOne<string>(
                     (await
                         new Get("http://www.enhanced-calm.com", new Version(1, 1))
                             .With(new Header("x-test", "successful"))

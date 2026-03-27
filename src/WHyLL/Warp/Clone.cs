@@ -15,7 +15,7 @@ namespace WHyLL.Warp
         /// <summary>
         /// A copy of the Warp message.
         /// </summary>
-        public Clone() : this(new Blank(), new None<IPair<string, string>>(), new MemoryStream())
+        public Clone() : this(new Blank(), new Empty<IPair<string, string>>(), new MemoryStream())
         { }
 
         public IWarp<IMessage> Refine(IPrologue newPrologue) =>

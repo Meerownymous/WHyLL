@@ -59,7 +59,7 @@ namespace Test.WHyLL.Http.Warp
             Assert.Empty(
                 await new SimpleMessage(
                     new AsPrologue(["GET","/unittest","HTTP/1.1"]),
-                    new None<IPair<string,string>>(),
+                    new Empty<IPair<string, string>>(),
                     new MemoryStream()
                 )
                 .To(new WithoutHttp())

@@ -56,7 +56,7 @@ namespace WHyLL.Http.Warp
         /// <summary>
         /// A WHyLL message where all http related data is removed from.
         /// </summary>
-        public WithoutHttp() : this(new Blank(), new None<IPair<string, string>>(), new MemoryStream())
+        public WithoutHttp() : this(new Blank(), new Empty<IPair<string, string>>(), new MemoryStream())
         { }
 
         public IWarp<IMessage> Refine(IPrologue newPrologue) =>

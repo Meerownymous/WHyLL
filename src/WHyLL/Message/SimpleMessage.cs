@@ -17,7 +17,7 @@ namespace WHyLL.Message
         /// Simple HTTP message.
         /// </summary>
         public SimpleMessage() : this(
-            new Blank(), new None<IPair<string,string>>(), new MemoryStream()
+            new Blank(), new Empty<IPair<string,string>>(), new MemoryStream()
         )
         { }
 

@@ -19,7 +19,7 @@ namespace WHyLL.Warp
         /// headers that do not match the allow function.
         /// </summary>
         public WithoutHeaders(Func<IPair<string, string>, bool> shouldRemove) : this(
-            shouldRemove, new Blank(), new None<IPair<string, string>>(), new MemoryStream()
+            shouldRemove, new Blank(), new Empty<IPair<string, string>>(), new MemoryStream()
         )
         { }
 
